@@ -1,0 +1,11 @@
+spring:
+  datasource:
+    url: jdbc:sqlite:db.sqlite
+    driver-class-name: org.sqlite.JDBC
+  jpa:
+    #    defer-datasource-initialization: true
+    hibernate:
+      ddl-auto: update
+
+  thymeleaf:
+    prefix: classpath:/templates/

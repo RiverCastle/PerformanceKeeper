@@ -9,6 +9,9 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.time.Instant;
+import java.time.LocalDateTime;
+
 @Service
 @RequiredArgsConstructor
 public class UserService {
@@ -16,13 +19,9 @@ public class UserService {
     private final BCryptPasswordEncoder passwordEncoder;
 
     public void createUser(UserCreateDto userCreateDto) {
-        System.out.println(1);
         String username = userCreateDto.getUsername();
-        System.out.println(2);
         checkUsername(username); // 아이디 중복 파악
-        System.out.println(3);
         checkPassword(userCreateDto); // 비밀번호 일치 확인
-        System.out.println(4);
         UserEntity user = new UserEntity(username, passwordEncoder.encode(userCreateDto.getPassword()));
         userRepository.save(user); //데이터 저장
     }

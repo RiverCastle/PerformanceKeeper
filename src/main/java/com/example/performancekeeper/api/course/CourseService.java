@@ -25,7 +25,7 @@ public class CourseService {
         courseCreateDto.setJoinCode(passwordEncoder.encode(courseCreateDto.getJoinCode()));
         CourseEntity courseEntity = CourseCreateDto.toEntity(courseCreateDto);
         courseEntity = courseRepository.save(courseEntity);
-        memberService.createManager(userEntity, courseEntity);
+        memberService.createManagerMember(userEntity, courseEntity);
     }
 
     public List<CourseOverviewDto> searchCourse(String keyword) {

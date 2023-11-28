@@ -20,7 +20,7 @@ public class MemberService {
     private final BCryptPasswordEncoder passwordEncoder;
     private final TaskService taskService;
 
-    public void createManager(UserEntity user, CourseEntity course) {
+    public void createManagerMember(UserEntity user, CourseEntity course) {
         memberRepository.save(new MemberEntity(user, course, "Manager"));
     }
     public void createStudentMember(Long userId, Long courseId, JoinCourseDto joinCourseDto) {

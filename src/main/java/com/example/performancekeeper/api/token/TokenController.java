@@ -11,8 +11,8 @@ import org.springframework.web.bind.annotation.*;
 public class TokenController {
     private final TokenService tokenService;
     @PostMapping
-    public String login(@RequestBody LoginRequestDto loginRequestDto) {
-        return tokenService.issueAccessToken(loginRequestDto);
+    public AccessTokenDto login(@RequestBody LoginRequestDto loginRequestDto) {
+        return new AccessTokenDto(tokenService.issueAccessToken(loginRequestDto));
     }
     @DeleteMapping
     public void logout(Authentication authentication,

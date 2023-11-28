@@ -35,4 +35,10 @@ public class ViewController {
         log.info("to Course Create Page");
         return "course-create-page";
     }
+
+    @GetMapping("/course-list-page")
+    public String courseListPage() {
+        log.info("to course-list-page");
+        return "course-list-page";
+    }
 }

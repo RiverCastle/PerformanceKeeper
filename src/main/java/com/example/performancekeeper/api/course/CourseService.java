@@ -7,6 +7,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 
 @Service
 @RequiredArgsConstructor
@@ -21,5 +24,12 @@ public class CourseService {
         CourseEntity courseEntity = CourseCreateDto.toEntity(courseCreateDto);
         courseEntity = courseRepository.save(courseEntity);
         memberService.createManager(userEntity, courseEntity);
+    }
+
+    public List<CourseOverviewDto> searchCourse(String keyword) {
+        List<CourseEntity> courseEntities = courseRepository.findAllByNameContainingAndDeletedAtIsNull(keyword);
+        List<CourseOverviewDto> result = new ArrayList<>();
+        for (CourseEntity entity : courseEntities) result.add(CourseOverviewDto.fromEntity(entity));
+        return result;
     }
 }

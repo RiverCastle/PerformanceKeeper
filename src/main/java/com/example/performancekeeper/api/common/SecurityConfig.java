@@ -21,8 +21,7 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.csrf(AbstractHttpConfigurer::disable);
         http.authorizeHttpRequests(authHttp -> authHttp
-                        .requestMatchers(HttpMethod.GET, "/js/**").permitAll()
-                        .requestMatchers(HttpMethod.GET, "/views/login", "/views/sign-up").anonymous()
+                        .requestMatchers(HttpMethod.GET, "/js/**","/views/**").permitAll()
                         .requestMatchers(HttpMethod.POST, "/api/users", "/api/token").anonymous()
                         .anyRequest().authenticated()
                 )

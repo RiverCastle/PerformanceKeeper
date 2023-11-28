@@ -17,7 +17,6 @@ document.getElementById("login-fetch-button").addEventListener("click", () => {
             if (response.ok) response.json()
                 .then(accesstoken => {
                     sessionStorage.setItem("JWT", accesstoken.token)
-
                     window.location.href = "/views/main";
                 })
              else {

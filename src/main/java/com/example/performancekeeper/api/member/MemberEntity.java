@@ -1,5 +1,6 @@
 package com.example.performancekeeper.api.member;
 
+import com.example.performancekeeper.api.common.BaseTimeEntity;
 import com.example.performancekeeper.api.course.CourseEntity;
 import com.example.performancekeeper.api.users.UserEntity;
 import jakarta.persistence.*;
@@ -7,7 +8,7 @@ import lombok.NoArgsConstructor;
 
 @Entity
 @NoArgsConstructor
-public class MemberEntity {
+public class MemberEntity extends BaseTimeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

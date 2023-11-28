@@ -22,8 +22,8 @@ public class UserService {
         String username = userCreateDto.getUsername();
         checkUsername(username); // 아이디 중복 파악
         checkPassword(userCreateDto); // 비밀번호 일치 확인
-        UserEntity user = new UserEntity(username, passwordEncoder.encode(userCreateDto.getPassword()));
-        userRepository.save(user); //데이터 저장
+        UserEntity user = new UserEntity(username, passwordEncoder.encode(userCreateDto.getPassword()), "USER");
+        userRepository.save(user); // 데이터 저장
     }
 
     private void checkUsername(String username) {

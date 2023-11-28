@@ -16,10 +16,8 @@ document.getElementById("login-fetch-button").addEventListener("click", () => {
         .then(response => {
             if (response.ok) response.json()
                 .then(accesstoken => {
-                    alert("로그인 성공")
-                    alert(accesstoken)
-                    alert(accesstoken.token)
-                    localStorage.setItem("JWT", accesstoken.token)
+                    sessionStorage.setItem("JWT", accesstoken.token)
+
                     window.location.href = "/views/main";
                 })
              else {

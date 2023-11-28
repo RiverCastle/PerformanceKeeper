@@ -17,7 +17,8 @@ public enum CustomErrorCode {
     ALREADY_LOGOUT(ALREADY_REPORTED, "로그아웃 되었습니다."),
     NOT_FOUND_USER(NOT_FOUND, "존재하지 않는 유저입니다."),
     NOT_FOUND_COURSE(NOT_FOUND, "존재하지 않는 강의실입니다."),
-    JOINCODE_MISMATCH(BAD_REQUEST, "가입코드를 확인해주세요.");
+    JOINCODE_MISMATCH(BAD_REQUEST, "가입코드를 확인해주세요."),
+    NOT_MANAGER(UNAUTHORIZED, "강의실 매니저만 사용할 수 있는 기능입니다.");
     private final HttpStatus httpStatus;
     private final String messagge;
 }

@@ -17,7 +17,7 @@ public class TokenService {
     private final RefreshTokenService refreshTokenService;
 
     public String issueAccessToken(LoginRequestDto loginRequestDto) {
-        UserEntity user = userRepository.findByUsername(loginRequestDto.getUsername())
+        UserEntity user = userRepository.findByUsernameAndDeletedAtIsNull(loginRequestDto.getUsername())
                 .orElseThrow(() -> new CustomException(CustomErrorCode.LOGIN_FAILED_NOT_FOUND_USER));
         if (!passwordEncoder.matches(loginRequestDto.getPassword(), user.getEncodedPW()))
             throw new CustomException(CustomErrorCode.LOGIN_FAILED_PASSWORD_MISMATCH);

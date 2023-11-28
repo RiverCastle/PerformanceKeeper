@@ -3,14 +3,9 @@ package com.example.performancekeeper.api.users;
 import com.example.performancekeeper.api.common.exception.CustomErrorCode;
 import com.example.performancekeeper.api.common.exception.CustomException;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
-
-import java.time.Instant;
-import java.time.LocalDateTime;
 
 @Service
 @RequiredArgsConstructor
@@ -27,7 +22,7 @@ public class UserService {
     }
 
     private void checkUsername(String username) {
-        if (userRepository.findByUsername(username).isPresent()) throw new CustomException(CustomErrorCode.USERNAME_DUPLICATED);
+        if (userRepository.findByUsernameAndDeletedAtIsNull(username).isPresent()) throw new CustomException(CustomErrorCode.USERNAME_DUPLICATED);
     }
 
     private void checkPassword(UserCreateDto userCreateDto) {

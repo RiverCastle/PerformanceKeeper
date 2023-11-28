@@ -13,13 +13,20 @@ document.getElementById("login-fetch-button").addEventListener("click", () => {
             "password": password
         })
     })
-        .then(response => response.json())
-        .then(body => {
-            const jwt = body.token;
-            sessionStorage.setItem("JWT", jwt);
-            window.location.href = '/views/main';
-        })
-        .catch(error => {
-            alert(error.message)
+        .then(response => {
+            if (response.ok) response.json()
+                .then(accesstoken => {
+                    alert("로그인 성공")
+                    alert(accesstoken)
+                    alert(accesstoken.token)
+                    localStorage.setItem("JWT", accesstoken.token)
+                    window.location.href = "/views/main";
+                })
+             else {
+                response.json().then(error => {
+                    alert(error.message);
+                    console.log(error.message);
+                })
+            }
         })
 });

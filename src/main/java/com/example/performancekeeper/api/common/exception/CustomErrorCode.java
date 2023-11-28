@@ -4,8 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import org.springframework.http.HttpStatus;
 
-import static org.springframework.http.HttpStatus.ALREADY_REPORTED;
-import static org.springframework.http.HttpStatus.UNAUTHORIZED;
+import static org.springframework.http.HttpStatus.*;
 
 @Getter
 @AllArgsConstructor
@@ -15,7 +14,8 @@ public enum CustomErrorCode {
     LOGIN_FAILED_NOT_FOUND_USER(HttpStatus.NOT_FOUND, "아이디를 확인해주세요."),
     LOGIN_FAILED_PASSWORD_MISMATCH(HttpStatus.BAD_REQUEST, "비밀번호를 확인해주세요."),
     RELOGIN_NEEDED(UNAUTHORIZED, "보안을 위해 자동 로그아웃 되었습니다. 재로그인을 해주세요."),
-    ALREADY_LOGOUT(ALREADY_REPORTED, "로그아웃 되었습니다.");
+    ALREADY_LOGOUT(ALREADY_REPORTED, "로그아웃 되었습니다."),
+    NOT_FOUND_USER(NOT_FOUND, "존재하지 않는 유저입니다.");
     private final HttpStatus httpStatus;
     private final String messagge;
 }

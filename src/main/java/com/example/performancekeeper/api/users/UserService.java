@@ -35,4 +35,8 @@ public class UserService {
         String password2 = userCreateDto.getPasswordCheck();
         if (!password1.equals(password2)) throw new CustomException(CustomErrorCode.PASSWORD_CHECK_MISMATCH);
     }
+
+    public UserEntity checkUserEntity(Long userId) {
+        return userRepository.findById(userId).orElseThrow(() -> new CustomException(CustomErrorCode.NOT_FOUND_USER));
+    }
 }

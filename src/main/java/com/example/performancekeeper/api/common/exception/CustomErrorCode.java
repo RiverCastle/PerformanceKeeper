@@ -15,7 +15,9 @@ public enum CustomErrorCode {
     LOGIN_FAILED_PASSWORD_MISMATCH(HttpStatus.BAD_REQUEST, "비밀번호를 확인해주세요."),
     RELOGIN_NEEDED(UNAUTHORIZED, "보안을 위해 자동 로그아웃 되었습니다. 재로그인을 해주세요."),
     ALREADY_LOGOUT(ALREADY_REPORTED, "로그아웃 되었습니다."),
-    NOT_FOUND_USER(NOT_FOUND, "존재하지 않는 유저입니다.");
+    NOT_FOUND_USER(NOT_FOUND, "존재하지 않는 유저입니다."),
+    NOT_FOUND_COURSE(NOT_FOUND, "존재하지 않는 강의실입니다."),
+    JOINCODE_MISMATCH(BAD_REQUEST, "가입코드를 확인해주세요.");
     private final HttpStatus httpStatus;
     private final String messagge;
 }

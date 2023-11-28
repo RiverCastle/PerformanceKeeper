@@ -1,5 +1,7 @@
 package com.example.performancekeeper.api.course;
 
+import com.example.performancekeeper.api.common.exception.CustomErrorCode;
+import com.example.performancekeeper.api.common.exception.CustomException;
 import com.example.performancekeeper.api.member.MemberService;
 import com.example.performancekeeper.api.users.UserEntity;
 import com.example.performancekeeper.api.users.UserService;
@@ -31,5 +33,9 @@ public class CourseService {
         List<CourseOverviewDto> result = new ArrayList<>();
         for (CourseEntity entity : courseEntities) result.add(CourseOverviewDto.fromEntity(entity));
         return result;
+    }
+
+    public CourseEntity checkCourseEntity(Long courseId) {
+        return courseRepository.findById(courseId).orElseThrow(() -> new CustomException(CustomErrorCode.NOT_FOUND_COURSE));
     }
 }

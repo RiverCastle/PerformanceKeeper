@@ -21,4 +21,11 @@ public class CourseController {
     public List<CourseOverviewDto> getCourseList(@RequestParam(value = "keyword", defaultValue = "") String keyword) {
         return courseService.searchCourse(keyword);
     }
+
+    @GetMapping("/myCourse")
+    public List<MyCourseOverviewDto> getMyCourses(Authentication authentication) {
+        Long userId = Long.parseLong(authentication.getName());
+        return courseService.getMyCourses(userId);
+    }
+
 }

@@ -1,6 +1,8 @@
 package com.example.performancekeeper.api.course;
 
+import com.example.performancekeeper.api.member.MemberEntity;
 import com.example.performancekeeper.api.member.MemberService;
+import com.example.performancekeeper.api.task.TaskService;
 import com.example.performancekeeper.api.users.UserEntity;
 import com.example.performancekeeper.api.users.UserService;
 import jakarta.transaction.Transactional;
@@ -19,6 +21,7 @@ public class CourseService {
     private final CourseRepository courseRepository;
     private final MemberService memberService;
     private final UserService userService;
+    private final TaskService taskService;
 
     @Transactional
     public void createCourse(Long userId, CourseCreateDto courseCreateDto) {
@@ -34,5 +37,19 @@ public class CourseService {
         List<CourseOverviewDto> result = new ArrayList<>();
         for (CourseEntity entity : courseEntities) result.add(CourseOverviewDto.fromEntity(entity));
         return result;
+    }
+
+    public List<MyCourseOverviewDto> getMyCourses(Long userId) {
+        UserEntity user = userService.checkUserEntity(userId);
+        List<MemberEntity> myMembers = memberService.getMyMember(user);
+        List<MyCourseOverviewDto> myCoursesDtoList = new ArrayList<>();
+        for (MemberEntity memberEntity : myMembers) {
+            CourseEntity course = memberEntity.getCourse();
+            MyCourseOverviewDto myCourseOverviewDto = new MyCourseOverviewDto(course.getId(), course.getName(), memberEntity.getRole());
+            if (memberEntity.getRole().equals("Student"))
+                myCourseOverviewDto.setProgress(taskService.getProgress(memberEntity));
+            myCoursesDtoList.add(myCourseOverviewDto);
+        }
+        return myCoursesDtoList;
     }
 }

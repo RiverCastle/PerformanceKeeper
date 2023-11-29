@@ -1,10 +1,8 @@
 package com.example.performancekeeper.api.task;
 
 import com.example.performancekeeper.api.course.CourseEntity;
-import com.example.performancekeeper.api.course.CourseService;
 import com.example.performancekeeper.api.course.CourseServiceImpl;
 import com.example.performancekeeper.api.member.MemberEntity;
-import com.example.performancekeeper.api.member.MemberService;
 import com.example.performancekeeper.api.member.MemberServiceImpl;
 import com.example.performancekeeper.api.users.UserEntity;
 import com.example.performancekeeper.api.users.UserService;
@@ -46,5 +44,13 @@ public class TaskService {
             assignedTaskEntity.setMember(studentMemberEntity);
             assignedTaskRepository.save(assignedTaskEntity);
         }
+    }
+
+    public int getProgress(MemberEntity member) {
+        List<AssignedTaskEntity> assignedTaskEntityList = assignedTaskRepository.findAllByMemberAndDeletedAtIsNull(member);
+        int completed = 0;
+        for (AssignedTaskEntity assignedTaskEntity : assignedTaskEntityList) if (assignedTaskEntity.getStatus().equals("완료")) completed++;
+        int all = assignedTaskEntityList.size();
+        return completed * 100 / all;
     }
 }

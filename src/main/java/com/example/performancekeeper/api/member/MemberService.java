@@ -14,6 +14,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class MemberService {
@@ -34,5 +36,9 @@ public class MemberService {
             throw new CustomException(CustomErrorCode.JOINCODE_MISMATCH);
         MemberEntity memberEntity = memberRepository.save(new MemberEntity(user, course, "Student"));
         taskService.assignTasksToNewStudent(course, memberEntity); // 새 학생에게 기존의 과제물 부여
+    }
+
+    public List<MemberEntity> getMyMember(UserEntity user) {
+        return memberRepository.findAllByUserAndDeletedAtIsNull(user);
     }
 }

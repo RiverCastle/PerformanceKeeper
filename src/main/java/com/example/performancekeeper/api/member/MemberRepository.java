@@ -10,6 +10,7 @@ import java.util.Optional;
 
 @Repository
 public interface MemberRepository extends JpaRepository<MemberEntity, Long> {
+    List<MemberEntity> findAllByUserAndDeletedAtIsNull(UserEntity user);
     List<MemberEntity> findAllByCourseAndRoleAndDeletedAtIsNull(CourseEntity course, String role);
     Optional<MemberEntity> findByUserAndCourseAndRoleAndDeletedAtIsNull(UserEntity user, CourseEntity course, String role);
 

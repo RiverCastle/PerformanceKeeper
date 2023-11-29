@@ -18,8 +18,10 @@ fetch('/api/course/myCourse', {
 
                 // course name
                 const course_name_cell = document.createElement('tr');
-                course_name_cell.href = '/views/course/' + course_id;
-                course_name_cell.textContent = course.name;
+                const course_link = document.createElement('a');
+                course_link.href = '/views/course/' + course_id;
+                course_link.textContent = course.name;
+                course_name_cell.appendChild(course_link);
                 course_table.appendChild(course_name_cell);
 
                 // role

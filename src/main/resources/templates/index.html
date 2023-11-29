@@ -15,8 +15,15 @@
             color: #333;
         }
 
+        #my-courses-wrapper {
+            display: flex; /* 테이블들을 가로로 나열하기 위해 flex 속성 사용 */
+            flex-wrap: wrap; /* 테이블이 화면 크기를 벗어나면 다음 줄로 넘어감 */
+            gap: 10px; /* 테이블들 간의 여백 설정 */
+        }
+
         #my-courses-wrapper > table {
-            width: 15%;
+            width: 10%;
+            padding: 10px;
             text-align: center;
             border: black solid;
         }

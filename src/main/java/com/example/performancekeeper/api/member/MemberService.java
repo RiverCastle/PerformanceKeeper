@@ -32,7 +32,7 @@ public class MemberService {
     public void createStudentMember(Long userId, Long courseId, JoinCourseDto joinCourseDto) {
         UserEntity user = userService.checkUserEntity(userId);
         CourseEntity course = courseServiceImpl.checkCourseEntity(courseId);
-        if (!passwordEncoder.matches(joinCourseDto.getJoinCode(), course.getJoinCode()))
+        if (!course.getJoinCode().equals(passwordEncoder.encode(joinCourseDto.getJoinCode())))
             throw new CustomException(CustomErrorCode.JOINCODE_MISMATCH);
         MemberEntity memberEntity = memberRepository.save(new MemberEntity(user, course, "Student"));
         taskService.assignTasksToNewStudent(course, memberEntity); // 새 학생에게 기존의 과제물 부여

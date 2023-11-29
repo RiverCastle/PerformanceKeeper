@@ -27,7 +27,7 @@ public class ViewController {
     @GetMapping("/main")
     public String mainPage() {
         log.info("to main page");
-        return "service-main";
+        return "index";
     }
 
     @GetMapping("/course-create-page")

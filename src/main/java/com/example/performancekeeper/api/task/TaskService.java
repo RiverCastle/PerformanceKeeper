@@ -51,6 +51,6 @@ public class TaskService {
         int completed = 0;
         for (AssignedTaskEntity assignedTaskEntity : assignedTaskEntityList) if (assignedTaskEntity.getStatus().equals("완료")) completed++;
         int all = assignedTaskEntityList.size();
-        return completed * 100 / all;
+        return all == 0 ? 0 : completed * 100 / all;
     }
 }

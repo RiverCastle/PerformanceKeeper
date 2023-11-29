@@ -8,6 +8,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDate;
 @Entity
 @Getter
 @Setter
@@ -17,26 +18,8 @@ public class TaskEntity extends BaseTimeEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
-    private String status;
     private String desc;
+    private LocalDate startAt;
     @ManyToOne
     private CourseEntity course;
-    @ManyToOne
-    private MemberEntity member;
-
-    public TaskEntity(String name, String status, String desc, CourseEntity course) {
-        this.name = name;
-        this.status = status;
-        this.desc = desc;
-        this.course = course;
-    }
-
-    public static TaskEntity fromEntity(TaskEntity entity) {
-        return new TaskEntity(
-                entity.getName(),
-                entity.getStatus(),
-                entity.desc,
-                entity.getCourse());
-
-    }
 }

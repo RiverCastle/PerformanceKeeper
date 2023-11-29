@@ -8,6 +8,7 @@ import com.example.performancekeeper.api.member.MemberService;
 import com.example.performancekeeper.api.member.MemberServiceImpl;
 import com.example.performancekeeper.api.users.UserEntity;
 import com.example.performancekeeper.api.users.UserService;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -17,6 +18,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class TaskService {
     private final TaskRepository taskRepository;
+    private final AssignedTaskRepository assignedTaskRepository;
     private final UserService userService;
     private final CourseServiceImpl courseServiceImpl;
     private final MemberServiceImpl memberServiceImpl;
@@ -24,22 +26,25 @@ public class TaskService {
     public void assignTasksToNewStudent(CourseEntity course, MemberEntity memberEntity) {
         List<TaskEntity> existingTasks = taskRepository.findAllByCourseAndDeletedAtIsNull(course);
         for (TaskEntity existingTask : existingTasks) {
-            TaskEntity newTaskEntity = TaskEntity.fromEntity(existingTask);
+            AssignedTaskEntity newTaskEntity = AssignedTaskEntity.fromTaskEntity(existingTask);
             newTaskEntity.setMember(memberEntity);
-            taskRepository.save(newTaskEntity);
+            assignedTaskRepository.save(newTaskEntity);
         }
     }
+    @Transactional
     public void createTask(Long userId, Long courseId, TaskCreateDto taskCreateDto) {
         UserEntity user = userService.checkUserEntity(userId);
         CourseEntity course = courseServiceImpl.checkCourseEntity(courseId);
         memberServiceImpl.checkManagerMember(user, course);
-        List<MemberEntity> studentsOfThisCourse = memberServiceImpl.getAllStudentsOfThisCourse(course);
+        TaskEntity taskEntity = TaskCreateDto.toEntity(taskCreateDto);
+        taskEntity.setCourse(course);
+        taskEntity = taskRepository.save(taskEntity);
+
+        List<MemberEntity> studentsOfThisCourse = memberServiceImpl.getAllStudentsOfThisCourse(course); // 기존 학생들에게 부여
         for (MemberEntity studentMemberEntity : studentsOfThisCourse) {
-            TaskEntity taskEntity = TaskCreateDto.toEntity(taskCreateDto);
-            taskEntity.setMember(studentMemberEntity);
-            taskEntity.setCourse(course);
-            taskEntity.setStatus("등록");
-            taskRepository.save(taskEntity);
+            AssignedTaskEntity assignedTaskEntity = AssignedTaskEntity.fromTaskEntity(taskEntity);
+            assignedTaskEntity.setMember(studentMemberEntity);
+            assignedTaskRepository.save(assignedTaskEntity);
         }
     }
 }

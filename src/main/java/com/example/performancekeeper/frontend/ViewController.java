@@ -41,4 +41,10 @@ public class ViewController {
         log.info("to course-list-page");
         return "course-list-page";
     }
+
+    @GetMapping("/course/{courseId}/task-create-page")
+    public String taskCreatePage() {
+        log.info("to task create page");
+        return "task-create-page";
+    }
 }

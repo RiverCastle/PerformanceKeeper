@@ -40,7 +40,7 @@ search_button.addEventListener("click", () => {
                 courseJoinButton.name = "가입하기";
                 courseJoinButton.addEventListener('click', () => {
                     const joinCode = prompt('해당 팀의 참여코드를 입력하세요 :');
-                    fetch('/api/team/' + courseId + '/member', {
+                    fetch('/api/course/' + courseId + '/member', {
                         headers: {
                             "Authorization": auth,
                             'Content-Type': 'application/json'
@@ -51,10 +51,12 @@ search_button.addEventListener("click", () => {
                         })
                     })
                         .then(response => {
-                            if (response.ok) window.location.href = '/views/team/' + courseId;
-                        })
-                        .catch(error => {
-                            alert(error.message);
+                            if (response.ok) window.location.href = '/views/course/' + courseId;
+                            else {
+                                response.json().then(error => {
+                                    alert(error.message);
+                                })
+                            }
                         })
                 })
 

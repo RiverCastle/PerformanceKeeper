@@ -10,6 +10,8 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -52,5 +54,31 @@ public class TaskService {
         for (AssignedTaskEntity assignedTaskEntity : assignedTaskEntityList) if (assignedTaskEntity.getStatus().equals("완료")) completed++;
         int all = assignedTaskEntityList.size();
         return all == 0 ? 0 : completed * 100 / all;
+    }
+
+    public List<AssignedTaskOverviewDto>[] searchTasksByKeyword(Long userId, Long courseId, String keyword) {
+        UserEntity user = userService.checkUserEntity(userId);
+        CourseEntity course = courseServiceImpl.checkCourseEntity(courseId);
+        MemberEntity member = memberServiceImpl.checkStudentMember(user, course);
+        List<AssignedTaskEntity> assignedTaskEntityList = assignedTaskRepository.findAllByMemberAndNameContainingAndDeletedAtIsNull(member, keyword);
+        return sortByStatus(assignedTaskEntityList);
+    }
+
+    public List<AssignedTaskOverviewDto>[] searchTasksByDate(Long userId, Long courseId, LocalDate date) {
+        UserEntity user = userService.checkUserEntity(userId);
+        CourseEntity course = courseServiceImpl.checkCourseEntity(courseId);
+        MemberEntity member = memberServiceImpl.checkStudentMember(user, course);
+        List<AssignedTaskEntity> assignedTaskEntityList = assignedTaskRepository.findAllByMemberAndStartAtAndDeletedAtIsNull(member, date);
+        return sortByStatus(assignedTaskEntityList);
+    }
+
+    private List<AssignedTaskOverviewDto>[] sortByStatus(List<AssignedTaskEntity> entityList) {
+        List<AssignedTaskOverviewDto>[] result = new ArrayList[] {new ArrayList(), new ArrayList()};
+
+        for (AssignedTaskEntity entity : entityList) {
+            if (entity.getStatus().equals("완료")) result[0].add(AssignedTaskOverviewDto.fromEntity(entity));
+            else result[1].add(AssignedTaskOverviewDto.fromEntity(entity));
+        }
+        return result;
     }
 }

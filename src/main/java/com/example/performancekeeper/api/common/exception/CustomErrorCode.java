@@ -18,7 +18,8 @@ public enum CustomErrorCode {
     NOT_FOUND_USER(NOT_FOUND, "존재하지 않는 유저입니다."),
     NOT_FOUND_COURSE(NOT_FOUND, "존재하지 않는 강의실입니다."),
     JOINCODE_MISMATCH(BAD_REQUEST, "가입코드를 확인해주세요."),
-    NOT_MANAGER(UNAUTHORIZED, "강의실 매니저만 사용할 수 있는 기능입니다.");
+    NOT_MANAGER(UNAUTHORIZED, "강의실 매니저만 사용할 수 있는 기능입니다."),
+    NOT_STUDENT(UNAUTHORIZED, "해당 강의실에 입실한 학생이 아닙니다."), BAD_SEARCH_CONDITION(BAD_REQUEST, "검색조건에 문제가 있습니다.");
     private final HttpStatus httpStatus;
     private final String messagge;
 }

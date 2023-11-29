@@ -22,4 +22,8 @@ public class MemberServiceImpl {
         return memberRepository.findAllByCourseAndRoleAndDeletedAtIsNull(course, "Student");
     }
 
+    public MemberEntity checkStudentMember(UserEntity user, CourseEntity course) {
+        return memberRepository.findByUserAndCourseAndRoleAndDeletedAtIsNull(user, course, "Student")
+                .orElseThrow(() -> new CustomException(CustomErrorCode.NOT_STUDENT));
+    }
 }

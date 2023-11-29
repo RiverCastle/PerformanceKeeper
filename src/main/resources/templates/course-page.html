@@ -1,10 +1,108 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>강의실 페이지</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Bootstrap demo</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        #task-date-search, #task-keyword-search {
+            display: inline-block;
+        }
+
+        #task-date-search {
+            width: 50%;
+            height: fit-content;
+        }
+
+        #task-date-search-input {
+            width: 30%;
+        }
+
+        #task-keyword-search {
+            width: 25%;
+        }
+
+        #uncompleted-tasks-wrapper, #completed-tasks-wrapper {
+            display: flex; /* 테이블들을 가로로 나열하기 위해 flex 속성 사용 */
+            flex-wrap: wrap; /* 테이블이 화면 크기를 벗어나면 다음 줄로 넘어감 */
+            gap: 10px; /* 테이블들 간의 여백 설정 */
+        }
+
+        #uncompleted-tasks-wrapper, #completed-tasks-wrapper > table {
+            width: 10%;
+            padding: 10px;
+            text-align: center;
+        }
+
+        #uncompleted-tasks-wrapper > table {
+            border: red solid;
+        }
+
+        hr[task-separating-border] {
+            width: 100%;
+            border: black dot-dash;
+        }
+
+        #completed-tasks-wrapper > table{
+            border: black solid;
+        }
+
+        #uncompleted-tasks-wrapper, #completed-tasks-wrapper > table > tr > a {
+            text-decoration: none; /* 밑줄 제거 */
+            cursor: pointer; /* 커서 모양을 포인터로 변경하여 클릭할 수 있음을 나타냄 */
+        }
+
+    </style>
 </head>
 <body>
-강의실 페이지입니다.
+<nav class="navbar navbar-expand-lg bg-body-tertiary">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="/views/main">Home</a>
+        <h1>강의실 이름</h1>
+        <div>
+            <button id="course-leave-button">강의실 나가기</button>
+            <button id="logout-button">로그아웃</button>
+        </div>
+    </div>
+</nav>
+
+<div>
+    <div id="task-date-search">
+        <label for="task-date-search-input">날짜로 과제 검색하기:</label><input id="task-date-search-input" type="date">
+        <button class="btn btn-outline-success">GO</button>
+    </div>
+    <div id="task-keyword-search">
+        <label for="task-keyword-search-input">검색어로 과제 검색하기:</label><input id="task-keyword-search-input" type="text"
+                                                                           placeholder="keyword">
+        <button class="btn btn-outline-success">GO</button>
+    </div>
+</div>
+
+<div id="uncompleted-tasks-wrapper"></div>
+
+<hr id="task-separating-border">
+
+<div id="completed-tasks-wrapper"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
+        crossorigin="anonymous"></script>
+<script src="/js/get-auth.js"></script>
+<script src="/js/get-current-date.js"></script>
+<script src="/js/leave-course-fetch.js"></script>
+<script src="/js/logout-fetch.js"></script>
+<script src="/js/get-tasks-with-date.js"></script>
+<script src="/js/get-tasks-with-keyword.js"></script>
 </body>
 </html>

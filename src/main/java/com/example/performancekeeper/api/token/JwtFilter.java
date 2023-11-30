@@ -1,9 +1,7 @@
 package com.example.performancekeeper.api.token;
 
-import com.example.performancekeeper.api.common.exception.CustomErrorCode;
-import com.example.performancekeeper.api.common.exception.CustomException;
 import com.example.performancekeeper.api.users.UserEntity;
-import com.example.performancekeeper.api.users.UserRepository;
+import com.example.performancekeeper.api.users.UserServiceImpl;
 import io.jsonwebtoken.ExpiredJwtException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -22,9 +20,10 @@ import java.util.Optional;
 @Component
 @RequiredArgsConstructor
 public class JwtFilter extends OncePerRequestFilter {
-    private final UserRepository userRepository;
+    private final UserServiceImpl userServiceImpl;
     private final TokenProvider tokenProvider;
     private final RefreshTokenService refreshTokenService;
+
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         String authHeader = request.getHeader(HttpHeaders.AUTHORIZATION);
@@ -47,11 +46,13 @@ public class JwtFilter extends OncePerRequestFilter {
             tokenProvider.validToken(accessToken);
         } catch (ExpiredJwtException e) { // 엑세스 토큰이 만료된 경우 => Refresh 토큰 조회
             RefreshTokenEntity refreshToken = optionalRefreshTokenEntity.get();
-            if (tokenProvider.validateRefreshToken(refreshToken.getRefreshToken())) { // Refresh 토큰이 유효한 경우
-                UserEntity user = userRepository.findById(refreshToken.getUserId()).orElseThrow(() -> new CustomException(CustomErrorCode.LOGIN_FAILED_NOT_FOUND_USER));
+            try {
+                tokenProvider.validateRefreshToken(refreshToken.getRefreshToken());  // Refresh 토큰이 유효한 경우
+                UserEntity user = userServiceImpl.checkUserEntity(refreshToken.getUserId());
                 accessToken = tokenProvider.createAccessToken(user); // 새 엑세스 토큰 생성
                 refreshTokenService.saveNewAccessTokenInRefreshToken(accessToken, refreshToken);
-            } else { // Refresh 토큰이 무효한 경우
+            } catch (ExpiredJwtException exception) { // Refresh 토큰이 무효한 경우
+                response.sendRedirect("/views/login");
                 filterChain.doFilter(request, response);
                 return;
             }

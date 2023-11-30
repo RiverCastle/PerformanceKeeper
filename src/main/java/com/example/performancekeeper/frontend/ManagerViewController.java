@@ -23,8 +23,13 @@ public class ManagerViewController {
         return "/manager/course-create-page";
     }
 
+    @GetMapping("/course/{courseId}")
+    public String managerCoursePage() {
+        return "/manager/course-page";
+    }
+
     @GetMapping("/course/{courseId}/task-create-page")
     public String taskCreatePage() {
-        return "/resources/templates/manager/task-create-page.html";
+        return "/manager/task-create-page.html";
     }
 }

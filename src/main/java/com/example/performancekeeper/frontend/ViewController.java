@@ -30,12 +30,6 @@ public class ViewController {
         return "index";
     }
 
-    @GetMapping("/course-create-page")
-    public String courseCreatePage(Authentication authentication) {
-        log.info("to Course Create Page");
-        return "course-create-page";
-    }
-
     @GetMapping("/course-list-page")
     public String courseListPage() {
         log.info("to course-list-page");

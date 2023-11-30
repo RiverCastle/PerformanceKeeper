@@ -1,5 +1,6 @@
 package com.example.performancekeeper.frontend;
 
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,5 +17,10 @@ public class ManagerViewController {
     @GetMapping("/main")
     public String managerMainPage() {
         return "/manager/index";
+    }
+
+    @GetMapping("/course-create-page")
+    public String courseCreatePage() {
+        return "/manager/course-create-page";
     }
 }

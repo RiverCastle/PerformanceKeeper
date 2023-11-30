@@ -32,4 +32,13 @@ public class TaskController {
         Long userId = Long.parseLong(authentication.getName());
         taskService.createTask(userId, courseId, taskCreateDto);
     }
+
+    @PutMapping("/{taskId}")
+    public void updateTaskStatus(Authentication authentication,
+                                 @PathVariable("courseId") Long courseId,
+                                 @PathVariable("taskId") Long taskId,
+                                 @RequestBody TaskStatusDto taskStatusDto) {
+        Long userId = Long.parseLong(authentication.getName());
+        taskService.updateTaskStatus(userId, courseId, taskId, taskStatusDto);
+    }
 }

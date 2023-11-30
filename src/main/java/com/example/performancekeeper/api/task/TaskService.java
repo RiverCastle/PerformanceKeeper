@@ -1,5 +1,7 @@
 package com.example.performancekeeper.api.task;
 
+import com.example.performancekeeper.api.common.exception.CustomErrorCode;
+import com.example.performancekeeper.api.common.exception.CustomException;
 import com.example.performancekeeper.api.course.CourseEntity;
 import com.example.performancekeeper.api.course.CourseServiceImpl;
 import com.example.performancekeeper.api.member.MemberEntity;
@@ -80,5 +82,15 @@ public class TaskService {
             else result[1].add(AssignedTaskOverviewDto.fromEntity(entity));
         }
         return result;
+    }
+
+    public void updateTaskStatus(Long userId, Long courseId, Long taskId, TaskStatusDto taskStatusDto) {
+        UserEntity user = userService.checkUserEntity(userId);
+        CourseEntity course = courseServiceImpl.checkCourseEntity(courseId);
+        MemberEntity member = memberServiceImpl.checkStudentMember(user, course);
+        AssignedTaskEntity assignedTask = assignedTaskRepository.findById(taskId).orElseThrow(() -> new CustomException(CustomErrorCode.NOT_FOUND_TASK));
+        if (!assignedTask.getMember().equals(member)) throw new CustomException(CustomErrorCode.NO_AUTHORIZATION);
+        assignedTask.setStatus(taskStatusDto.getSelectedStatus());
+        assignedTaskRepository.save(assignedTask);
     }
 }

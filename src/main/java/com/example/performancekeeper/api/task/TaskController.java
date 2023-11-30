@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
 
 
@@ -17,13 +18,11 @@ public class TaskController {
     private final TaskService taskService;
 
     @GetMapping
-    public List<AssignedTaskOverviewDto>[] getTasksByKeyword(Authentication authentication,
-                                                             @PathVariable("courseId") Long courseId,
-                                                             @RequestBody TaskSearchDto taskSearchDto) {
+    public List<AssignedTaskOverviewDto>[] getTasksByDate(Authentication authentication,
+                                                          @PathVariable("courseId") Long courseId,
+                                                          @RequestParam("date") LocalDate date) {
         Long userId = Long.parseLong(authentication.getName());
-        if (taskSearchDto.getCondition().equals("keyword")) return taskService.searchTasksByKeyword(userId, courseId, taskSearchDto.getKeyword());
-        else if (taskSearchDto.getCondition().equals("date")) return taskService.searchTasksByDate(userId, courseId, taskSearchDto.getDate());
-        else throw new CustomException(CustomErrorCode.BAD_SEARCH_CONDITION);
+        return taskService.searchTasksByDate(userId, courseId, date);
     }
     @PostMapping
     public void createTask(Authentication authentication,

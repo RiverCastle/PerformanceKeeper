@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Performance Keeper</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+    }
+
+    h1 {
+      color: #333;
+    }
+
+    #my-courses-wrapper {
+      display: flex; /* 테이블들을 가로로 나열하기 위해 flex 속성 사용 */
+      flex-wrap: wrap; /* 테이블이 화면 크기를 벗어나면 다음 줄로 넘어감 */
+      gap: 10px; /* 테이블들 간의 여백 설정 */
+    }
+
+    #my-courses-wrapper > table {
+      width: 10%;
+      padding: 10px;
+      text-align: center;
+      border: black solid;
+    }
+
+    #my-courses-wrapper > table > tr > a {
+      text-decoration: none; /* 밑줄 제거 */
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+<div></div>
+<h1>내가 개설한 강의 목록</h1>
+<button id="button-to-course-create-page">강의 개설하기</button>
+
+<div id="my-courses-wrapper"></div>
+<script src="/js/get-auth.js"></script>
+<script src="/js/manager/button-to-create-list-page.js"></script>
+<script src="/js/manager/my-course-fetch.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
+        crossorigin="anonymous"></script>
+</body>
+</html>

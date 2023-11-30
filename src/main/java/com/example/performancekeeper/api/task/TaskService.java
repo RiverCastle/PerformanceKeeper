@@ -7,7 +7,7 @@ import com.example.performancekeeper.api.course.CourseServiceImpl;
 import com.example.performancekeeper.api.member.MemberEntity;
 import com.example.performancekeeper.api.member.MemberServiceImpl;
 import com.example.performancekeeper.api.users.UserEntity;
-import com.example.performancekeeper.api.users.UserService;
+import com.example.performancekeeper.api.users.UserServiceImpl;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -21,7 +21,7 @@ import java.util.List;
 public class TaskService {
     private final TaskRepository taskRepository;
     private final AssignedTaskRepository assignedTaskRepository;
-    private final UserService userService;
+    private final UserServiceImpl userServiceImpl;
     private final CourseServiceImpl courseServiceImpl;
     private final MemberServiceImpl memberServiceImpl;
 
@@ -35,7 +35,7 @@ public class TaskService {
     }
     @Transactional
     public void createTask(Long userId, Long courseId, TaskCreateDto taskCreateDto) {
-        UserEntity user = userService.checkUserEntity(userId);
+        UserEntity user = userServiceImpl.checkUserEntity(userId);
         CourseEntity course = courseServiceImpl.checkCourseEntity(courseId);
         memberServiceImpl.checkManagerMember(user, course);
         TaskEntity taskEntity = TaskCreateDto.toEntity(taskCreateDto);
@@ -59,7 +59,7 @@ public class TaskService {
     }
 
     public List<AssignedTaskOverviewDto>[] searchTasksByKeyword(Long userId, Long courseId, String keyword) {
-        UserEntity user = userService.checkUserEntity(userId);
+        UserEntity user = userServiceImpl.checkUserEntity(userId);
         CourseEntity course = courseServiceImpl.checkCourseEntity(courseId);
         MemberEntity member = memberServiceImpl.checkStudentMember(user, course);
         List<AssignedTaskEntity> assignedTaskEntityList = assignedTaskRepository.findAllByMemberAndNameContainingAndDeletedAtIsNull(member, keyword);
@@ -67,7 +67,7 @@ public class TaskService {
     }
 
     public List<AssignedTaskOverviewDto>[] searchTasksByDate(Long userId, Long courseId, LocalDate date) {
-        UserEntity user = userService.checkUserEntity(userId);
+        UserEntity user = userServiceImpl.checkUserEntity(userId);
         CourseEntity course = courseServiceImpl.checkCourseEntity(courseId);
         MemberEntity member = memberServiceImpl.checkStudentMember(user, course);
         List<AssignedTaskEntity> assignedTaskEntityList = assignedTaskRepository.findAllByMemberAndStartAtAndDeletedAtIsNull(member, date);
@@ -85,7 +85,7 @@ public class TaskService {
     }
 
     public void updateTaskStatus(Long userId, Long courseId, Long taskId, TaskStatusDto taskStatusDto) {
-        UserEntity user = userService.checkUserEntity(userId);
+        UserEntity user = userServiceImpl.checkUserEntity(userId);
         CourseEntity course = courseServiceImpl.checkCourseEntity(courseId);
         MemberEntity member = memberServiceImpl.checkStudentMember(user, course);
         AssignedTaskEntity assignedTask = assignedTaskRepository.findById(taskId).orElseThrow(() -> new CustomException(CustomErrorCode.NOT_FOUND_TASK));

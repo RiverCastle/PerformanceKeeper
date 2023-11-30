@@ -7,7 +7,7 @@ import com.example.performancekeeper.api.course.CourseEntity;
 import com.example.performancekeeper.api.course.CourseServiceImpl;
 import com.example.performancekeeper.api.task.TaskService;
 import com.example.performancekeeper.api.users.UserEntity;
-import com.example.performancekeeper.api.users.UserService;
+import com.example.performancekeeper.api.users.UserServiceImpl;
 import jakarta.transaction.Transactional;
 
 import lombok.RequiredArgsConstructor;
@@ -20,7 +20,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class MemberService {
     private final MemberRepository memberRepository;
-    private final UserService userService;
+    private final UserServiceImpl userServiceImpl;
     private final CourseServiceImpl courseServiceImpl;
     private final BCryptPasswordEncoder passwordEncoder;
     private final TaskService taskService;
@@ -30,7 +30,7 @@ public class MemberService {
     }
     @Transactional
     public void createStudentMember(Long userId, Long courseId, JoinCourseDto joinCourseDto) {
-        UserEntity user = userService.checkUserEntity(userId);
+        UserEntity user = userServiceImpl.checkUserEntity(userId);
         CourseEntity course = courseServiceImpl.checkCourseEntity(courseId);
         if (!passwordEncoder.matches(joinCourseDto.getJoinCode(), course.getJoinCode()))
             throw new CustomException(CustomErrorCode.JOINCODE_MISMATCH);

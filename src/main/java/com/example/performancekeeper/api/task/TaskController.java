@@ -1,14 +1,13 @@
 package com.example.performancekeeper.api.task;
 
 
-import com.example.performancekeeper.api.common.exception.CustomErrorCode;
-import com.example.performancekeeper.api.common.exception.CustomException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Map;
 
 
 @RestController
@@ -17,12 +16,19 @@ import java.util.List;
 public class TaskController {
     private final TaskService taskService;
 
-    @GetMapping
-    public List<AssignedTaskOverviewDto>[] getTasksByDate(Authentication authentication,
-                                                          @PathVariable("courseId") Long courseId,
-                                                          @RequestParam("date") LocalDate date) {
+    @GetMapping("/my-progress")// 학생이 자신의 진행상황을 요청
+    public List<AssignedTaskOverviewDto>[] getCompletedTasksAndUncompletedTasksByDate(Authentication authentication,
+                                                                                      @PathVariable("courseId") Long courseId,
+                                                                                      @RequestParam("date") LocalDate date) {
         Long userId = Long.parseLong(authentication.getName());
-        return taskService.searchTasksByDate(userId, courseId, date);
+        return taskService.searchCompletedTasksAndUncompletedTasksByDate(userId, courseId, date);
+    }
+    @GetMapping("/course-progress")// 매니저가 과제명과 각 학생의 진행상황을 요청
+    public Map<String, Object> getTasksProgressesByDate(Authentication authentication,
+                                                            @PathVariable("courseId") Long courseId,
+                                                            @RequestParam("date") LocalDate startAt) {
+        Long userId = Long.parseLong(authentication.getName());
+        return taskService.getTasksAndProgressesByDate(userId, courseId, startAt);
     }
     @PostMapping
     public void createTask(Authentication authentication,

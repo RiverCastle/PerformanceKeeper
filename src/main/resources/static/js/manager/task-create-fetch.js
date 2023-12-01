@@ -29,7 +29,7 @@ function create_task() {
 }
 function getCourseIdFromURL() {
     const url = window.location.href;
-    const match = url.match(/\/views\/course\/(\d+)\/task/);
+    const match = url.match(/\/views\/manager\/course\/(\d+)\/task/);
     if (match) {
         return match[1];
     } else {

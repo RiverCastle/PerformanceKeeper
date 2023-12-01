@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/course/{courseId}/member")
 public class MemberController {
     private final MemberService memberService;
-    @PostMapping
+    @PostMapping// 강의실 입실
     public void createStudentMember(Authentication authentication,
                                     @PathVariable("courseId") Long courseId,
                                     @RequestBody JoinCourseDto joinCourseDto) {
@@ -17,7 +17,7 @@ public class MemberController {
         memberService.createStudentMember(userId, courseId, joinCourseDto);
     }
 
-    @DeleteMapping
+    @DeleteMapping// 강의실 퇴실
     public void leaveCourse(Authentication authentication,
                             @PathVariable("courseId") Long courseId) {
         Long userId = Long.parseLong(authentication.getName());

@@ -14,6 +14,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.*;
 
 @Service
@@ -135,5 +136,14 @@ public class TaskService {
         result.put("taskList", getTasksByDate(userId, courseId, startAt));
         result.put("progresses", getProgressesByDate(userId, courseId, startAt));
         return result;
+    }
+
+    public void deleteAssignedTasksOfLeavingStudent(MemberEntity member) {
+        LocalDateTime now = LocalDateTime.now();
+        List<AssignedTaskEntity> assignedTaskEntityListToBeDeleted = assignedTaskRepository.findAllByMemberAndDeletedAtIsNull(member);
+        for (AssignedTaskEntity assignedTaskEntity : assignedTaskEntityListToBeDeleted) {
+            assignedTaskEntity.setDeletedAt(now);
+            assignedTaskRepository.save(assignedTaskEntity);
+        }
     }
 }

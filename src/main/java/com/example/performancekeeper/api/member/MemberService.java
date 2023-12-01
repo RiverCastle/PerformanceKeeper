@@ -14,6 +14,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -28,6 +29,7 @@ public class MemberService {
     public void createManagerMember(UserEntity user, CourseEntity course) {
         memberRepository.save(new MemberEntity(user, course, "Manager"));
     }
+
     @Transactional
     public void createStudentMember(Long userId, Long courseId, JoinCourseDto joinCourseDto) {
         UserEntity user = userServiceImpl.checkUserEntity(userId);
@@ -40,5 +42,17 @@ public class MemberService {
 
     public List<MemberEntity> getMyMember(UserEntity user) {
         return memberRepository.findAllByUserAndDeletedAtIsNull(user);
+    }
+    @Transactional
+    public void deleteStudentMember(Long userId, Long courseId) {
+        UserEntity user = userServiceImpl.checkUserEntity(userId);
+        CourseEntity course = courseServiceImpl.checkCourseEntity(courseId);
+        MemberEntity member = memberRepository.findByUserAndCourseAndRoleAndDeletedAtIsNull(user, course, "Student")
+                .orElseThrow(() -> new CustomException(CustomErrorCode.NOT_STUDENT));
+
+        taskService.deleteAssignedTasksOfLeavingStudent(member); // 나가려는 유저에게 부여된 과제들 삭제처리
+        member.setDeletedAt(LocalDateTime.now());
+        memberRepository.save(member); // soft deletion
+
     }
 }

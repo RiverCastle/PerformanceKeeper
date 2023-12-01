@@ -16,4 +16,11 @@ public class MemberController {
         Long userId = Long.parseLong(authentication.getName());
         memberService.createStudentMember(userId, courseId, joinCourseDto);
     }
+
+    @DeleteMapping
+    public void leaveCourse(Authentication authentication,
+                            @PathVariable("courseId") Long courseId) {
+        Long userId = Long.parseLong(authentication.getName());
+        memberService.deleteStudentMember(userId, courseId);
+    }
 }

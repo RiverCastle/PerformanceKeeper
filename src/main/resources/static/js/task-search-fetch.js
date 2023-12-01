@@ -1,6 +1,6 @@
 const uncompleted_tasks_wrapper = document.getElementById("uncompleted-tasks-wrapper");
 const completed_tasks_wrapper = document.getElementById("completed-tasks-wrapper");
-const courseId = getCourseId()
+const course_id = getCourseId()
 
 function getCourseId() {
     const url = window.location.href;
@@ -18,7 +18,7 @@ task_search_btn.addEventListener('click', () => {
     completed_tasks_wrapper.innerText = '';
     const date_input = document.getElementById("task-date-search-input").value;
 
-    fetch('/api/course/' + courseId + '/task/my-progress?date=' + date_input, {
+    fetch('/api/course/' + course_id + '/task/my-progress?date=' + date_input, {
         headers: {
             'Authorization': auth
         },
@@ -39,7 +39,7 @@ task_search_btn.addEventListener('click', () => {
 
                 const task_name_cell = document.createElement('tr');
                 const task_link = document.createElement('a');
-                task_link.href = '/views/course/' + courseId + '/task/' + task_id;
+                task_link.href = '/views/course/' + course_id + '/task/' + task_id;
                 task_link.textContent = task_name;
                 task_name_cell.appendChild(task_link);
                 task_table.appendChild(task_name_cell);
@@ -81,7 +81,7 @@ task_search_btn.addEventListener('click', () => {
                         var selectedStatus = menuItem;
 
                         // 여기서 Fetch API 호출을 수행
-                        fetch('/api/course/' + courseId + '/task/' + task_id, {
+                        fetch('/api/course/' + course_id + '/task/' + task_id, {
                             headers: {
                                 'Authorization': auth,
                                 'Content-Type': 'application/json'
@@ -116,7 +116,7 @@ task_search_btn.addEventListener('click', () => {
 
                 const task_name_cell = document.createElement('tr');
                 const task_link = document.createElement('a');
-                task_link.href = '/views/course/' + courseId + '/task/' + task_id;
+                task_link.href = '/views/course/' + course_id + '/task/' + task_id;
                 task_link.textContent = task_name;
                 task_name_cell.appendChild(task_link);
                 task_table.appendChild(task_name_cell);
@@ -151,7 +151,7 @@ task_search_btn.addEventListener('click', () => {
                         var selectedStatus = menuItem;
 
                         // 여기서 Fetch API 호출을 수행
-                        fetch('/api/course/' + courseId + '/task/' + task_id, {
+                        fetch('/api/course/' + course_id + '/task/' + task_id, {
                             headers: {
                                 'Authorization': auth,
                                 'Content-Type': 'application/json'

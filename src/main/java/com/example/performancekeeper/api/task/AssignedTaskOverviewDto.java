@@ -15,6 +15,6 @@ public class AssignedTaskOverviewDto {
     }
 
     public static AssignedTaskOverviewDto fromEntity(AssignedTaskEntity entity) {
-        return new AssignedTaskOverviewDto(entity.getId(), entity.getName(), entity.getStatus());
+        return new AssignedTaskOverviewDto(entity.getId(), entity.getTask().getName(), entity.getStatus());
     }
 }

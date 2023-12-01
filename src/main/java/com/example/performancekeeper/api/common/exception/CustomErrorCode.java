@@ -20,7 +20,7 @@ public enum CustomErrorCode {
     JOINCODE_MISMATCH(BAD_REQUEST, "가입코드를 확인해주세요."),
     NOT_MANAGER(UNAUTHORIZED, "강의실 매니저만 사용할 수 있는 기능입니다."),
     NOT_STUDENT(UNAUTHORIZED, "해당 강의실에 입실한 학생이 아닙니다."), BAD_SEARCH_CONDITION(BAD_REQUEST, "검색조건에 문제가 있습니다."),
-    NOT_FOUND_TASK(NOT_FOUND, "해당 과제는 존재하지 않습니다."), NO_AUTHORIZATION(UNAUTHORIZED, "권한이 없습니다.");
+    NOT_FOUND_TASK(NOT_FOUND, "해당 과제는 존재하지 않습니다."), NO_AUTHORIZATION(UNAUTHORIZED, "권한이 없습니다."), ALREADY_JOIN(ALREADY_REPORTED, "이미 해당 강의실에 입실하였습니다.");
     private final HttpStatus httpStatus;
     private final String messagge;
 }

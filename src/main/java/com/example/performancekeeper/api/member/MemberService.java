@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -36,6 +37,8 @@ public class MemberService {
         CourseEntity course = courseServiceImpl.checkCourseEntity(courseId);
         if (!passwordEncoder.matches(joinCourseDto.getJoinCode(), course.getJoinCode()))
             throw new CustomException(CustomErrorCode.JOINCODE_MISMATCH);
+        Optional<MemberEntity> optionalMemberEntity = memberRepository.findByUserAndCourseAndRoleAndDeletedAtIsNull(user, course, "Student");
+        if (optionalMemberEntity.isPresent()) throw new CustomException(CustomErrorCode.ALREADY_JOIN);
         MemberEntity memberEntity = memberRepository.save(new MemberEntity(user, course, "Student"));
         taskService.assignTasksToNewStudent(course, memberEntity); // 새 학생에게 기존의 과제물 부여
     }

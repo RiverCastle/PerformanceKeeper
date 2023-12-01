@@ -5,6 +5,7 @@ import com.example.performancekeeper.api.common.exception.CustomException;
 import com.example.performancekeeper.api.course.CourseEntity;
 import com.example.performancekeeper.api.course.CourseServiceImpl;
 import com.example.performancekeeper.api.member.MemberEntity;
+import com.example.performancekeeper.api.member.MemberOverviewDto;
 import com.example.performancekeeper.api.member.MemberServiceImpl;
 import com.example.performancekeeper.api.users.UserEntity;
 import com.example.performancekeeper.api.users.UserServiceImpl;
@@ -13,8 +14,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor
@@ -25,7 +25,7 @@ public class TaskService {
     private final CourseServiceImpl courseServiceImpl;
     private final MemberServiceImpl memberServiceImpl;
 
-    public void assignTasksToNewStudent(CourseEntity course, MemberEntity memberEntity) {
+    public void assignTasksToNewStudent(CourseEntity course, MemberEntity memberEntity) { // 새 학생에게 기존의 과제들을 부여하기
         List<TaskEntity> existingTasks = taskRepository.findAllByCourseAndDeletedAtIsNull(course);
         for (TaskEntity existingTask : existingTasks) {
             AssignedTaskEntity newTaskEntity = AssignedTaskEntity.fromTaskEntity(existingTask);
@@ -53,24 +53,28 @@ public class TaskService {
     public int getProgress(MemberEntity member) {
         List<AssignedTaskEntity> assignedTaskEntityList = assignedTaskRepository.findAllByMemberAndDeletedAtIsNull(member);
         int completed = 0;
-        for (AssignedTaskEntity assignedTaskEntity : assignedTaskEntityList) if (assignedTaskEntity.getStatus().equals("완료")) completed++;
+        for (AssignedTaskEntity assignedTaskEntity : assignedTaskEntityList)
+            if (assignedTaskEntity.getStatus().equals("완료")) completed++;
         int all = assignedTaskEntityList.size();
         return all == 0 ? 0 : completed * 100 / all;
     }
 
-    public List<AssignedTaskOverviewDto>[] searchTasksByKeyword(Long userId, Long courseId, String keyword) {
-        UserEntity user = userServiceImpl.checkUserEntity(userId);
-        CourseEntity course = courseServiceImpl.checkCourseEntity(courseId);
-        MemberEntity member = memberServiceImpl.checkStudentMember(user, course);
-        List<AssignedTaskEntity> assignedTaskEntityList = assignedTaskRepository.findAllByMemberAndNameContainingAndDeletedAtIsNull(member, keyword);
-        return sortByStatus(assignedTaskEntityList);
-    }
+//    public List<AssignedTaskOverviewDto>[] searchTasksByKeyword(Long userId, Long courseId, String keyword) {
+//        UserEntity user = userServiceImpl.checkUserEntity(userId);
+//        CourseEntity course = courseServiceImpl.checkCourseEntity(courseId);
+//        MemberEntity member = memberServiceImpl.checkStudentMember(user, course);
+//        List<AssignedTaskEntity> assignedTaskEntityList = assignedTaskRepository.findAllByMemberAndNameContainingAndDeletedAtIsNull(member, keyword);
+//        return sortByStatus(assignedTaskEntityList);
+//    }
 
-    public List<AssignedTaskOverviewDto>[] searchTasksByDate(Long userId, Long courseId, LocalDate date) {
+    public List<AssignedTaskOverviewDto>[] searchCompletedTasksAndUncompletedTasksByDate(Long userId, Long courseId, LocalDate date) { // 학생이 날짜별 자신의 진행상황 조회
         UserEntity user = userServiceImpl.checkUserEntity(userId);
         CourseEntity course = courseServiceImpl.checkCourseEntity(courseId);
         MemberEntity member = memberServiceImpl.checkStudentMember(user, course);
-        List<AssignedTaskEntity> assignedTaskEntityList = assignedTaskRepository.findAllByMemberAndStartAtAndDeletedAtIsNull(member, date);
+        List<TaskEntity> taskList = taskRepository.findAllByCourseAndStartAtAndDeletedAtIsNull(course, date);
+        List<AssignedTaskEntity> assignedTaskEntityList = new ArrayList<>();
+        for (TaskEntity task : taskList)
+            assignedTaskEntityList.add(assignedTaskRepository.findByMemberAndTaskAndDeletedAtIsNull(member, task));
         return sortByStatus(assignedTaskEntityList);
     }
 
@@ -92,5 +96,44 @@ public class TaskService {
         if (!assignedTask.getMember().equals(member)) throw new CustomException(CustomErrorCode.NO_AUTHORIZATION);
         assignedTask.setStatus(taskStatusDto.getSelectedStatus());
         assignedTaskRepository.save(assignedTask);
+    }
+
+    public List<Object> getTasksByDate(Long userId, Long courseId, LocalDate startAt) {
+        UserEntity user = userServiceImpl.checkUserEntity(userId);
+        CourseEntity course = courseServiceImpl.checkCourseEntity(courseId);
+        memberServiceImpl.checkManagerMember(user, course);
+
+        List<Object> result = new ArrayList<>();
+        List<TaskEntity> taskEntityList =
+                taskRepository.findAllByCourseAndStartAtAndDeletedAtIsNull(course, startAt);
+        taskEntityList.sort(Comparator.comparing(TaskEntity::getCreatedAt).thenComparing(TaskEntity::getId)); // 생성순 정렬
+        for (TaskEntity taskEntity : taskEntityList) result.add(TaskOverviewDto.fromEntity(taskEntity));
+        return result;
+    }
+
+    public Map<MemberOverviewDto, List<AssignedTaskStatusDto>> getProgressesByDate(Long userId, Long courseId, LocalDate startAt) {
+        UserEntity user = userServiceImpl.checkUserEntity(userId);
+        CourseEntity course = courseServiceImpl.checkCourseEntity(courseId);
+        memberServiceImpl.checkManagerMember(user, course);
+        // ↑ 3줄 필요X
+
+        Map<MemberOverviewDto, List<AssignedTaskStatusDto>> result = new HashMap<>();
+        List<MemberEntity> studentsOfThisCourse = memberServiceImpl.getAllStudentsOfThisCourse(course);
+        for (MemberEntity student : studentsOfThisCourse) {
+            MemberOverviewDto key = MemberOverviewDto.fromEntity(student);
+            List<AssignedTaskEntity> assignedTaskEntityList = assignedTaskRepository.findAllByMemberAndDeletedAtIsNull(student);
+            List<AssignedTaskStatusDto> value = new ArrayList<>();
+            for (AssignedTaskEntity assignedTaskEntity : assignedTaskEntityList)
+                if (assignedTaskEntity.getTask().getStartAt().equals(startAt)) value.add(AssignedTaskStatusDto.fromEntity(assignedTaskEntity));
+            result.put(key,value);
+        }
+        return result;
+    }
+
+    public Map<String, Object> getTasksAndProgressesByDate(Long userId, Long courseId, LocalDate startAt) {
+        Map<String, Object> result = new HashMap<>();
+        result.put("taskList", getTasksByDate(userId, courseId, startAt));
+        result.put("progresses", getProgressesByDate(userId, courseId, startAt));
+        return result;
     }
 }

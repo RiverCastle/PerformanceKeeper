@@ -30,6 +30,6 @@ public class ManagerViewController {
 
     @GetMapping("/course/{courseId}/task-create-page")
     public String taskCreatePage() {
-        return "/manager/task-create-page.html";
+        return "/manager/task-create-page";
     }
 }

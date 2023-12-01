@@ -11,7 +11,7 @@ public class CustomExceptionHandler {
         CustomErrorCode errorCode = e.getErrorCode();
         ErrorResponse errorResponse = ErrorResponse.builder()
                 .errorCode(errorCode.getHttpStatus())
-                .message(errorCode.getMessagge())
+                .message(errorCode.getMessage())
                 .build();
         return new ResponseEntity<>(errorResponse, errorCode.getHttpStatus());
     }

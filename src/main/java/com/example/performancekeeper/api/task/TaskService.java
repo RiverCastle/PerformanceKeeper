@@ -146,4 +146,23 @@ public class TaskService {
             assignedTaskRepository.save(assignedTaskEntity);
         }
     }
+
+    public int[] getProgressOfThisTask(Long userId, Long courseId, Long taskId) {
+        UserEntity user = userServiceImpl.checkUserEntity(userId);
+        CourseEntity course = courseServiceImpl.checkCourseEntity(courseId);
+        memberServiceImpl.checkManagerMember(user, course);
+        TaskEntity task = taskRepository.findById(taskId).orElseThrow(() -> new CustomException(CustomErrorCode.NOT_FOUND_TASK));
+        List<AssignedTaskEntity> assignedTaskEntityList = assignedTaskRepository.findAllByTaskAndDeletedAtIsNull(task);
+        int[] result = new int[4]; // index 0: 완료 1: 진행중 2: 에러 3: 등록
+        for (AssignedTaskEntity assignedTaskEntity : assignedTaskEntityList) {
+            String status = assignedTaskEntity.getStatus();
+            switch (status) {
+                case "완료" -> result[0]++;
+                case "진행중" -> result[1]++;
+                case "에러" -> result[2]++;
+                case "등록" -> result[3]++;
+            }
+        }
+        return result;
+    }
 }

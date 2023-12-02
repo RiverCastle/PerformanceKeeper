@@ -10,6 +10,7 @@ import java.util.List;
 
 @Repository
 public interface AssignedTaskRepository extends JpaRepository<AssignedTaskEntity, Long> {
+    List<AssignedTaskEntity> findAllByTaskAndDeletedAtIsNull(TaskEntity task);
     List<AssignedTaskEntity> findAllByMemberAndDeletedAtIsNull(MemberEntity member);
     AssignedTaskEntity findByMemberAndTaskAndDeletedAtIsNull(MemberEntity member, TaskEntity task);
 }

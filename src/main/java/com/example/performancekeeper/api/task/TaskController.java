@@ -46,4 +46,12 @@ public class TaskController {
         Long userId = Long.parseLong(authentication.getName());
         taskService.updateTaskStatus(userId, courseId, taskId, taskStatusDto);
     }
+
+    @GetMapping("/{taskId}/progress")
+    public int[] getProgressOfThisTask(Authentication authentication,
+                                     @PathVariable("courseId") Long courseId,
+                                     @PathVariable("taskId") Long taskId) {
+        Long userId = Long.parseLong(authentication.getName());
+        return taskService.getProgressOfThisTask(userId, courseId, taskId);
+    }
 }

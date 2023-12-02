@@ -123,5 +123,9 @@
 <script src="/js/logout-fetch.js"></script>
 <script src="/js/manager/get-task-progress-fetch.js"></script>
 <script src="/js/manager/button-to-task-create-page.js"></script>
+<script>
+    const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
+    const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
+</script>
 </body>
 </html>

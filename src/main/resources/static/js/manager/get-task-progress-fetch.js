@@ -14,9 +14,9 @@ btn.addEventListener('click', () => {
         .then(response => response.json())
         .then(map => {
             const progress_table = document.createElement('table');
-            progress_table.className='fl-table'
+            progress_table.className = 'fl-table'
 
-            // 요구사항 1: 1열 head는 "유저이름"
+            // 요구사항 1: 1열 head "유저이름"
             const thead = progress_table.createTHead();
             const headerRow = thead.insertRow(0);
             const usernameHeader = headerRow.insertCell(0);
@@ -26,7 +26,27 @@ btn.addEventListener('click', () => {
             const taskList = map.taskList;
             taskList.forEach((task, index) => {
                 const taskNameHeader = headerRow.insertCell(index + 1);
+                const task_id = task.id;
                 taskNameHeader.textContent = task.name;
+                taskNameHeader.addEventListener('mouseover', () => {
+                    fetch('/api/course/' + course_id + '/task/' + task_id + '/progress', {
+                        headers: {
+                            "Authorization": auth
+                        },
+                        method: "GET"
+                    })
+                        .then(response => {
+                            if (response.ok) {
+                                response.json().then(dataArr => {
+                                    alert(task.name + "과제 진행 상황" +
+                                        "\n완료 : " + dataArr[0] +
+                                        "\n진행중 : " + dataArr[1] +
+                                        "\n에러 : " + dataArr[2] +
+                                        "\n등록 : " + dataArr[1])
+                                })
+                            } else response.json().then(error => alert(error.message))
+                        })
+                })
             });
 
             // 요구사항 3: tbody 생성 및 progresses 키에 들어있는 맵 객체의 데이터 추가

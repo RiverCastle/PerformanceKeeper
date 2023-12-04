@@ -3,7 +3,7 @@
 source ~/.bash_profile
 
 PROJECT_ROOT="/home/ubuntu/app"
-JAR_FILE=$PROJECT_ROOT/build/libs/todo-0.0.1-SNAPSHOT.jar
+JAR_FILE=$PROJECT_ROOT/build/libs/PerformanceKeeper-0.0.1-SNAPSHOT.jar
 APP_LOG="$PROJECT_ROOT/app.log"
 ERROR_LOG="$PROJECT_ROOT/error.log"
 
@@ -20,8 +20,8 @@ echo "Port 8080 is cleared!"
 echo "change dir"
 cd ~/app/build/libs
 chmod +x $JAR_FILE
-if [ -f todo-0.0.1-SNAPSHOT.jar ]; then
-    nohup  java -jar todo-0.0.1-SNAPSHOT.jar > $APP_LOG 2> $ERROR_LOG &
+if [ -f PerformanceKeeper-0.0.1-SNAPSHOT.jar ]; then
+    nohup  java -jar PerformanceKeeper-0.0.1-SNAPSHOT.jar > $APP_LOG 2> $ERROR_LOG &
                                              CURRENT_PID=$(pgrep -f $JAR_FILE)
                                              TIME_NOW=$(date +%s)
 

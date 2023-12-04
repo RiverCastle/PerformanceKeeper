@@ -1,9 +1,10 @@
 spring:
   datasource:
-    url: jdbc:sqlite:db.sqlite
-    driver-class-name: org.sqlite.JDBC
+    url: jdbc:mysql://localhost:3306/performance_keeper_db?characterEncoding=UTF-8
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: ${MySQL_Username}
+    password: ${MySQL_Password}
   jpa:
-    #    defer-datasource-initialization: true
     hibernate:
       ddl-auto: update
 

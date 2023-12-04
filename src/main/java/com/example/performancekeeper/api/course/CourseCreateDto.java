@@ -6,13 +6,13 @@ import lombok.Data;
 public class CourseCreateDto {
     private String name;
     private String joinCode;
-    private String desc;
+    private String description;
 
     public static CourseEntity toEntity(CourseCreateDto dto) {
         CourseEntity entity = new CourseEntity();
         entity.setName(dto.getName());
         entity.setJoinCode(dto.getJoinCode());
-        entity.setDesc(dto.getDesc());
+        entity.setDescription(dto.getDescription());
         return entity;
     }
 }

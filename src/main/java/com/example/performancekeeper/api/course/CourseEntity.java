@@ -14,5 +14,5 @@ public class CourseEntity extends BaseTimeEntity {
     private Long id;
     private String name;
     private String joinCode;
-    private String desc;
+    private String description;
 }

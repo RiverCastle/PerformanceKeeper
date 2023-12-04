@@ -2,7 +2,6 @@ package com.example.performancekeeper.api.task;
 
 import com.example.performancekeeper.api.common.BaseTimeEntity;
 import com.example.performancekeeper.api.course.CourseEntity;
-import com.example.performancekeeper.api.member.MemberEntity;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -18,7 +17,7 @@ public class TaskEntity extends BaseTimeEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
-    private String desc;
+    private String description;
     private LocalDate startAt;
     @ManyToOne
     private CourseEntity course;

@@ -13,7 +13,7 @@ public class TaskCreateDto {
     public static TaskEntity toEntity(TaskCreateDto dto) {
         TaskEntity entity = new TaskEntity();
         entity.setName(dto.getName());
-        entity.setDesc(dto.getDesc());
+        entity.setDescription(dto.getDesc());
         entity.setStartAt(dto.getStartAt());
         return entity;
     }

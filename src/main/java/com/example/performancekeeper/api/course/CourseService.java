@@ -65,4 +65,34 @@ public class CourseService {
         }
         throw new CustomException(CustomErrorCode.NOT_MEMBER);
     }
+
+    public void updateCourseName(Long userId, Long courseId, CourseNameUpdateDto courseNameUpdateDto) {
+        UserEntity user = userServiceImpl.checkUserEntity(userId);
+        CourseEntity course = courseRepository.findByIdAndDeletedAtIsNull(courseId).orElseThrow(() -> new CustomException(CustomErrorCode.NOT_FOUND_COURSE));
+        List<MemberEntity> myMembers = memberService.getMyMember(user);
+        for (MemberEntity member : myMembers) {
+            CourseEntity targetCourse = member.getCourse();
+            if (targetCourse.equals(course) && member.getRole().equals("Manager")) {
+                course.setName(courseNameUpdateDto.getNewName());
+                courseRepository.save(course);
+                return;
+            }
+        }
+        throw new CustomException(CustomErrorCode.NO_AUTHORIZATION);
+    }
+
+    public void updateDescriptionName(Long userId, Long courseId, CourseDescriptionUpdateDto courseDescriptionUpdateDto) {
+        UserEntity user = userServiceImpl.checkUserEntity(userId);
+        CourseEntity course = courseRepository.findByIdAndDeletedAtIsNull(courseId).orElseThrow(() -> new CustomException(CustomErrorCode.NOT_FOUND_COURSE));
+        List<MemberEntity> myMembers = memberService.getMyMember(user);
+        for (MemberEntity member : myMembers) {
+            CourseEntity targetCourse = member.getCourse();
+            if (targetCourse.equals(course) && member.getRole().equals("Manager")) {
+                course.setDescription(courseDescriptionUpdateDto.getNewDescription());
+                courseRepository.save(course);
+                return;
+            }
+        }
+        throw new CustomException(CustomErrorCode.NO_AUTHORIZATION);
+    }
 }

@@ -35,4 +35,19 @@ public class CourseController {
         return courseService.getCourseDetails(userId, courseId);
     }
 
+    @PutMapping("/{courseId}/name")
+    public void updateCourseName(Authentication authentication,
+                                 @PathVariable("courseId") Long courseId,
+                                 @RequestBody CourseNameUpdateDto courseNameUpdateDto) {
+        Long userId = Long.parseLong(authentication.getName());
+        courseService.updateCourseName(userId, courseId, courseNameUpdateDto);
+    }
+
+    @PutMapping("/{courseId}/description")
+    public void updateDescriptionName(Authentication authentication,
+                                      @PathVariable("courseId") Long courseId,
+                                      @RequestBody CourseDescriptionUpdateDto courseDescriptionUpdateDto) {
+        Long userId = Long.parseLong(authentication.getName());
+        courseService.updateDescriptionName(userId, courseId, courseDescriptionUpdateDto);
+    }
 }

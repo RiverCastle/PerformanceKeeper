@@ -11,14 +11,55 @@
             margin: 20px;
         }
 
+        .container-fluid {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            padding: 10px;
+            box-sizing: border-box;
+        }
+
+        .ui-left,
+        .ui-right {
+            display: flex;
+            align-items: center;
+        }
+
+        .ui-right {
+            width: fit-content; /* .ui-right의 너비를 fit-content로 설정 */
+        }
+
+        .ui-left a {
+            margin-right: 10px; /* Optional: Add margin between anchor tags */
+        }
+
+        .ui-right button {
+            margin-left: 10px; /* Optional: Add margin between buttons */
+        }
+
+        .ui-right {
+            right: 0%;
+        }
+
         h1 {
             color: #333;
+            width: fit-content;
+            position: absolute;
+            left: 50%;
+            height: 25%;
+            transform: translate(-50%, -50%);
         }
 
         #my-courses-wrapper {
             display: flex; /* 테이블들을 가로로 나열하기 위해 flex 속성 사용 */
             flex-wrap: wrap; /* 테이블이 화면 크기를 벗어나면 다음 줄로 넘어감 */
             gap: 10px; /* 테이블들 간의 여백 설정 */
+            margin-right: auto;
+            margin-left: auto;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
 
         #my-courses-wrapper > table {
@@ -35,10 +76,19 @@
     </style>
 </head>
 <body>
-<div></div>
-<h1>내가 수강중인 강의 목록</h1>
-<button id="button-to-course-list-page">강의실 찾기</button>
+<nav class="navbar navbar-expand-lg bg-body-tertiary">
+    <div class="container-fluid">
+        <span class="ui-left"><a class="navbar-brand" href="/views/main">Home</a></span>
 
+        <h1 id="course-name-tag">수강중인 강의 목록</h1>
+
+        <span class="ui-right">
+            <button id="button-to-course-list-page">강의실 찾기</button>
+            <button id="logout-button">로그아웃</button>
+        </span>
+    </div>
+</nav>
+<br>
 <div id="my-courses-wrapper"></div>
 <script src="/js/get-auth.js"></script>
 <script src="/js/button-to-course-list-page.js"></script>

@@ -52,12 +52,21 @@ public class TaskService {
     }
 
     public int getProgress(MemberEntity member) {
-        List<AssignedTaskEntity> assignedTaskEntityList = assignedTaskRepository.findAllByMemberAndDeletedAtIsNull(member);
-        int completed = 0;
-        for (AssignedTaskEntity assignedTaskEntity : assignedTaskEntityList)
-            if (assignedTaskEntity.getStatus().equals("완료")) completed++;
-        int all = assignedTaskEntityList.size();
-        return all == 0 ? 0 : completed * 100 / all;
+        if (member.getRole().equals("Student")) {
+            List<AssignedTaskEntity> assignedTaskEntityList = assignedTaskRepository.findAllByMemberAndDeletedAtIsNull(member);
+            int completed = 0;
+            for (AssignedTaskEntity assignedTaskEntity : assignedTaskEntityList)
+                if (assignedTaskEntity.getStatus().equals("완료")) completed++;
+            int all = assignedTaskEntityList.size();
+            return all == 0 ? 0 : completed * 100 / all;
+        } else {
+            CourseEntity course = member.getCourse();
+            int completed = 0;
+            List<TaskEntity> taskEntityList = taskRepository.findAllByCourseAndDeletedAtIsNull(course);
+            for (TaskEntity task : taskEntityList) completed += assignedTaskRepository.countAssignedTaskEntitiesByTaskAndStatusAndDeletedAtIsNull(task, "완료");
+            int all = memberServiceImpl.getAllStudentsOfThisCourse(course).size() * taskEntityList.size();
+            return all == 0? 0 : completed * 100 / all;
+        }
     }
 
 //    public List<AssignedTaskOverviewDto>[] searchTasksByKeyword(Long userId, Long courseId, String keyword) {

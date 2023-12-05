@@ -25,8 +25,7 @@ fetch('/api/course/myCourse', {
                 course_table.appendChild(course_name_cell);
 
                 const course_progress_cell = document.createElement('tr');
-                course_progress_cell.textContent = '학생들의 과제 완수율'
-                // TODO 부여된 과제들의 완수율을 전달 받아서 출력하기
+                course_progress_cell.textContent = course.progress + '%';
                 course_table.appendChild(course_progress_cell);
 
                 wrapper.appendChild(course_table);

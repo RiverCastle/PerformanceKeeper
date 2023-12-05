@@ -48,8 +48,7 @@ public class CourseService {
         for (MemberEntity memberEntity : myMembers) {
             CourseEntity course = memberEntity.getCourse();
             MyCourseOverviewDto myCourseOverviewDto = new MyCourseOverviewDto(course.getId(), course.getName(), memberEntity.getRole());
-            if (memberEntity.getRole().equals("Student"))
-                myCourseOverviewDto.setProgress(taskService.getProgress(memberEntity));
+            myCourseOverviewDto.setProgress(taskService.getProgress(memberEntity));
             myCoursesDtoList.add(myCourseOverviewDto);
         }
         return myCoursesDtoList;

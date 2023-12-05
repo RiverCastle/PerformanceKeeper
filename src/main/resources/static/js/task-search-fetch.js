@@ -1,16 +1,6 @@
 const uncompleted_tasks_wrapper = document.getElementById("uncompleted-tasks-wrapper");
 const completed_tasks_wrapper = document.getElementById("completed-tasks-wrapper");
-const course_id = getCourseId()
 
-function getCourseId() {
-    const url = window.location.href;
-    const match = url.match(/\/views\/course\/(\d+)/);
-    if (match) {
-        return match[1];
-    } else {
-        throw new Error("Team ID not found in URL");
-    }
-}
 
 const task_search_btn = document.getElementById('task-search-btn');
 task_search_btn.addEventListener('click', () => {

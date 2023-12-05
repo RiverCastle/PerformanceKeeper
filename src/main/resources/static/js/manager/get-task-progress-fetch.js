@@ -1,5 +1,4 @@
 const btn = document.getElementById('task-search-btn');
-const course_id = getCourseId()
 btn.addEventListener('click', () => {
     const div_progress_wrapper = document.getElementById('task-progress-wrapper');
     div_progress_wrapper.innerText = '';
@@ -66,13 +65,3 @@ btn.addEventListener('click', () => {
             div_progress_wrapper.appendChild(progress_table);
         })
 })
-
-function getCourseId() {
-    const url = window.location.href;
-    const match = url.match(/\/views\/manager\/course\/(\d+)/);
-    if (match) {
-        return match[1];
-    } else {
-        throw new Error("Team ID not found in URL");
-    }
-}

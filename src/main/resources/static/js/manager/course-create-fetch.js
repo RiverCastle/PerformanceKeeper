@@ -13,7 +13,7 @@ sign_up_button.addEventListener('click', () => {
                 body: JSON.stringify({
                     "name": course_name,
                     "joinCode": course_joincode,
-                    "desc": course_desc
+                    "description": course_desc
                 })
             }
         )

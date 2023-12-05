@@ -14,6 +14,16 @@
 
         h1 {
             color: #333;
+            text-align: center;
+        }
+
+        #course-details {
+            align-items: center;
+            align-content: center;
+        }
+
+        #course-desc-tag {
+            font-size: 20px;
         }
 
         #task-date-search, #task-keyword-search {
@@ -68,7 +78,10 @@
 <nav class="navbar navbar-expand-lg bg-body-tertiary">
     <div class="container-fluid">
         <a class="navbar-brand" href="/views/main">Home</a>
-        <h1>강의실 이름</h1>
+        <div id="course-details">
+            <h1 id="course-name-tag">강의실 이름</h1>
+            <p id="course-desc-tag">강의실 소개강의실 소개강의실 소개강의실 소개</p>
+        </div>
         <div>
             <button id="course-leave-button">강의실 나가기</button>
             <button id="logout-button">로그아웃</button>
@@ -95,6 +108,19 @@
         crossorigin="anonymous"></script>
 <script src="/js/get-auth.js"></script>
 <script src="/js/get-current-date.js"></script>
+<script>
+    const course_id = getCourseId()
+    function getCourseId() {
+        const url = window.location.href;
+        const match = url.match(/\/views\/course\/(\d+)/);
+        if (match) {
+            return match[1];
+        } else {
+            throw new Error("Team ID not found in URL");
+        }
+    }
+</script>
+<script src="/js/get-course-details.js"></script>
 <script src="/js/leave-course-fetch.js"></script>
 <script src="/js/logout-fetch.js"></script>
 <script src="/js/task-search-fetch.js"></script>

@@ -28,4 +28,11 @@ public class CourseController {
         return courseService.getMyCourses(userId);
     }
 
+    @GetMapping("/{courseId}")
+    public CourseDetailsDto getCourseDetails(Authentication authentication,
+                                             @PathVariable("courseId") Long courseId) {
+        Long userId = Long.parseLong(authentication.getName());
+        return courseService.getCourseDetails(userId, courseId);
+    }
+
 }

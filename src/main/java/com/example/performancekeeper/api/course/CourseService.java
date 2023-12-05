@@ -1,5 +1,7 @@
 package com.example.performancekeeper.api.course;
 
+import com.example.performancekeeper.api.common.exception.CustomErrorCode;
+import com.example.performancekeeper.api.common.exception.CustomException;
 import com.example.performancekeeper.api.member.MemberEntity;
 import com.example.performancekeeper.api.member.MemberService;
 import com.example.performancekeeper.api.task.TaskService;
@@ -51,5 +53,16 @@ public class CourseService {
             myCoursesDtoList.add(myCourseOverviewDto);
         }
         return myCoursesDtoList;
+    }
+
+    public CourseDetailsDto getCourseDetails(Long userId, Long courseId) {
+        UserEntity user = userServiceImpl.checkUserEntity(userId);
+        CourseEntity course = courseRepository.findByIdAndDeletedAtIsNull(courseId).orElseThrow(() -> new CustomException(CustomErrorCode.NOT_FOUND_COURSE));
+        List<MemberEntity> myMembers = memberService.getMyMember(user);
+        for (MemberEntity member : myMembers) {
+            CourseEntity targetCourse = member.getCourse();
+            if (targetCourse.equals(course)) return CourseDetailsDto.fromEntity(targetCourse);
+        }
+        throw new CustomException(CustomErrorCode.NOT_MEMBER);
     }
 }

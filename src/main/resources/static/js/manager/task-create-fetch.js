@@ -1,7 +1,7 @@
 const courseId = getCourseIdFromURL();
 function create_task() {
     const name = document.getElementById("task_name_input").value;
-    const desc = document.getElementById("task_desc_input").value;
+    const description = document.getElementById("task_desc_input").value;
     const start = document.getElementById("task_start_at").value;
 
     fetch('/api/course/' + courseId + '/task', {
@@ -12,7 +12,7 @@ function create_task() {
         method: "POST",
         body: JSON.stringify({
             "name": name,
-            "desc": desc,
+            "description": description,
             "startAt": start
         })
     })

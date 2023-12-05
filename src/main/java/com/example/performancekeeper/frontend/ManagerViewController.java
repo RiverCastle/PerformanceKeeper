@@ -10,26 +10,26 @@ public class ManagerViewController {
 
     @GetMapping("/login")
     public String managerLoginPage() {
-        return "/manager/login-page";
+        return "manager/login-page";
     }
 
     @GetMapping("/main")
     public String managerMainPage() {
-        return "/manager/index";
+        return "manager/index";
     }
 
     @GetMapping("/course-create-page")
     public String courseCreatePage() {
-        return "/manager/course-create-page";
+        return "manager/course-create-page";
     }
 
     @GetMapping("/course/{courseId}")
     public String managerCoursePage() {
-        return "/manager/course-page";
+        return "manager/course-page";
     }
 
     @GetMapping("/course/{courseId}/task-create-page")
     public String taskCreatePage() {
-        return "/manager/task-create-page";
+        return "manager/task-create-page";
     }
 }

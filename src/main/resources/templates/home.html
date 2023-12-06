@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Performance Keeper Homepage</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f0f0f0;
+            padding: 20px;
+            margin: 0;
+            color: #333;
+        }
+
+        .container {
+            max-width: 800px;
+            background-color: #fff;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .jumbotron {
+            /*background-color: #17a2b8;*/
+            color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+
+        .card {
+            margin-top: 20px;
+            border: none;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s;
+        }
+
+        .card:hover {
+            transform: scale(1.05);
+        }
+
+        .card-body {
+            padding: 20px;
+        }
+
+        h1, h2, h3 {
+            color: #17a2b8;
+        }
+
+        .lead {
+            color: #555;
+        }
+
+        .btn-primary {
+            background-color: #007bff;
+            border-color: #007bff;
+        }
+
+        .btn-primary:hover {
+            background-color: #0056b3;
+            border-color: #0056b3;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+    <div class="jumbotron">
+        <h1 class="display-4">Welcome to Performance Keeper!</h1>
+        <p class="lead">PerformanceKeeper는 현대적인 온라인 교육 환경에서 학생, 강사, 그리고 매니저들을 위한 강력한 도구입니다.
+        </p>
+    </div>
+
+    <div class="card">
+        <div class="card-body">
+            <h2 class="card-title">학생 모드</h2>
+            <p class="card-text">학생 모드에서는 현재 참여 중인 강의실 목록과 부여된 과제의 완수율을 한눈에 확인할 수 있습니다.
+                과제는 부여된 날짜에 따라 미완료와 완료로 나뉘어 표시되어, 실습 내용과 채팅이 혼재되는 문제를 해결합니다.</p>
+            <a href="/views/login" class="btn btn-primary">학생모드로 시작하기</a>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-body">
+            <h2 class="card-title">매니저 모드</h2>
+            <p class="card-text">매니저 모드에서는 강의실에 입실한 학생들의 평균 과제 완수률을 조회하고, 날짜 또는 검색어를
+                활용해 각 학생들의 과제 진행 현황을 상세하게 파악할 수 있습니다. 과제명에 커서를 위치시키면 해당
+                과제의 진행 현황을 상태별로 확인할 수 있어, 강사와 매니저는 학생들의 성과를 더욱 효과적으로
+                관리할 수 있습니다.</p>
+            <a href="/views/manager/login" class="btn btn-primary">매니저모드로 알아보기</a>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-body">
+            <h2 class="card-title">PerformanceKeeper 활용</h2>
+            <p class="card-text">PerformanceKeeper는 온라인 교육 환경에서의 효율적인 학습과 관리를 위해 설계되었습니다. 더 나은
+                교육 경험을 위해 PerformanceKeeper를 활용해보세요!</p>
+            <a href="/views/course-list-page" class="btn btn-primary">더 알아보기</a>
+        </div>
+    </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
+        crossorigin="anonymous"></script>
+</body>
+</html>

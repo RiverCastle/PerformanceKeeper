@@ -1,4 +1,3 @@
-
 const search_button = document.getElementById("course-search-button");
 search_button.addEventListener("click", () => {
     const keyword_input = document.getElementById("keyword_input").value;
@@ -6,7 +5,7 @@ search_button.addEventListener("click", () => {
     coursesTag.innerHTML = '';
     fetch('/api/course?keyword=' + keyword_input, {
         headers: {
-            'Content-Type':'application/json'
+            'Content-Type': 'application/json'
         },
         method: "GET"
     })
@@ -38,6 +37,7 @@ search_button.addEventListener("click", () => {
                 courseJoinButton.type = "button";
                 courseJoinButton.id = "join-button";
                 courseJoinButton.name = "가입하기";
+                courseJoinButton.setAttribute('class', "btn btn-success");
                 courseJoinButton.addEventListener('click', () => {
                     const joinCode = prompt('해당 팀의 참여코드를 입력하세요 :');
                     fetch('/api/course/' + courseId + '/member', {

@@ -2,7 +2,6 @@ package com.example.performancekeeper.frontend;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,6 +11,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/views")
 @RequiredArgsConstructor
 public class ViewController {
+
+    @GetMapping("/home")
+    public String homepage() {
+        return "home";
+    }
     @GetMapping("/sign-up")
     public String signUpPage() {
         log.info("to sign up page");

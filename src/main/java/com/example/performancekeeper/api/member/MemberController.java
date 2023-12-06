@@ -19,8 +19,9 @@ public class MemberController {
 
     @DeleteMapping// 강의실 퇴실
     public void leaveCourse(Authentication authentication,
-                            @PathVariable("courseId") Long courseId) {
+                            @PathVariable("courseId") Long courseId,
+                            @RequestBody LeaveRequestDto leaveRequestDto) {
         Long userId = Long.parseLong(authentication.getName());
-        memberService.deleteStudentMember(userId, courseId);
+        memberService.deleteStudentMember(userId, courseId, leaveRequestDto);
     }
 }

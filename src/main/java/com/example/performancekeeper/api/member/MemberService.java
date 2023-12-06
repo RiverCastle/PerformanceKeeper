@@ -47,11 +47,12 @@ public class MemberService {
         return memberRepository.findAllByUserAndDeletedAtIsNull(user);
     }
     @Transactional
-    public void deleteStudentMember(Long userId, Long courseId) {
+    public void deleteStudentMember(Long userId, Long courseId, LeaveRequestDto leaveRequestDto) {
         UserEntity user = userServiceImpl.checkUserEntity(userId);
         CourseEntity course = courseServiceImpl.checkCourseEntity(courseId);
         MemberEntity member = memberRepository.findByUserAndCourseAndRoleAndDeletedAtIsNull(user, course, "Student")
                 .orElseThrow(() -> new CustomException(CustomErrorCode.NOT_STUDENT));
+        if (!course.getName().equals(leaveRequestDto.getCourseNameCheck())) throw new CustomException(CustomErrorCode.WRONG_COURSE_NAME);
 
         taskService.deleteAssignedTasksOfLeavingStudent(member); // 나가려는 유저에게 부여된 과제들 삭제처리
         member.setDeletedAt(LocalDateTime.now());

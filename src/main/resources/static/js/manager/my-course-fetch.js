@@ -21,6 +21,7 @@ fetch('/api/course/myCourse', {
                 const course_link = document.createElement('a');
                 course_link.href = '/views/manager/course/' + course_id;
                 course_link.textContent = course.name;
+                course_link.setAttribute('class', "d-inline-block text-truncate");
                 course_name_cell.appendChild(course_link);
                 course_table.appendChild(course_name_cell);
 

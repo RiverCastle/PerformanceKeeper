@@ -21,7 +21,7 @@ search_button.addEventListener("click", () => {
                 courseTag.appendChild(courseNameTag);
 
                 const courseDescTag = document.createElement('th');
-                courseDescTag.textContent = courseOverviewDto.desc;
+                courseDescTag.textContent = courseOverviewDto.description;
                 courseTag.appendChild(courseDescTag);
 
                 const courseCreatedAtTag = document.createElement('th');

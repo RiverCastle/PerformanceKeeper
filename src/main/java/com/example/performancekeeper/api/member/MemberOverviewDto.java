@@ -5,14 +5,14 @@ import lombok.Data;
 @Data
 public class MemberOverviewDto {
     private Long id;
-    private String name;
+    private String nickname;
 
-    public MemberOverviewDto(Long id, String name) {
+    public MemberOverviewDto(Long id, String nickname) {
         this.id = id;
-        this.name = name;
+        this.nickname = nickname;
     }
 
     public static MemberOverviewDto fromEntity(MemberEntity entity) {
-        return new MemberOverviewDto(entity.getId(), entity.getUser().getUsername());
+        return new MemberOverviewDto(entity.getId(), entity.getNickname());
     }
 }

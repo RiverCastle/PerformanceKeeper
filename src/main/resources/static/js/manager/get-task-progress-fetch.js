@@ -53,8 +53,8 @@ btn.addEventListener('click', () => {
             for (const [userOverview, assignedTasks] of Object.entries(map.progresses)) {
                 const row = tbody.insertRow();
                 const usernameCell = row.insertCell(0);
-                const name = userOverview.match(/name=(.*?)(?=\))/);
-                usernameCell.textContent = name[1].trim();
+                const nickname = userOverview.match(/nickname=(.*?)(?=\))/);
+                usernameCell.textContent = nickname[1].trim();
 
                 assignedTasks.forEach((assignedTask, index) => {
                     const taskStatusCell = row.insertCell(index + 1);

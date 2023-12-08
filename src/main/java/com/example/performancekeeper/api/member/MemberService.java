@@ -59,4 +59,13 @@ public class MemberService {
         memberRepository.save(member); // soft deletion
 
     }
+
+    public void changeNickname(Long userId, Long courseId, NicknameUpdateDto nicknameUpdateDto) {
+        UserEntity user = userServiceImpl.checkUserEntity(userId);
+        CourseEntity course = courseServiceImpl.checkCourseEntity(courseId);
+        MemberEntity member = memberRepository.findByUserAndCourseAndRoleAndDeletedAtIsNull(user, course, "Student")
+                .orElseThrow(() -> new CustomException(CustomErrorCode.NOT_STUDENT));
+        member.setNickname(nicknameUpdateDto.getNickname());
+        memberRepository.save(member);
+    }
 }

@@ -24,4 +24,12 @@ public class MemberController {
         Long userId = Long.parseLong(authentication.getName());
         memberService.deleteStudentMember(userId, courseId, leaveRequestDto);
     }
+
+    @PutMapping
+    public void changeNickname(Authentication authentication,
+                               @PathVariable("courseId") Long courseId,
+                               @RequestBody NicknameUpdateDto nicknameUpdateDto) {
+        Long userId = Long.parseLong(authentication.getName());
+        memberService.changeNickname(userId, courseId, nicknameUpdateDto);
+    }
 }

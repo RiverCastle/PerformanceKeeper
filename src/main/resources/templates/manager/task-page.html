@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>과제 상세 페이지</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+  <style>
+    .task-description {
+      padding: 20px;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+    }
+
+    h1 {
+      color: #333;
+      text-align: center;
+    }
+
+    #comments-container {
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    /* 댓글 입력창과 레이블 스타일 */
+    label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: bold;
+    }
+
+    textarea {
+      width: 90%;
+      padding: 8px;
+      box-sizing: border-box;
+      margin-bottom: 10px;
+      resize: vertical; /* 사용자가 수직으로만 리사이즈 가능하도록 설정 */
+      border: 1px solid #ccc;
+    }
+
+    button {
+      padding: 8px;
+      cursor: pointer;
+    }
+
+    /* 댓글 박스 스타일 */
+    .comment {
+      border: 1px solid #ccc;
+      padding: 10px;
+      margin-bottom: 10px;
+    }
+
+    .comment-actions button {
+      margin-right: 5px;
+    }
+
+  </style>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg bg-body-tertiary">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="/views/home">Home</a>
+    <p><div id="task-details">
+    <h1 id="task-name-tag">과제명</h1>
+  </div>
+    <div>
+      <button id="btn-update-task-name">과제명 수정</button>
+    </div></p>
+    <div>
+      <button id="logout-button">로그아웃</button>
+    </div>
+  </div>
+</nav>
+<div id="task-details-container"></div>
+
+<div id="comments-container">
+  <!-- 댓글 목록이 표시될 영역 -->
+</div>
+
+<!-- 댓글 작성 폼 -->
+<div>
+  <label for="comment-text-input">댓글 작성:</label>
+  <textarea id="comment-text-input" rows="4" cols="50"></textarea>
+  <button id="btn-to-add-comment" type="button">댓글 작성</button>
+</div>
+<script src="/js/get-auth.js"></script>
+<script>
+  // 현재 페이지의 URL 가져오기
+  var currentUrl = window.location.href;
+
+  // 정규 표현식을 사용하여 course_id 및 assigned_task_id 추출
+  var courseMatch = currentUrl.match(/\/course\/(\d+)/);
+  var assignedTaskMatch = currentUrl.match(/\/assignedTaskId\/(\d+)/);
+
+  // course_id 및 assigned_task_id 변수에 할당
+  var course_id = courseMatch ? courseMatch[1] : null;
+  var assigned_task_id = assignedTaskMatch ? assignedTaskMatch[1] : null;
+
+  // 결과 확인 (콘솔에 출력하거나 필요한 다른 작업 수행)
+  console.log("course_id: ", course_id);
+  console.log("assigned_task_id: ", assigned_task_id);
+
+</script>
+<script src="/js/manager/get-task-details.js"></script>
+<script src="/js/get-comment.js"></script>
+<script src="/js/add-comment-fetch.js"></script>
+</body>
+</html>

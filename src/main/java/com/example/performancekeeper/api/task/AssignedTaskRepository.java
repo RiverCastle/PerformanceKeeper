@@ -7,6 +7,7 @@ import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface AssignedTaskRepository extends JpaRepository<AssignedTaskEntity, Long> {
@@ -14,4 +15,5 @@ public interface AssignedTaskRepository extends JpaRepository<AssignedTaskEntity
     List<AssignedTaskEntity> findAllByMemberAndDeletedAtIsNull(MemberEntity member);
     AssignedTaskEntity findByMemberAndTaskAndDeletedAtIsNull(MemberEntity member, TaskEntity task);
     int countAssignedTaskEntitiesByTaskAndStatusAndDeletedAtIsNull(TaskEntity task, String status);
+    Optional<AssignedTaskEntity> findByIdAndDeletedAtIsNull(Long id);
 }

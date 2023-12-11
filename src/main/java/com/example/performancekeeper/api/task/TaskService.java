@@ -20,4 +20,8 @@ public interface TaskService {
     Map<String, Object> getTasksAndProgressesByDate(Long userId, Long courseId, LocalDate startAt); // 매니저가 날짜별 과제 진행상황 파악
     void deleteAssignedTasksOfLeavingStudent(MemberEntity member);
     int[] getProgressOfThisTask(Long userId, Long courseId, Long taskId);
+
+    AssignedTaskEntity getAssignedTask(Long assignedTaskId);
+
+    TaskOverviewDto getTaskDetails(Long userId, Long courseId, Long assignedTaskId);
 }

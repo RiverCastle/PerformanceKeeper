@@ -16,6 +16,14 @@ import java.util.Map;
 public class TaskController {
     private final TaskService taskService;
 
+    @GetMapping("/{taskId}")
+    public TaskOverviewDto getTaskDetails(Authentication authentication,
+                                          @PathVariable("courseId") Long courseId,
+                                          @PathVariable("taskId") Long assignedTaskId) {
+        Long userId = Long.parseLong(authentication.getName());
+        return taskService.getTaskDetails(userId, courseId, assignedTaskId);
+    }
+
     @GetMapping("/my-progress")// 학생이 자신의 진행상황을 요청
     public List<AssignedTaskOverviewDto>[] getCompletedTasksAndUncompletedTasksByDate(Authentication authentication,
                                                                                       @PathVariable("courseId") Long courseId,

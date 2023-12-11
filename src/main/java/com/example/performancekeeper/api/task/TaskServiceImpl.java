@@ -176,4 +176,19 @@ public class TaskServiceImpl implements TaskService {
         }
         return result;
     }
+
+    @Override
+    public AssignedTaskEntity getAssignedTask(Long assignedTaskId) {
+        return assignedTaskRepository.findByIdAndDeletedAtIsNull(assignedTaskId)
+                .orElseThrow(() -> new CustomException(CustomErrorCode.NOT_FOUND_TASK));
+    }
+
+    @Override
+    public TaskOverviewDto getTaskDetails(Long userId, Long courseId, Long assignedTaskId) {
+        UserEntity user = userServiceImpl.checkUserEntity(userId);
+        CourseEntity course = courseServiceImpl.checkCourseEntity(courseId);
+        memberServiceImpl.checkMember(user, course);
+        AssignedTaskEntity assignedTask = assignedTaskRepository.findByIdAndDeletedAtIsNull(assignedTaskId).orElseThrow(() -> new CustomException(CustomErrorCode.NOT_FOUND_TASK));
+        return TaskOverviewDto.fromEntity(assignedTask.getTask());
+    }
 }

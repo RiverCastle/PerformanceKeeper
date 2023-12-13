@@ -7,83 +7,87 @@ fetch('/api/course/' + course_id + '/assignedTask/' + assigned_task_id + '/comme
     .then(response => {
         if (response.ok) response.json().then(data => {
             const comments_div = document.getElementById('comments-container');
-            console.log(data)
 
-
-            // TaskCommentReadDto 객체들을 반복하여 표시 또는 처리합니다.
             data.forEach(comment => {
-                // 작성자 이름과 내용을 추출
                 const comment_id = comment.id;
                 const data_created_at = new Date(comment.createdAt);
-                const comment_created_at = data_created_at.getMonth() + 1 + "/" + data_created_at.getDay() + "  " + data_created_at.getHours() + ":" + data_created_at.getMinutes();
+                const comment_created_at = data_created_at.getMonth() + 1 + "/" + data_created_at.getDate() + "  " + data_created_at.getHours() + ":" + data_created_at.getMinutes();
                 const writerName = comment.writerName;
                 const content = comment.content;
 
-                // 작성자 이름과 내용을 HTML 엘리먼트로 만들어 추가하거나 표시
                 const commentElement = document.createElement('ul');
-                const comment_delete_button = document.createElement('button');
                 commentElement.innerHTML = `<p>${comment_created_at} | <strong>${writerName}:</strong> ${content}</p>`;
-                // 삭제 버튼
-                // TODO 삭제버튼이 댓글 내용 오른쪽 옆에 붙었으면 좋겠음.
-                comment_delete_button.textContent = "댓글삭제";
-                comment_delete_button.id = "delete_button"
-                comment_delete_button.addEventListener('click', () => {
-                    alert("정말로 댓글을 삭제하시겠습니까?");
-                    fetch('/api/course/' + course_id + '/assignedTask/' + assigned_task_id + '/comment/' + comment_id, {
-                        headers: {
-                            "Authorization" : auth
-                        },
-                        method: "DELETE"
+
+                // 댓글삭제버튼
+                if (member_id === comment.writerId) {
+                    const comment_delete_button = document.createElement('button');
+                    comment_delete_button.textContent = "댓글삭제";
+                    comment_delete_button.className = "comment_delete_button"
+                    comment_delete_button.addEventListener('click', () => {
+                        alert("정말로 댓글을 삭제하시겠습니까?");
+                        fetch('/api/course/' + course_id + '/assignedTask/' + assigned_task_id + '/comment/' + comment_id, {
+                            headers: {
+                                "Authorization": auth
+                            },
+                            method: "DELETE"
+                        })
+                            .then(response => {
+                                if (response.ok) {
+                                    alert("댓글이 삭제되었습니다.");
+                                    window.location.reload();
+                                }
+
+                            })
+                            .catch(error => {
+                                alert(error.message);
+                            })
                     })
-                        .then(response => {
-                            if (response.ok) {
-                                alert("댓글이 삭제되었습니다.");
-                                window.location.reload();
-                            }
+                    commentElement.appendChild(comment_delete_button);
+                }
 
-                        })
-                        .catch(error => {
-                            alert(error.message);
-                        })
-                })
-                commentElement.appendChild(comment_delete_button);
-
-                // 만약 댓글에 대한 답글도 표시해야 한다면, replies를 처리할 수 있습니다.
+                //답글
                 if (comment.replies) {
                     comment.replies.forEach(reply => {
                         const replyId = reply.id;
                         const data_created_at = new Date(reply.createdAt);
-                        const reply_created_at = data_created_at.getMonth() + 1 + "/" + data_created_at.getDay() + "  " + data_created_at.getHours() + ":" + data_created_at.getMinutes();
+                        const reply_created_at = data_created_at.getMonth() + 1 + "/" + data_created_at.getDate() + "  " + data_created_at.getHours() + ":" + data_created_at.getMinutes();
                         const replyElement = document.createElement('ul');
                         replyElement.innerHTML = `<p>└ ${reply_created_at} | <strong>${reply.writerName}:</strong> ${reply.content}</p>`;
-                        const reply_delete_button = document.createElement('button');
-                        reply_delete_button.textContent = "답글삭제";
-                        reply_delete_button.id = "delete_button"
-                        reply_delete_button.addEventListener('click', () => {
-                            alert("정말로 답글을 삭제하시겠습니까?");
-                            fetch('/api/course/' + course_id + '/assignedTask/' + assigned_task_id + '/comment/' + comment_id + '/reply/' + replyId, {
-                                headers: {
-                                    "Authorization" : auth
-                                },
-                                method: "DELETE"
+
+                        // 답글 삭제 버튼
+                        if (member_id === reply.writerId) {
+                            const reply_delete_button = document.createElement('button');
+                            reply_delete_button.textContent = "답글삭제";
+                            reply_delete_button.className = "reply_delete_button"
+                            reply_delete_button.addEventListener('click', () => {
+                                alert("정말로 답글을 삭제하시겠습니까?");
+                                fetch('/api/course/' + course_id + '/assignedTask/' + assigned_task_id + '/comment/' + comment_id + '/reply/' + replyId, {
+                                    headers: {
+                                        "Authorization": auth
+                                    },
+                                    method: "DELETE"
+                                })
+                                    .then(response => {
+                                        if (response.ok) {
+                                            alert("답글이 삭제되었습니다.");
+                                            window.location.reload();
+                                        }
+                                    })
+                                    .catch(error => {
+                                        alert(error.message);
+                                    })
                             })
-                                .then(response => {
-                                    if (response.ok) {
-                                        alert("답글이 삭제되었습니다.");
-                                        window.location.reload();
-                                    }
-                                })
-                                .catch(error => {
-                                    alert(error.message);
-                                })
-                        })
-                        replyElement.appendChild(reply_delete_button);
+                            replyElement.appendChild(reply_delete_button);
+
+                        }
+
                         // 답글을 댓글 아래에 표시하거나 원하는 위치에 추가
                         commentElement.appendChild(replyElement);
                     });
                 }
+
                 const reply_add_button = document.createElement('button');
-                reply_add_button.id = "new_reply_button"
+                reply_add_button.className = "new_reply_button"
                 reply_add_button.textContent = "답글달기";
                 reply_add_button.addEventListener('click', () => {
                     const new_reply_content = prompt("답글을 입력해주세요.");
@@ -105,7 +109,7 @@ fetch('/api/course/' + course_id + '/assignedTask/' + assigned_task_id + '/comme
                             })
                             .catch(error => {
                                 alert(error.method);
-                                window.location.href="/views/login";
+                                window.location.href = "/views/login";
                             });
                     }
                 })

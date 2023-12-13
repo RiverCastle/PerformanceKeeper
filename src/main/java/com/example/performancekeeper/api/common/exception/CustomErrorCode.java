@@ -25,7 +25,11 @@ public enum CustomErrorCode {
     NO_AUTHORIZATION(UNAUTHORIZED, "권한이 없습니다."),
     ALREADY_JOIN(ALREADY_REPORTED, "이미 해당 강의실에 입실하였습니다."),
     NOT_MEMBER(UNAUTHORIZED, "해당 강의실에 입실하지 않았습니다."),
-    WRONG_COURSE_NAME(BAD_REQUEST, "강의실 이름을 잘못 입력하셨습니다.");
+    WRONG_COURSE_NAME(BAD_REQUEST, "강의실 이름을 잘못 입력하셨습니다."),
+    NOT_FOUND_COMMENT(NOT_FOUND, "해당 댓글이 존재하지 않습니다."),
+    ALREADY_DELETED(ALREADY_REPORTED, "이미 삭제되었습니다."),
+    NOT_FOUND_REPLY(NOT_FOUND, "해당 답글이 존재하지 않습니다."),
+    COMMENT_REPLY_MISMATCH(BAD_REQUEST, "해당 댓글에 존재하지 않는 답글입니다.");
     private final HttpStatus httpStatus;
     private final String message;
 }

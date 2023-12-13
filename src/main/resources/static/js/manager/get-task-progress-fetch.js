@@ -59,7 +59,7 @@ btn.addEventListener('click', () => {
                 assignedTasks.forEach((assignedTask, index) => {
                     const taskStatusCell = row.insertCell(index + 1);
                     const taskStatusTag = document.createElement('a');
-                    taskStatusTag.href = '/views/manager/course/' + course_id + '/assignedTaskId/' + assignedTask.id;
+                    taskStatusTag.href = '/views/manager/course/' + course_id + '/assignedTask/' + assignedTask.id;
                     taskStatusTag.textContent = assignedTask.status;
                     taskStatusCell.appendChild(taskStatusTag);
                 });

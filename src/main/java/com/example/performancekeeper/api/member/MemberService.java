@@ -68,4 +68,12 @@ public class MemberService {
         member.setNickname(nicknameUpdateDto.getNickname());
         memberRepository.save(member);
     }
+
+    public MemberOverviewDto getMemberInfo(Long userId, Long courseId) {
+        UserEntity user = userServiceImpl.checkUserEntity(userId);
+        CourseEntity course = courseServiceImpl.checkCourseEntity(courseId);
+        MemberEntity member = memberRepository.findByUserAndCourseAndDeletedAtIsNull(user, course)
+                .orElseThrow(() -> new CustomException(CustomErrorCode.NOT_MEMBER));
+        return MemberOverviewDto.fromEntity(member);
+    }
 }

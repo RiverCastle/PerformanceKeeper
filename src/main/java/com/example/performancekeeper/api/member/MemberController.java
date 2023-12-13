@@ -32,4 +32,11 @@ public class MemberController {
         Long userId = Long.parseLong(authentication.getName());
         memberService.changeNickname(userId, courseId, nicknameUpdateDto);
     }
+
+    @GetMapping
+    public MemberOverviewDto getMemberInfo(Authentication authentication,
+                                           @PathVariable("courseId") Long courseId) {
+        Long userId = Long.parseLong(authentication.getName());
+        return memberService.getMemberInfo(userId, courseId);
+    }
 }

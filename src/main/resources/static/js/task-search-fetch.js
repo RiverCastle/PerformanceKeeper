@@ -29,7 +29,7 @@ task_search_btn.addEventListener('click', () => {
 
                 const task_name_cell = document.createElement('tr');
                 const task_link = document.createElement('a');
-                task_link.href = '/views/course/' + course_id + '/task/' + task_id;
+                task_link.href = '/views/course/' + course_id + '/assignedTask/' + task_id;
                 task_link.textContent = task_name;
                 task_name_cell.appendChild(task_link);
                 task_table.appendChild(task_name_cell);
@@ -106,7 +106,7 @@ task_search_btn.addEventListener('click', () => {
 
                 const task_name_cell = document.createElement('tr');
                 const task_link = document.createElement('a');
-                task_link.href = '/views/course/' + course_id + '/task/' + task_id;
+                task_link.href = '/views/course/' + course_id + '/assignedTask/' + task_id;
                 task_link.textContent = task_name;
                 task_name_cell.appendChild(task_link);
                 task_table.appendChild(task_name_cell);

@@ -1,4 +1,4 @@
-fetch('/api/course/' + course_id + '/assignedTaskId/' + assigned_task_id + '/comment', {
+fetch('/api/course/' + course_id + '/assignedTask/' + assigned_task_id + '/comment', {
     headers: {
         'Authorization': auth
     },
@@ -29,7 +29,7 @@ fetch('/api/course/' + course_id + '/assignedTaskId/' + assigned_task_id + '/com
                 comment_delete_button.id = "delete_button"
                 comment_delete_button.addEventListener('click', () => {
                     alert("정말로 댓글을 삭제하시겠습니까?");
-                    fetch('/api/team/' + teamId + '/tasks/' + taskId + '/comments/' + comment_id, {
+                    fetch('/api/course/' + course_id + '/assignedTask/' + assigned_task_id + '/comment/' + comment_id, {
                         headers: {
                             "Authorization" : auth
                         },
@@ -55,13 +55,13 @@ fetch('/api/course/' + course_id + '/assignedTaskId/' + assigned_task_id + '/com
                         const data_created_at = new Date(reply.createdAt);
                         const reply_created_at = data_created_at.getMonth() + 1 + "/" + data_created_at.getDay() + "  " + data_created_at.getHours() + ":" + data_created_at.getMinutes();
                         const replyElement = document.createElement('ul');
-                        replyElement.innerHTML = `<p>└ ${reply_created_at} | <strong>${reply.writerName}:</strong> ${reply.reply}</p>`;
+                        replyElement.innerHTML = `<p>└ ${reply_created_at} | <strong>${reply.writerName}:</strong> ${reply.content}</p>`;
                         const reply_delete_button = document.createElement('button');
                         reply_delete_button.textContent = "답글삭제";
                         reply_delete_button.id = "delete_button"
                         reply_delete_button.addEventListener('click', () => {
                             alert("정말로 답글을 삭제하시겠습니까?");
-                            fetch('/api/team/' + teamId + '/tasks/' + taskId + '/comments/' + comment_id + '/reply/' + replyId, {
+                            fetch('/api/course/' + course_id + '/assignedTask/' + assigned_task_id + '/comment/' + comment_id + '/reply/' + replyId, {
                                 headers: {
                                     "Authorization" : auth
                                 },
@@ -90,7 +90,7 @@ fetch('/api/course/' + course_id + '/assignedTaskId/' + assigned_task_id + '/com
                     if (new_reply_content !== null) {
                         const commentId = comment.id;
                         // 답글 추가 api
-                        fetch('/api/team/' + teamId + '/tasks/' + taskId + '/comments/' + commentId + '/reply', {
+                        fetch('/api/course/' + course_id + '/assignedTask/' + assigned_task_id + '/comment/' + commentId + '/reply', {
                             headers: {
                                 "Authorization": auth,
                                 "Content-Type": "application/json"

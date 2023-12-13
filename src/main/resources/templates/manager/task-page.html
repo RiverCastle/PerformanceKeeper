@@ -123,6 +123,7 @@
 <!-- 댓글 작성 폼 -->
 <div>
   <textarea id="comment-text-input" rows="4" cols="50" placeholder="댓글을 입력해주세요."></textarea>
+  <button id="btn-to-share">공유하기</button>
   <button id="btn-to-add-comment" type="submit">댓글 작성</button>
 </div>
 <script src="/js/get-auth.js"></script>
@@ -132,7 +133,7 @@
 
   // 정규 표현식을 사용하여 course_id 및 assigned_task_id 추출
   var courseMatch = currentUrl.match(/\/course\/(\d+)/);
-  var assignedTaskMatch = currentUrl.match(/\/assignedTaskId\/(\d+)/);
+  var assignedTaskMatch = currentUrl.match(/\/assignedTask\/(\d+)/);
 
   // course_id 및 assigned_task_id 변수에 할당
   var course_id = courseMatch ? courseMatch[1] : null;
@@ -143,7 +144,7 @@
   console.log("assigned_task_id: ", assigned_task_id);
 
 </script>
-<script src="/js/manager/get-task-details.js"></script>
+<script src="/js/get-task-details.js"></script>
 <script src="/js/get-comment.js"></script>
 <script src="/js/add-comment-fetch.js"></script>
 </body>

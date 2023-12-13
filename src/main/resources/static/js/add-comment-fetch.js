@@ -3,7 +3,7 @@ const comment_div = document.getElementById('comments-container');
 add_comment_btn.addEventListener('click', () => {
     const comment_content_input = document.getElementById('comment-text-input').value;
     if (comment_content_input !== null) {
-        fetch('/api/course/' + course_id + '/assignedTaskId/' + assigned_task_id + '/comment', {
+        fetch('/api/course/' + course_id + '/assignedTask/' + assigned_task_id + '/comment', {
             headers: {
                 'Authorization' : auth,
                 'Content-Type' : 'application/json'

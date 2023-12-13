@@ -13,13 +13,16 @@ import com.example.performancekeeper.api.users.UserServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.IllegalFormatCodePointException;
 import java.util.List;
 
 @Service
 @RequiredArgsConstructor
 public class CommentServiceImpl implements CommentService {
     private final CommentRepository commentRepository;
+    private final ReplyRepository replyRepository;
     private final UserServiceImpl userServiceImpl;
     private final CourseServiceImpl courseServiceImpl;
     private final MemberServiceImpl memberServiceImpl;
@@ -31,7 +34,8 @@ public class CommentServiceImpl implements CommentService {
         CourseEntity course = courseServiceImpl.checkCourseEntity(courseId);
         MemberEntity member = memberServiceImpl.checkMember(user, course);
         AssignedTaskEntity assignedTask = taskService.getAssignedTask(assignedTaskId);
-        if (!assignedTask.getMember().equals(member) && !member.getRole().equals("Manager")) throw new CustomException(CustomErrorCode.NO_AUTHORIZATION);
+        if (!assignedTask.getMember().equals(member) && !member.getRole().equals("Manager"))
+            throw new CustomException(CustomErrorCode.NO_AUTHORIZATION);
         commentRepository.save(new CommentEntity(commentCreateDto.getContent(), assignedTask, member));
     }
 
@@ -41,11 +45,65 @@ public class CommentServiceImpl implements CommentService {
         CourseEntity course = courseServiceImpl.checkCourseEntity(courseId);
         MemberEntity member = memberServiceImpl.checkMember(user, course);
         AssignedTaskEntity assignedTask = taskService.getAssignedTask(assignedTaskId);
-        if (!assignedTask.getMember().equals(member) && !member.getRole().equals("Manager")) throw new CustomException(CustomErrorCode.NO_AUTHORIZATION);
+        if (!assignedTask.getMember().equals(member) && !member.getRole().equals("Manager"))
+            throw new CustomException(CustomErrorCode.NO_AUTHORIZATION);
 
         List<CommentReadDto> result = new ArrayList<>();
-        List<CommentEntity> commentEntityList = commentRepository.findAllByAssignedTaskEntityAndDeletedAtIsNull(assignedTask);
-        for (CommentEntity comment : commentEntityList) result.add(CommentReadDto.fromEntity(comment));
+        List<CommentEntity> commentEntityList = commentRepository.findAllByAssignedTaskEntity(assignedTask);
+        for (CommentEntity comment : commentEntityList) {
+            CommentReadDto commentReadDto = CommentReadDto.fromEntity(comment);
+            List<ReplyEntity> replyEntityList = replyRepository.findAllByComment(comment);
+            List<ReplyReadDto> replyReadDtoList = new ArrayList<>();
+            for (ReplyEntity reply : replyEntityList) replyReadDtoList.add(ReplyReadDto.fromEntity(reply));
+            commentReadDto.setReplies(replyReadDtoList);
+            result.add(commentReadDto);
+        }
         return result;
+    }
+
+    @Override
+    public void createReply(Long userId, Long courseId, Long assignedTaskId, Long commentId, ReplyCreateDto replyCreateDto) {
+        UserEntity user = userServiceImpl.checkUserEntity(userId);
+        CourseEntity course = courseServiceImpl.checkCourseEntity(courseId);
+        MemberEntity member = memberServiceImpl.checkMember(user, course);
+        AssignedTaskEntity assignedTask = taskService.getAssignedTask(assignedTaskId);
+        if (!assignedTask.getMember().equals(member) && !member.getRole().equals("Manager"))
+            throw new CustomException(CustomErrorCode.NO_AUTHORIZATION);
+        CommentEntity comment = commentRepository.findById(commentId).orElseThrow(() -> new CustomException(CustomErrorCode.NOT_FOUND_COMMENT));
+        replyRepository.save(new ReplyEntity(replyCreateDto.getContent(), comment, member));
+    }
+
+    @Override
+    public void deleteComment(Long userId, Long courseId, Long assignedTaskId, Long commentId) {
+        UserEntity user = userServiceImpl.checkUserEntity(userId);
+        CourseEntity course = courseServiceImpl.checkCourseEntity(courseId);
+        MemberEntity member = memberServiceImpl.checkMember(user, course);
+        AssignedTaskEntity assignedTask = taskService.getAssignedTask(assignedTaskId);
+        if (!assignedTask.getMember().equals(member) && !member.getRole().equals("Manager"))
+            throw new CustomException(CustomErrorCode.NO_AUTHORIZATION);
+        CommentEntity comment = commentRepository.findById(commentId).orElseThrow(() -> new CustomException(CustomErrorCode.NOT_FOUND_COMMENT));
+        if (!comment.getWriter().equals(member)) throw new CustomException(CustomErrorCode.NO_AUTHORIZATION);
+        if (comment.getDeletedAt() != null) throw new CustomException(CustomErrorCode.ALREADY_DELETED);
+
+        comment.setDeletedAt(LocalDateTime.now());
+        commentRepository.save(comment);
+
+    }
+
+    @Override
+    public void deleteReply(Long userId, Long courseId, Long assignedTaskId, Long commentId, Long replyId) {
+        UserEntity user = userServiceImpl.checkUserEntity(userId);
+        CourseEntity course = courseServiceImpl.checkCourseEntity(courseId);
+        MemberEntity member = memberServiceImpl.checkMember(user, course);
+        AssignedTaskEntity assignedTask = taskService.getAssignedTask(assignedTaskId);
+        if (!assignedTask.getMember().equals(member) && !member.getRole().equals("Manager"))
+            throw new CustomException(CustomErrorCode.NO_AUTHORIZATION);
+        CommentEntity comment = commentRepository.findById(commentId).orElseThrow(() -> new CustomException(CustomErrorCode.NOT_FOUND_COMMENT));
+        ReplyEntity reply = replyRepository.findById(replyId).orElseThrow(() -> new CustomException(CustomErrorCode.NOT_FOUND_REPLY));
+        if (!reply.getComment().equals(comment)) throw new CustomException(CustomErrorCode.COMMENT_REPLY_MISMATCH);
+        if (reply.getDeletedAt() != null) throw new CustomException(CustomErrorCode.ALREADY_DELETED);
+
+        reply.setDeletedAt(LocalDateTime.now());
+        replyRepository.save(reply);
     }
 }

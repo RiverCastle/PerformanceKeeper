@@ -33,7 +33,7 @@ public class ManagerViewController {
         return "manager/task-create-page";
     }
 
-    @GetMapping("/course/{courseId}/assignedTaskId/{assignedTaskId}")
+    @GetMapping("/course/{courseId}/assignedTask/{assignedTaskId}")
     public String assignedTaskPage() {
         return "manager/task-page";
     }

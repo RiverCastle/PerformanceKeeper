@@ -21,6 +21,9 @@ public class CommentReadDto {
     }
 
     public static CommentReadDto fromEntity(CommentEntity entity) {
-        return new CommentReadDto(entity.getId(), entity.getWriter().getNickname(), entity.getContent(), entity.getCreatedAt());
+        return new CommentReadDto(entity.getId(),
+                entity.getWriter().getNickname(),
+                entity.getDeletedAt() == null ? entity.getContent() : "삭제된 댓글입니다.",
+                entity.getCreatedAt());
     }
 }

@@ -45,4 +45,9 @@ public class ViewController {
         log.info("to course page");
         return "course-page";
     }
+
+    @GetMapping("/course/{courseId}/assignedTask/{assignedTaskId}")
+    public String assignedTaskPage() {
+        return "task-page";
+    }
 }

@@ -11,7 +11,21 @@ fetch('/api/course/' + course_id + '/assignedTask/' + assigned_task_id + '/comme
             data.forEach(comment => {
                 const comment_id = comment.id;
                 const data_created_at = new Date(comment.createdAt);
-                const comment_created_at = data_created_at.getMonth() + 1 + "/" + data_created_at.getDate() + "  " + data_created_at.getHours() + ":" + data_created_at.getMinutes();
+                const comment_month = data_created_at.getMonth() + 1;
+                const comment_date = data_created_at.getDate();
+                const comment_hour = data_created_at.getHours();
+                const comment_minutes = data_created_at.getMinutes();
+
+                function formatTime(month, date, hours, minutes) {
+                    const formattedMonth = month < 10 ? '0' + month : month;
+                    const formattedDate = date < 10 ? '0' + date : date;
+                    const formattedHours = hours < 10 ? '0' + hours : hours;
+                    const formattedMinutes = minutes < 10 ? '0' + minutes : minutes;
+
+                    return formattedMonth + '/' + formattedDate + '  ' + formattedHours + ':' + formattedMinutes;
+                }
+
+                const comment_created_at = formatTime(comment_month, comment_date, comment_hour, comment_minutes);
                 const writerName = comment.writerName;
                 const content = comment.content;
 
@@ -50,7 +64,9 @@ fetch('/api/course/' + course_id + '/assignedTask/' + assigned_task_id + '/comme
                     comment.replies.forEach(reply => {
                         const replyId = reply.id;
                         const data_created_at = new Date(reply.createdAt);
-                        const reply_created_at = data_created_at.getMonth() + 1 + "/" + data_created_at.getDate() + "  " + data_created_at.getHours() + ":" + data_created_at.getMinutes();
+                        const reply_hour = data_created_at.getHours();
+                        const reply_minutes = data_created_at.getMinutes();
+                        const reply_created_at = data_created_at.getMonth() + 1 + "/" + data_created_at.getDate() + "  " + formatTime(reply_hour, reply_minutes);
                         const replyElement = document.createElement('ul');
                         replyElement.innerHTML = `<p>└ ${reply_created_at} | <strong>${reply.writerName}:</strong> ${reply.content}</p>`;
 

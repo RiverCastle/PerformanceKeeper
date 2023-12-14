@@ -32,10 +32,10 @@ fetch('/api/course/' + course_id + '/assignedTask/' + assigned_task_id + '/comme
                 const commentElement = document.createElement('ul');
                 commentElement.innerHTML = `<p>${comment_created_at} | <strong>${writerName}:</strong> ${content}</p>`;
 
-                // 댓글삭제버튼
+                // 댓글 삭제 버튼
                 if (member_id === comment.writerId) {
                     const comment_delete_button = document.createElement('button');
-                    comment_delete_button.textContent = "댓글삭제";
+                    comment_delete_button.textContent = "댓글 삭제";
                     comment_delete_button.className = "comment_delete_button"
                     comment_delete_button.addEventListener('click', () => {
                         alert("정말로 댓글을 삭제하시겠습니까?");
@@ -64,16 +64,18 @@ fetch('/api/course/' + course_id + '/assignedTask/' + assigned_task_id + '/comme
                     comment.replies.forEach(reply => {
                         const replyId = reply.id;
                         const data_created_at = new Date(reply.createdAt);
+                        const reply_month = data_created_at.getMonth();
+                        const reply_date = data_created_at.getDate();
                         const reply_hour = data_created_at.getHours();
                         const reply_minutes = data_created_at.getMinutes();
-                        const reply_created_at = data_created_at.getMonth() + 1 + "/" + data_created_at.getDate() + "  " + formatTime(reply_hour, reply_minutes);
+                        const reply_created_at = formatTime(reply_month, reply_date, reply_hour, reply_minutes);
                         const replyElement = document.createElement('ul');
                         replyElement.innerHTML = `<p>└ ${reply_created_at} | <strong>${reply.writerName}:</strong> ${reply.content}</p>`;
 
                         // 답글 삭제 버튼
                         if (member_id === reply.writerId) {
                             const reply_delete_button = document.createElement('button');
-                            reply_delete_button.textContent = "답글삭제";
+                            reply_delete_button.textContent = "답글 삭제";
                             reply_delete_button.className = "reply_delete_button"
                             reply_delete_button.addEventListener('click', () => {
                                 alert("정말로 답글을 삭제하시겠습니까?");
@@ -97,14 +99,13 @@ fetch('/api/course/' + course_id + '/assignedTask/' + assigned_task_id + '/comme
 
                         }
 
-                        // 답글을 댓글 아래에 표시하거나 원하는 위치에 추가
                         commentElement.appendChild(replyElement);
                     });
                 }
 
                 const reply_add_button = document.createElement('button');
                 reply_add_button.className = "new_reply_button"
-                reply_add_button.textContent = "답글달기";
+                reply_add_button.textContent = "답글 달기";
                 reply_add_button.addEventListener('click', () => {
                     const new_reply_content = prompt("답글을 입력해주세요.");
                     if (new_reply_content !== null) {
@@ -121,7 +122,7 @@ fetch('/api/course/' + course_id + '/assignedTask/' + assigned_task_id + '/comme
                             })
                         })
                             .then(response => {
-                                window.location.reload()
+                                if (response.ok) window.location.reload()
                             })
                             .catch(error => {
                                 alert(error.method);
@@ -130,7 +131,6 @@ fetch('/api/course/' + course_id + '/assignedTask/' + assigned_task_id + '/comme
                     }
                 })
                 commentElement.appendChild(reply_add_button);
-                // 표시할 요소에 추가하거나 DOM에 직접 추가
                 commentElement.appendChild(document.createElement('hr'))
                 comments_div.appendChild(commentElement);
             });

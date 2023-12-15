@@ -17,7 +17,7 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class CourseServiceImpl implements CourseService{
+public class CourseServiceImpl implements CourseService {
     private final BCryptPasswordEncoder passwordEncoder;
     private final CourseRepository courseRepository;
     private final MemberService memberService;
@@ -96,5 +96,11 @@ public class CourseServiceImpl implements CourseService{
 
     public CourseEntity checkCourseEntity(Long courseId) {
         return courseRepository.findByIdAndDeletedAtIsNull(courseId).orElseThrow(() -> new CustomException(CustomErrorCode.NOT_FOUND_COURSE));
+    }
+
+    @Override
+    public CourseEntity checkCourse(Long courseId) {
+        return courseRepository.findByIdAndDeletedAtIsNull(courseId)
+                .orElseThrow(() -> new CustomException(CustomErrorCode.NOT_FOUND_COURSE));
     }
 }

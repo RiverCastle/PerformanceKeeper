@@ -10,4 +10,6 @@ public interface CourseService {
     void updateCourseName(Long userId, Long courseId, CourseNameUpdateDto courseNameUpdateDto);
     void updateDescriptionName(Long userId, Long courseId, CourseDescriptionUpdateDto courseDescriptionUpdateDto);
     CourseEntity checkCourseEntity(Long courseId);
+
+    CourseEntity checkCourse(Long courseId);
 }

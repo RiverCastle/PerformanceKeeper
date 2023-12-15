@@ -72,15 +72,9 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
-    public void deleteReply(Long userId, Long courseId, Long assignedTaskId, Long commentId, Long replyId) {
-        UserEntity user = userServiceImpl.checkUser(userId);
-        CourseEntity course = courseServiceImpl.checkCourseEntity(courseId);
-        MemberEntity member = memberServiceImpl.checkMember(user, course);
-        AssignedTaskEntity assignedTask = taskService.checkAssignedTask(assignedTaskId);
+    public void deleteReply(MemberEntity member, AssignedTaskEntity assignedTask, CommentEntity comment, ReplyEntity reply) {
         if (!assignedTask.getMember().equals(member) && !member.getRole().equals("Manager"))
             throw new CustomException(CustomErrorCode.NO_AUTHORIZATION);
-        CommentEntity comment = commentRepository.findById(commentId).orElseThrow(() -> new CustomException(CustomErrorCode.NOT_FOUND_COMMENT));
-        ReplyEntity reply = replyRepository.findById(replyId).orElseThrow(() -> new CustomException(CustomErrorCode.NOT_FOUND_REPLY));
         if (!reply.getComment().equals(comment)) throw new CustomException(CustomErrorCode.COMMENT_REPLY_MISMATCH);
         if (reply.getDeletedAt() != null) throw new CustomException(CustomErrorCode.ALREADY_DELETED);
 
@@ -92,5 +86,11 @@ public class CommentServiceImpl implements CommentService {
     public CommentEntity checkComment(Long commentId) {
         return commentRepository.findByIdAndDeletedAtIsNull(commentId)
                 .orElseThrow(() -> new CustomException(CustomErrorCode.NOT_FOUND_COMMENT));
+    }
+
+    @Override
+    public ReplyEntity checkReply(Long replyId) {
+        return replyRepository.findById(replyId)
+                .orElseThrow(() -> new CustomException(CustomErrorCode.NOT_FOUND_REPLY));
     }
 }

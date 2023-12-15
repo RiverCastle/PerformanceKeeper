@@ -14,7 +14,9 @@ public interface CommentService {
 
     void deleteComment(MemberEntity member, AssignedTaskEntity assignedTask, CommentEntity comment);
 
-    void deleteReply(Long userId, Long courseId, Long assignedTaskId, Long commentId, Long replyId);
+    void deleteReply(MemberEntity member, AssignedTaskEntity assignedTask, CommentEntity comment, ReplyEntity reply);
 
     CommentEntity checkComment(Long commentId);
+
+    ReplyEntity checkReply(Long replyId);
 }

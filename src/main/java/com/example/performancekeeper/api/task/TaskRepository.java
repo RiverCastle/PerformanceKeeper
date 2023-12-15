@@ -6,9 +6,12 @@ import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface TaskRepository extends JpaRepository<TaskEntity, Long> {
     List<TaskEntity> findAllByCourseAndDeletedAtIsNull(CourseEntity course);
     List<TaskEntity> findAllByCourseAndStartAtAndDeletedAtIsNull(CourseEntity course, LocalDate startAt);
+
+    Optional<TaskEntity> findByIdAndDeletedAtIsNull(Long taskId);
 }

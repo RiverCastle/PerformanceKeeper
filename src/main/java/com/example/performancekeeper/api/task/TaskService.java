@@ -24,4 +24,6 @@ public interface TaskService {
     AssignedTaskEntity getAssignedTask(Long assignedTaskId);
 
     TaskOverviewDto getTaskDetails(Long userId, Long courseId, Long assignedTaskId);
+
+    TaskEntity checkTask(Long taskId);
 }

@@ -191,4 +191,10 @@ public class TaskServiceImpl implements TaskService {
         AssignedTaskEntity assignedTask = assignedTaskRepository.findByIdAndDeletedAtIsNull(assignedTaskId).orElseThrow(() -> new CustomException(CustomErrorCode.NOT_FOUND_TASK));
         return TaskOverviewDto.fromEntity(assignedTask.getTask());
     }
+
+    @Override
+    public TaskEntity checkTask(Long taskId) {
+        return taskRepository.findByIdAndDeletedAtIsNull(taskId)
+                .orElseThrow(() -> new CustomException(CustomErrorCode.NOT_FOUND_TASK));
+    }
 }

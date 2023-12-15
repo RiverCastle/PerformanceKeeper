@@ -15,7 +15,6 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.IllegalFormatCodePointException;
 import java.util.List;
 
 @Service
@@ -30,7 +29,7 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     public void createComment(Long userId, Long courseId, Long assignedTaskId, CommentCreateDto commentCreateDto) {
-        UserEntity user = userServiceImpl.checkUserEntity(userId);
+        UserEntity user = userServiceImpl.checkUser(userId);
         CourseEntity course = courseServiceImpl.checkCourseEntity(courseId);
         MemberEntity member = memberServiceImpl.checkMember(user, course);
         AssignedTaskEntity assignedTask = taskService.getAssignedTask(assignedTaskId);
@@ -41,7 +40,7 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     public List<CommentReadDto> getComments(Long userId, Long courseId, Long assignedTaskId) {
-        UserEntity user = userServiceImpl.checkUserEntity(userId);
+        UserEntity user = userServiceImpl.checkUser(userId);
         CourseEntity course = courseServiceImpl.checkCourseEntity(courseId);
         MemberEntity member = memberServiceImpl.checkMember(user, course);
         AssignedTaskEntity assignedTask = taskService.getAssignedTask(assignedTaskId);
@@ -63,7 +62,7 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     public void createReply(Long userId, Long courseId, Long assignedTaskId, Long commentId, ReplyCreateDto replyCreateDto) {
-        UserEntity user = userServiceImpl.checkUserEntity(userId);
+        UserEntity user = userServiceImpl.checkUser(userId);
         CourseEntity course = courseServiceImpl.checkCourseEntity(courseId);
         MemberEntity member = memberServiceImpl.checkMember(user, course);
         AssignedTaskEntity assignedTask = taskService.getAssignedTask(assignedTaskId);
@@ -75,7 +74,7 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     public void deleteComment(Long userId, Long courseId, Long assignedTaskId, Long commentId) {
-        UserEntity user = userServiceImpl.checkUserEntity(userId);
+        UserEntity user = userServiceImpl.checkUser(userId);
         CourseEntity course = courseServiceImpl.checkCourseEntity(courseId);
         MemberEntity member = memberServiceImpl.checkMember(user, course);
         AssignedTaskEntity assignedTask = taskService.getAssignedTask(assignedTaskId);
@@ -92,7 +91,7 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     public void deleteReply(Long userId, Long courseId, Long assignedTaskId, Long commentId, Long replyId) {
-        UserEntity user = userServiceImpl.checkUserEntity(userId);
+        UserEntity user = userServiceImpl.checkUser(userId);
         CourseEntity course = courseServiceImpl.checkCourseEntity(courseId);
         MemberEntity member = memberServiceImpl.checkMember(user, course);
         AssignedTaskEntity assignedTask = taskService.getAssignedTask(assignedTaskId);

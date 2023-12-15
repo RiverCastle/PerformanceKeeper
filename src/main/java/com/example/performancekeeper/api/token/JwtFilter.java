@@ -48,7 +48,7 @@ public class JwtFilter extends OncePerRequestFilter {
             RefreshTokenEntity refreshToken = optionalRefreshTokenEntity.get();
             try {
                 tokenProvider.validateRefreshToken(refreshToken.getRefreshToken());  // Refresh 토큰이 유효한 경우
-                UserEntity user = userServiceImpl.checkUserEntity(refreshToken.getUserId());
+                UserEntity user = userServiceImpl.checkUser(refreshToken.getUserId());
                 accessToken = tokenProvider.createAccessToken(user); // 새 엑세스 토큰 생성
                 refreshTokenService.saveNewAccessTokenInRefreshToken(accessToken, refreshToken);
             } catch (ExpiredJwtException exception) { // Refresh 토큰이 무효한 경우

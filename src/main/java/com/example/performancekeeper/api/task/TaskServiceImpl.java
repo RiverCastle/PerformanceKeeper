@@ -38,7 +38,7 @@ public class TaskServiceImpl implements TaskService {
     }
     @Transactional
     public void createTask(Long userId, Long courseId, TaskCreateDto taskCreateDto) {
-        UserEntity user = userServiceImpl.checkUserEntity(userId);
+        UserEntity user = userServiceImpl.checkUser(userId);
         CourseEntity course = courseServiceImpl.checkCourseEntity(courseId);
         memberServiceImpl.checkManagerMember(user, course);
         TaskEntity taskEntity = TaskCreateDto.toEntity(taskCreateDto);
@@ -80,7 +80,7 @@ public class TaskServiceImpl implements TaskService {
 //    }
 
     public List<AssignedTaskOverviewDto>[] searchCompletedTasksAndUncompletedTasksByDate(Long userId, Long courseId, LocalDate date) { // 학생이 날짜별 자신의 진행상황 조회
-        UserEntity user = userServiceImpl.checkUserEntity(userId);
+        UserEntity user = userServiceImpl.checkUser(userId);
         CourseEntity course = courseServiceImpl.checkCourseEntity(courseId);
         MemberEntity member = memberServiceImpl.checkStudentMember(user, course);
         List<TaskEntity> taskList = taskRepository.findAllByCourseAndStartAtAndDeletedAtIsNull(course, date);
@@ -101,7 +101,7 @@ public class TaskServiceImpl implements TaskService {
     }
 
     public void updateTaskStatus(Long userId, Long courseId, Long taskId, TaskStatusDto taskStatusDto) {
-        UserEntity user = userServiceImpl.checkUserEntity(userId);
+        UserEntity user = userServiceImpl.checkUser(userId);
         CourseEntity course = courseServiceImpl.checkCourseEntity(courseId);
         MemberEntity member = memberServiceImpl.checkStudentMember(user, course);
         AssignedTaskEntity assignedTask = assignedTaskRepository.findById(taskId).orElseThrow(() -> new CustomException(CustomErrorCode.NOT_FOUND_TASK));
@@ -111,7 +111,7 @@ public class TaskServiceImpl implements TaskService {
     }
 
     public List<Object> getTasksByDate(Long userId, Long courseId, LocalDate startAt) {
-        UserEntity user = userServiceImpl.checkUserEntity(userId);
+        UserEntity user = userServiceImpl.checkUser(userId);
         CourseEntity course = courseServiceImpl.checkCourseEntity(courseId);
         memberServiceImpl.checkManagerMember(user, course);
 
@@ -124,7 +124,7 @@ public class TaskServiceImpl implements TaskService {
     }
 
     public Map<MemberOverviewDto, List<AssignedTaskStatusDto>> getProgressesByDate(Long userId, Long courseId, LocalDate startAt) {
-        UserEntity user = userServiceImpl.checkUserEntity(userId);
+        UserEntity user = userServiceImpl.checkUser(userId);
         CourseEntity course = courseServiceImpl.checkCourseEntity(courseId);
         memberServiceImpl.checkManagerMember(user, course);
         // ↑ 3줄 필요X
@@ -159,7 +159,7 @@ public class TaskServiceImpl implements TaskService {
     }
 
     public int[] getProgressOfThisTask(Long userId, Long courseId, Long taskId) {
-        UserEntity user = userServiceImpl.checkUserEntity(userId);
+        UserEntity user = userServiceImpl.checkUser(userId);
         CourseEntity course = courseServiceImpl.checkCourseEntity(courseId);
         memberServiceImpl.checkManagerMember(user, course);
         TaskEntity task = taskRepository.findById(taskId).orElseThrow(() -> new CustomException(CustomErrorCode.NOT_FOUND_TASK));
@@ -185,7 +185,7 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     public TaskOverviewDto getTaskDetails(Long userId, Long courseId, Long assignedTaskId) {
-        UserEntity user = userServiceImpl.checkUserEntity(userId);
+        UserEntity user = userServiceImpl.checkUser(userId);
         CourseEntity course = courseServiceImpl.checkCourseEntity(courseId);
         memberServiceImpl.checkMember(user, course);
         AssignedTaskEntity assignedTask = assignedTaskRepository.findByIdAndDeletedAtIsNull(assignedTaskId).orElseThrow(() -> new CustomException(CustomErrorCode.NOT_FOUND_TASK));

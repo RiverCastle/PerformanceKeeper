@@ -1,6 +1,5 @@
 package com.example.performancekeeper.api.comment;
 
-import com.example.performancekeeper.api.course.CourseEntity;
 import com.example.performancekeeper.api.member.MemberEntity;
 import com.example.performancekeeper.api.task.AssignedTaskEntity;
 
@@ -11,7 +10,7 @@ public interface CommentService {
 
     List<CommentReadDto> getComments(MemberEntity member, AssignedTaskEntity assignedTask);
 
-    void createReply(Long userId, Long courseId, Long assignedTaskId, Long commentId, ReplyCreateDto replyCreateDto);
+    void createReply(MemberEntity member, AssignedTaskEntity assignedTask, CommentEntity comment, ReplyCreateDto replyCreateDto);
 
     void deleteComment(Long userId, Long courseId, Long assignedTaskId, Long commentId);
 

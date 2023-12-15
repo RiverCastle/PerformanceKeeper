@@ -53,6 +53,7 @@ public class CommentServiceImpl implements CommentService {
     public void deleteComment(MemberEntity member, AssignedTaskEntity assignedTask, CommentEntity comment) {
         if (!assignedTask.getMember().equals(member) && !member.getRole().equals("Manager"))
             throw new CustomException(CustomErrorCode.NO_AUTHORIZATION);
+        if (!comment.getAssignedTaskEntity().equals(assignedTask)) throw new CustomException(CustomErrorCode.ASSIGNEDTASK_COMMENT_MISMATCH);
         if (!comment.getWriter().equals(member)) throw new CustomException(CustomErrorCode.NO_AUTHORIZATION);
         if (comment.getDeletedAt() != null) throw new CustomException(CustomErrorCode.ALREADY_DELETED);
 

@@ -1,5 +1,6 @@
 package com.example.performancekeeper.api.comment;
 
+import com.example.performancekeeper.api.common.PerformanceKeeperFacade;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
@@ -10,14 +11,14 @@ import java.util.List;
 @RequiredArgsConstructor
 @RequestMapping("/api/course/{courseId}/assignedTask/{assignedTaskId}/comment")
 public class CommentController {
-    private final CommentService commentService;
+    private final PerformanceKeeperFacade performanceKeeperFacade;
     @PostMapping
     public void addComment(Authentication authentication,
                            @PathVariable("courseId") Long courseId,
                            @PathVariable("assignedTaskId") Long assignedTaskId,
                            @RequestBody CommentCreateDto commentCreateDto) {
         Long userId = Long.parseLong(authentication.getName());
-        commentService.createComment(userId, courseId, assignedTaskId, commentCreateDto);
+        performanceKeeperFacade.createComment(userId, courseId, assignedTaskId, commentCreateDto);
     }
 
     @GetMapping
@@ -25,7 +26,7 @@ public class CommentController {
                                             @PathVariable("courseId") Long courseId,
                                             @PathVariable("assignedTaskId") Long assignedTaskId) {
         Long userId = Long.parseLong(authentication.getName());
-        return commentService.getComments(userId, courseId, assignedTaskId);
+        return performanceKeeperFacade.getComments(userId, courseId, assignedTaskId);
     }
 
     @PostMapping("/{commentId}/reply")
@@ -35,7 +36,7 @@ public class CommentController {
                            @PathVariable("commentId") Long commentId,
                            @RequestBody ReplyCreateDto replyCreateDto) {
         Long userId = Long.parseLong(authentication.getName());
-        commentService.createReply(userId, courseId, assignedTaskId, commentId, replyCreateDto);
+        performanceKeeperFacade.createReply(userId, courseId, assignedTaskId, commentId, replyCreateDto);
     }
 
     @DeleteMapping("/{commentId}")
@@ -44,7 +45,7 @@ public class CommentController {
                               @PathVariable("assignedTaskId") Long assignedTaskId,
                               @PathVariable("commentId") Long commentId) {
         Long userId = Long.parseLong(authentication.getName());
-        commentService.deleteComment(userId, courseId, assignedTaskId, commentId);
+        performanceKeeperFacade.deleteComment(userId, courseId, assignedTaskId, commentId);
     }
 
     @DeleteMapping("/{commentId}/reply/{replyId}")
@@ -54,7 +55,6 @@ public class CommentController {
                             @PathVariable("commentId") Long commentId,
                             @PathVariable("replyId") Long replyId) {
         Long userId = Long.parseLong(authentication.getName());
-        commentService.deleteReply(userId, courseId, assignedTaskId, commentId, replyId);
-
+        performanceKeeperFacade.deleteReply(userId, courseId, assignedTaskId, commentId, replyId);
     }
 }

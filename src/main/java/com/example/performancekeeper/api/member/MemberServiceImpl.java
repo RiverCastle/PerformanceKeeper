@@ -47,16 +47,12 @@ public class MemberServiceImpl implements MemberService{
         memberRepository.save(new MemberEntity(user, course, "Manager"));
     }
 
-    @Transactional
-    public void createStudentMember(Long userId, Long courseId, JoinCourseDto joinCourseDto) {
-        UserEntity user = userServiceImpl.checkUser(userId);
-        CourseEntity course = courseServiceImpl.checkCourseEntity(courseId);
+    public MemberEntity createStudentMember(UserEntity user, CourseEntity course, JoinCourseDto joinCourseDto) {
         if (!passwordEncoder.matches(joinCourseDto.getJoinCode(), course.getJoinCode()))
-            throw new CustomException(CustomErrorCode.JOINCODE_MISMATCH);
+            throw new CustomException(CustomErrorCode.JOINCODE_MISMATCH); // 참여코드 일치 확인
         Optional<MemberEntity> optionalMemberEntity = memberRepository.findByUserAndCourseAndRoleAndDeletedAtIsNull(user, course, "Student");
         if (optionalMemberEntity.isPresent()) throw new CustomException(CustomErrorCode.ALREADY_JOIN);
-        MemberEntity memberEntity = memberRepository.save(new MemberEntity(user, course, "Student"));
-        taskService.assignTasksToNewStudent(course, memberEntity); // 새 학생에게 기존의 과제물 부여
+        return memberRepository.save(new MemberEntity(user, course, "Student"));
     }
 
     public List<MemberEntity> getMyMember(UserEntity user) {

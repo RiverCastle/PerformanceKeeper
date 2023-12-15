@@ -1,11 +1,13 @@
 package com.example.performancekeeper.api.comment;
 
 import com.example.performancekeeper.api.course.CourseEntity;
+import com.example.performancekeeper.api.member.MemberEntity;
+import com.example.performancekeeper.api.task.AssignedTaskEntity;
 
 import java.util.List;
 
 public interface CommentService {
-    void createComment(Long userId, Long courseId, Long assignedTaskId, CommentCreateDto commentCreateDto);
+    void createComment(MemberEntity member, AssignedTaskEntity assignedTask, CommentCreateDto commentCreateDto);
 
     List<CommentReadDto> getComments(Long userId, Long courseId, Long assignedTaskId);
 

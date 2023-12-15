@@ -28,13 +28,9 @@ public class CommentServiceImpl implements CommentService {
     private final TaskService taskService;
 
     @Override
-    public void createComment(Long userId, Long courseId, Long assignedTaskId, CommentCreateDto commentCreateDto) {
-        UserEntity user = userServiceImpl.checkUser(userId);
-        CourseEntity course = courseServiceImpl.checkCourseEntity(courseId);
-        MemberEntity member = memberServiceImpl.checkMember(user, course);
-        AssignedTaskEntity assignedTask = taskService.checkAssignedTask(assignedTaskId);
+    public void createComment(MemberEntity member, AssignedTaskEntity assignedTask, CommentCreateDto commentCreateDto) {
         if (!assignedTask.getMember().equals(member) && !member.getRole().equals("Manager"))
-            throw new CustomException(CustomErrorCode.NO_AUTHORIZATION);
+            throw new CustomException(CustomErrorCode.NO_AUTHORIZATION); // 작성자 본인 또는 강사만 작성 가능
         commentRepository.save(new CommentEntity(commentCreateDto.getContent(), assignedTask, member));
     }
 

@@ -3,7 +3,7 @@ package com.example.performancekeeper.api.course;
 import java.util.List;
 
 public interface CourseService {
-    void createCourse(Long userId, CourseCreateDto courseCreateDto);
+    CourseEntity createCourse(CourseCreateDto courseCreateDto);
     List<CourseOverviewDto> searchCourse(String keyword);
     List<MyCourseOverviewDto> getMyCourses(Long userId);
     CourseDetailsDto getCourseDetails(Long userId, Long courseId);

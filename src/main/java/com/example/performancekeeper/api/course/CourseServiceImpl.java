@@ -7,7 +7,6 @@ import com.example.performancekeeper.api.member.MemberService;
 import com.example.performancekeeper.api.task.TaskService;
 import com.example.performancekeeper.api.users.UserEntity;
 import com.example.performancekeeper.api.users.UserServiceImpl;
-import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -24,13 +23,9 @@ public class CourseServiceImpl implements CourseService {
     private final UserServiceImpl userServiceImpl;
     private final TaskService taskService;
 
-    @Transactional
-    public void createCourse(Long userId, CourseCreateDto courseCreateDto) {
-        UserEntity userEntity = userServiceImpl.checkUser(userId);
-        courseCreateDto.setJoinCode(passwordEncoder.encode(courseCreateDto.getJoinCode()));
-        CourseEntity courseEntity = CourseCreateDto.toEntity(courseCreateDto);
-        courseEntity = courseRepository.save(courseEntity);
-        memberService.createManagerMember(userEntity, courseEntity);
+    public CourseEntity createCourse(CourseCreateDto courseCreateDto) {
+        courseCreateDto.setJoinCode(passwordEncoder.encode(courseCreateDto.getJoinCode())); // 가입코드 암호화
+        return courseRepository.save(CourseCreateDto.toEntity(courseCreateDto));
     }
 
     public List<CourseOverviewDto> searchCourse(String keyword) {

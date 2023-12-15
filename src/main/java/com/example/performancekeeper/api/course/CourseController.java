@@ -1,5 +1,6 @@
 package com.example.performancekeeper.api.course;
 
+import com.example.performancekeeper.api.common.PerformanceKeeperFacade;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
@@ -10,29 +11,29 @@ import java.util.List;
 @RequiredArgsConstructor
 @RequestMapping("/api/course")
 public class CourseController {
-    private final CourseService courseService;
+    private final PerformanceKeeperFacade performanceKeeperFacade;
     @PostMapping
     public void createCourse(Authentication authentication,
                              @RequestBody CourseCreateDto courseCreateDto) {
         Long userId = Long.parseLong(authentication.getName());
-        courseService.createCourse(userId, courseCreateDto);
+        performanceKeeperFacade.createCourse(userId, courseCreateDto);
     }
     @GetMapping
     public List<CourseOverviewDto> getCourseList(@RequestParam(value = "keyword", defaultValue = "") String keyword) {
-        return courseService.searchCourse(keyword);
+        return performanceKeeperFacade.searchCourse(keyword);
     }
 
     @GetMapping("/myCourse")
     public List<MyCourseOverviewDto> getMyCourses(Authentication authentication) {
         Long userId = Long.parseLong(authentication.getName());
-        return courseService.getMyCourses(userId);
+        return performanceKeeperFacade.getMyCourses(userId);
     }
 
     @GetMapping("/{courseId}")
     public CourseDetailsDto getCourseDetails(Authentication authentication,
                                              @PathVariable("courseId") Long courseId) {
         Long userId = Long.parseLong(authentication.getName());
-        return courseService.getCourseDetails(userId, courseId);
+        return performanceKeeperFacade.getCourseDetails(userId, courseId);
     }
 
     @PutMapping("/{courseId}/name")
@@ -40,7 +41,7 @@ public class CourseController {
                                  @PathVariable("courseId") Long courseId,
                                  @RequestBody CourseNameUpdateDto courseNameUpdateDto) {
         Long userId = Long.parseLong(authentication.getName());
-        courseService.updateCourseName(userId, courseId, courseNameUpdateDto);
+        performanceKeeperFacade.updateCourseName(userId, courseId, courseNameUpdateDto);
     }
 
     @PutMapping("/{courseId}/description")
@@ -48,6 +49,6 @@ public class CourseController {
                                       @PathVariable("courseId") Long courseId,
                                       @RequestBody CourseDescriptionUpdateDto courseDescriptionUpdateDto) {
         Long userId = Long.parseLong(authentication.getName());
-        courseService.updateDescriptionName(userId, courseId, courseDescriptionUpdateDto);
+        performanceKeeperFacade.updateCourseDescription(userId, courseId, courseDescriptionUpdateDto);
     }
 }

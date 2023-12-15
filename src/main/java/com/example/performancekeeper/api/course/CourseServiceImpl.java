@@ -2,11 +2,6 @@ package com.example.performancekeeper.api.course;
 
 import com.example.performancekeeper.api.common.exception.CustomErrorCode;
 import com.example.performancekeeper.api.common.exception.CustomException;
-import com.example.performancekeeper.api.member.MemberEntity;
-import com.example.performancekeeper.api.member.MemberService;
-import com.example.performancekeeper.api.task.TaskService;
-import com.example.performancekeeper.api.users.UserEntity;
-import com.example.performancekeeper.api.users.UserServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -19,9 +14,6 @@ import java.util.List;
 public class CourseServiceImpl implements CourseService {
     private final BCryptPasswordEncoder passwordEncoder;
     private final CourseRepository courseRepository;
-    private final MemberService memberService;
-    private final UserServiceImpl userServiceImpl;
-    private final TaskService taskService;
 
     public CourseEntity createCourse(CourseCreateDto courseCreateDto) {
         courseCreateDto.setJoinCode(passwordEncoder.encode(courseCreateDto.getJoinCode())); // 가입코드 암호화
@@ -39,34 +31,14 @@ public class CourseServiceImpl implements CourseService {
         return CourseDetailsDto.fromEntity(course);
     }
 
-    public void updateCourseName(Long userId, Long courseId, CourseNameUpdateDto courseNameUpdateDto) {
-        UserEntity user = userServiceImpl.checkUser(userId);
-        CourseEntity course = courseRepository.findByIdAndDeletedAtIsNull(courseId).orElseThrow(() -> new CustomException(CustomErrorCode.NOT_FOUND_COURSE));
-        List<MemberEntity> myMembers = memberService.getMyMember(user);
-        for (MemberEntity member : myMembers) {
-            CourseEntity targetCourse = member.getCourse();
-            if (targetCourse.equals(course) && member.getRole().equals("Manager")) {
-                course.setName(courseNameUpdateDto.getNewName());
-                courseRepository.save(course);
-                return;
-            }
-        }
-        throw new CustomException(CustomErrorCode.NO_AUTHORIZATION);
+    public void updateCourseName(CourseEntity course, CourseNameUpdateDto courseNameUpdateDto) {
+        course.setName(courseNameUpdateDto.getNewName());
+        courseRepository.save(course);
     }
 
-    public void updateDescriptionName(Long userId, Long courseId, CourseDescriptionUpdateDto courseDescriptionUpdateDto) {
-        UserEntity user = userServiceImpl.checkUser(userId);
-        CourseEntity course = courseRepository.findByIdAndDeletedAtIsNull(courseId).orElseThrow(() -> new CustomException(CustomErrorCode.NOT_FOUND_COURSE));
-        List<MemberEntity> myMembers = memberService.getMyMember(user);
-        for (MemberEntity member : myMembers) {
-            CourseEntity targetCourse = member.getCourse();
-            if (targetCourse.equals(course) && member.getRole().equals("Manager")) {
-                course.setDescription(courseDescriptionUpdateDto.getNewDescription());
-                courseRepository.save(course);
-                return;
-            }
-        }
-        throw new CustomException(CustomErrorCode.NO_AUTHORIZATION);
+    public void updateCourseDescription(CourseEntity course, CourseDescriptionUpdateDto courseDescriptionUpdateDto) {
+        course.setDescription(courseDescriptionUpdateDto.getNewDescription());
+        courseRepository.save(course);
     }
 
     public CourseEntity checkCourseEntity(Long courseId) {

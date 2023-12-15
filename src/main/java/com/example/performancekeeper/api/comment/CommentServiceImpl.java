@@ -105,4 +105,10 @@ public class CommentServiceImpl implements CommentService {
         reply.setDeletedAt(LocalDateTime.now());
         replyRepository.save(reply);
     }
+
+    @Override
+    public CommentEntity checkComment(Long commentId) {
+        return commentRepository.findByIdAndDeletedAtIsNull(commentId)
+                .orElseThrow(() -> new CustomException(CustomErrorCode.NOT_FOUND_COMMENT));
+    }
 }

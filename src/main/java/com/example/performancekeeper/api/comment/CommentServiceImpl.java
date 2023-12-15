@@ -2,14 +2,8 @@ package com.example.performancekeeper.api.comment;
 
 import com.example.performancekeeper.api.common.exception.CustomErrorCode;
 import com.example.performancekeeper.api.common.exception.CustomException;
-import com.example.performancekeeper.api.course.CourseEntity;
-import com.example.performancekeeper.api.course.CourseServiceImpl;
 import com.example.performancekeeper.api.member.MemberEntity;
-import com.example.performancekeeper.api.member.MemberServiceImpl;
 import com.example.performancekeeper.api.task.AssignedTaskEntity;
-import com.example.performancekeeper.api.task.TaskService;
-import com.example.performancekeeper.api.users.UserEntity;
-import com.example.performancekeeper.api.users.UserServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -22,10 +16,6 @@ import java.util.List;
 public class CommentServiceImpl implements CommentService {
     private final CommentRepository commentRepository;
     private final ReplyRepository replyRepository;
-    private final UserServiceImpl userServiceImpl;
-    private final CourseServiceImpl courseServiceImpl;
-    private final MemberServiceImpl memberServiceImpl;
-    private final TaskService taskService;
 
     @Override
     public void createComment(MemberEntity member, AssignedTaskEntity assignedTask, CommentCreateDto commentCreateDto) {

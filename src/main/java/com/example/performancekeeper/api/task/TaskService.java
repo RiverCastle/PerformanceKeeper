@@ -21,7 +21,7 @@ public interface TaskService {
     void deleteAssignedTasksOfLeavingStudent(MemberEntity member);
     int[] getProgressOfThisTask(Long userId, Long courseId, Long taskId);
 
-    AssignedTaskEntity getAssignedTask(Long assignedTaskId);
+    AssignedTaskEntity checkAssignedTask(Long assignedTaskId);
 
     TaskOverviewDto getTaskDetails(Long userId, Long courseId, Long assignedTaskId);
 

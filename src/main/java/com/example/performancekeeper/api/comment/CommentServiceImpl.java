@@ -32,7 +32,7 @@ public class CommentServiceImpl implements CommentService {
         UserEntity user = userServiceImpl.checkUser(userId);
         CourseEntity course = courseServiceImpl.checkCourseEntity(courseId);
         MemberEntity member = memberServiceImpl.checkMember(user, course);
-        AssignedTaskEntity assignedTask = taskService.getAssignedTask(assignedTaskId);
+        AssignedTaskEntity assignedTask = taskService.checkAssignedTask(assignedTaskId);
         if (!assignedTask.getMember().equals(member) && !member.getRole().equals("Manager"))
             throw new CustomException(CustomErrorCode.NO_AUTHORIZATION);
         commentRepository.save(new CommentEntity(commentCreateDto.getContent(), assignedTask, member));
@@ -43,7 +43,7 @@ public class CommentServiceImpl implements CommentService {
         UserEntity user = userServiceImpl.checkUser(userId);
         CourseEntity course = courseServiceImpl.checkCourseEntity(courseId);
         MemberEntity member = memberServiceImpl.checkMember(user, course);
-        AssignedTaskEntity assignedTask = taskService.getAssignedTask(assignedTaskId);
+        AssignedTaskEntity assignedTask = taskService.checkAssignedTask(assignedTaskId);
         if (!assignedTask.getMember().equals(member) && !member.getRole().equals("Manager"))
             throw new CustomException(CustomErrorCode.NO_AUTHORIZATION);
 
@@ -65,7 +65,7 @@ public class CommentServiceImpl implements CommentService {
         UserEntity user = userServiceImpl.checkUser(userId);
         CourseEntity course = courseServiceImpl.checkCourseEntity(courseId);
         MemberEntity member = memberServiceImpl.checkMember(user, course);
-        AssignedTaskEntity assignedTask = taskService.getAssignedTask(assignedTaskId);
+        AssignedTaskEntity assignedTask = taskService.checkAssignedTask(assignedTaskId);
         if (!assignedTask.getMember().equals(member) && !member.getRole().equals("Manager"))
             throw new CustomException(CustomErrorCode.NO_AUTHORIZATION);
         CommentEntity comment = commentRepository.findById(commentId).orElseThrow(() -> new CustomException(CustomErrorCode.NOT_FOUND_COMMENT));
@@ -77,7 +77,7 @@ public class CommentServiceImpl implements CommentService {
         UserEntity user = userServiceImpl.checkUser(userId);
         CourseEntity course = courseServiceImpl.checkCourseEntity(courseId);
         MemberEntity member = memberServiceImpl.checkMember(user, course);
-        AssignedTaskEntity assignedTask = taskService.getAssignedTask(assignedTaskId);
+        AssignedTaskEntity assignedTask = taskService.checkAssignedTask(assignedTaskId);
         if (!assignedTask.getMember().equals(member) && !member.getRole().equals("Manager"))
             throw new CustomException(CustomErrorCode.NO_AUTHORIZATION);
         CommentEntity comment = commentRepository.findById(commentId).orElseThrow(() -> new CustomException(CustomErrorCode.NOT_FOUND_COMMENT));
@@ -94,7 +94,7 @@ public class CommentServiceImpl implements CommentService {
         UserEntity user = userServiceImpl.checkUser(userId);
         CourseEntity course = courseServiceImpl.checkCourseEntity(courseId);
         MemberEntity member = memberServiceImpl.checkMember(user, course);
-        AssignedTaskEntity assignedTask = taskService.getAssignedTask(assignedTaskId);
+        AssignedTaskEntity assignedTask = taskService.checkAssignedTask(assignedTaskId);
         if (!assignedTask.getMember().equals(member) && !member.getRole().equals("Manager"))
             throw new CustomException(CustomErrorCode.NO_AUTHORIZATION);
         CommentEntity comment = commentRepository.findById(commentId).orElseThrow(() -> new CustomException(CustomErrorCode.NOT_FOUND_COMMENT));

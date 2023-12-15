@@ -35,15 +35,8 @@ public class CourseServiceImpl implements CourseService {
         return result;
     }
 
-    public CourseDetailsDto getCourseDetails(Long userId, Long courseId) {
-        UserEntity user = userServiceImpl.checkUser(userId);
-        CourseEntity course = courseRepository.findByIdAndDeletedAtIsNull(courseId).orElseThrow(() -> new CustomException(CustomErrorCode.NOT_FOUND_COURSE));
-        List<MemberEntity> myMembers = memberService.getMyMember(user);
-        for (MemberEntity member : myMembers) {
-            CourseEntity targetCourse = member.getCourse();
-            if (targetCourse.equals(course)) return CourseDetailsDto.fromEntity(targetCourse);
-        }
-        throw new CustomException(CustomErrorCode.NOT_MEMBER);
+    public CourseDetailsDto getCourseDetails(CourseEntity course) {
+        return CourseDetailsDto.fromEntity(course);
     }
 
     public void updateCourseName(Long userId, Long courseId, CourseNameUpdateDto courseNameUpdateDto) {

@@ -35,19 +35,6 @@ public class CourseServiceImpl implements CourseService {
         return result;
     }
 
-    public List<MyCourseOverviewDto> getMyCourses(Long userId) {
-        UserEntity user = userServiceImpl.checkUser(userId);
-        List<MemberEntity> myMembers = memberService.getMyMember(user);
-        List<MyCourseOverviewDto> myCoursesDtoList = new ArrayList<>();
-        for (MemberEntity memberEntity : myMembers) {
-            CourseEntity course = memberEntity.getCourse();
-            MyCourseOverviewDto myCourseOverviewDto = new MyCourseOverviewDto(course.getId(), course.getName(), memberEntity.getRole());
-            myCourseOverviewDto.setProgress(taskService.getProgress(memberEntity));
-            myCoursesDtoList.add(myCourseOverviewDto);
-        }
-        return myCoursesDtoList;
-    }
-
     public CourseDetailsDto getCourseDetails(Long userId, Long courseId) {
         UserEntity user = userServiceImpl.checkUser(userId);
         CourseEntity course = courseRepository.findByIdAndDeletedAtIsNull(courseId).orElseThrow(() -> new CustomException(CustomErrorCode.NOT_FOUND_COURSE));

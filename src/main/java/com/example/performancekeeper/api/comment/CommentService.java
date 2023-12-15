@@ -9,7 +9,7 @@ import java.util.List;
 public interface CommentService {
     void createComment(MemberEntity member, AssignedTaskEntity assignedTask, CommentCreateDto commentCreateDto);
 
-    List<CommentReadDto> getComments(Long userId, Long courseId, Long assignedTaskId);
+    List<CommentReadDto> getComments(MemberEntity member, AssignedTaskEntity assignedTask);
 
     void createReply(Long userId, Long courseId, Long assignedTaskId, Long commentId, ReplyCreateDto replyCreateDto);
 

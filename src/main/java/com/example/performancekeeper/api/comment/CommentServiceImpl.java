@@ -35,13 +35,9 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
-    public List<CommentReadDto> getComments(Long userId, Long courseId, Long assignedTaskId) {
-        UserEntity user = userServiceImpl.checkUser(userId);
-        CourseEntity course = courseServiceImpl.checkCourseEntity(courseId);
-        MemberEntity member = memberServiceImpl.checkMember(user, course);
-        AssignedTaskEntity assignedTask = taskService.checkAssignedTask(assignedTaskId);
+    public List<CommentReadDto> getComments(MemberEntity member, AssignedTaskEntity assignedTask) {
         if (!assignedTask.getMember().equals(member) && !member.getRole().equals("Manager"))
-            throw new CustomException(CustomErrorCode.NO_AUTHORIZATION);
+            throw new CustomException(CustomErrorCode.NO_AUTHORIZATION); // 작성자 본인 또는 강사만 작성 가능
 
         List<CommentReadDto> result = new ArrayList<>();
         List<CommentEntity> commentEntityList = commentRepository.findAllByAssignedTaskEntity(assignedTask);

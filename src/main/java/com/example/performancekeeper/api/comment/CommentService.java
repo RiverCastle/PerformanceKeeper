@@ -12,7 +12,7 @@ public interface CommentService {
 
     void createReply(MemberEntity member, AssignedTaskEntity assignedTask, CommentEntity comment, ReplyCreateDto replyCreateDto);
 
-    void deleteComment(Long userId, Long courseId, Long assignedTaskId, Long commentId);
+    void deleteComment(MemberEntity member, AssignedTaskEntity assignedTask, CommentEntity comment);
 
     void deleteReply(Long userId, Long courseId, Long assignedTaskId, Long commentId, Long replyId);
 

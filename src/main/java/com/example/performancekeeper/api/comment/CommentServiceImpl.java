@@ -60,14 +60,9 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
-    public void deleteComment(Long userId, Long courseId, Long assignedTaskId, Long commentId) {
-        UserEntity user = userServiceImpl.checkUser(userId);
-        CourseEntity course = courseServiceImpl.checkCourseEntity(courseId);
-        MemberEntity member = memberServiceImpl.checkMember(user, course);
-        AssignedTaskEntity assignedTask = taskService.checkAssignedTask(assignedTaskId);
+    public void deleteComment(MemberEntity member, AssignedTaskEntity assignedTask, CommentEntity comment) {
         if (!assignedTask.getMember().equals(member) && !member.getRole().equals("Manager"))
             throw new CustomException(CustomErrorCode.NO_AUTHORIZATION);
-        CommentEntity comment = commentRepository.findById(commentId).orElseThrow(() -> new CustomException(CustomErrorCode.NOT_FOUND_COMMENT));
         if (!comment.getWriter().equals(member)) throw new CustomException(CustomErrorCode.NO_AUTHORIZATION);
         if (comment.getDeletedAt() != null) throw new CustomException(CustomErrorCode.ALREADY_DELETED);
 

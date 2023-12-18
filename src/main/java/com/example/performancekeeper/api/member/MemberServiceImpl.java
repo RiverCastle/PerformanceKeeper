@@ -69,11 +69,7 @@ public class MemberServiceImpl implements MemberService{
         memberRepository.save(member);
     }
 
-    public MemberOverviewDto getMemberInfo(Long userId, Long courseId) {
-        UserEntity user = userServiceImpl.checkUser(userId);
-        CourseEntity course = courseServiceImpl.checkCourseEntity(courseId);
-        MemberEntity member = memberRepository.findByUserAndCourseAndDeletedAtIsNull(user, course)
-                .orElseThrow(() -> new CustomException(CustomErrorCode.NOT_MEMBER));
+    public MemberOverviewDto getMemberInfo(MemberEntity member) {
         return MemberOverviewDto.fromEntity(member);
     }
 

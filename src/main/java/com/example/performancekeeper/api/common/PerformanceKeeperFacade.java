@@ -149,7 +149,7 @@ public class PerformanceKeeperFacade {
         CourseEntity course = courseService.checkCourse(courseId);
         MemberEntity member = memberService.checkMember(user, course);
         AssignedTaskEntity assignedTask = taskService.checkAssignedTask(assignedTaskId);
-        if (!assignedTask.getMember().equals(member)) throw new CustomException(CustomErrorCode.NO_AUTHORIZATION);
+        if (!assignedTask.getMember().equals(member) && !member.getRole().equals("Manager")) throw new CustomException(CustomErrorCode.NO_AUTHORIZATION);
         return taskService.getTaskDetails(assignedTask);
     }
 

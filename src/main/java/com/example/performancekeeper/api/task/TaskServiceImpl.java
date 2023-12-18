@@ -59,10 +59,21 @@ public class TaskServiceImpl implements TaskService {
             CourseEntity course = member.getCourse();
             int completed = 0;
             List<TaskEntity> taskEntityList = taskRepository.findAllByCourseAndDeletedAtIsNull(course);
-            for (TaskEntity task : taskEntityList) completed += assignedTaskRepository.countAssignedTaskEntitiesByTaskAndStatusAndDeletedAtIsNull(task, "완료");
-            int all = memberServiceImpl.getAllStudentsOfThisCourse(course).size() * taskEntityList.size();
-            return all == 0? 0 : completed * 100 / all;
+            int all = 0;
+            for (TaskEntity task : taskEntityList) {
+                List<AssignedTaskEntity> assignedTaskEntityList = assignedTaskRepository.countAssignedTaskEntitiesByTaskAndDeletedAtIsNull(task);
+                all += assignedTaskEntityList.size();
+                completed += countCompletedAssignedTask(assignedTaskEntityList);
+            }
+
+            return all == 0 ? 0 : completed * 100 / all;
         }
+    }
+
+    private int countCompletedAssignedTask(List<AssignedTaskEntity> assignedTaskEntityList) {
+        int result = 0;
+        for (AssignedTaskEntity assignedTaskEntity : assignedTaskEntityList) if (assignedTaskEntity.getStatus().equals("완료")) result++;
+        return result;
     }
 
 //    public List<AssignedTaskOverviewDto>[] searchTasksByKeyword(Long userId, Long courseId, String keyword) {

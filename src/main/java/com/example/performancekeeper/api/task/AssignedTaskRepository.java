@@ -1,11 +1,8 @@
 package com.example.performancekeeper.api.task;
 
-import com.example.performancekeeper.api.course.CourseEntity;
 import com.example.performancekeeper.api.member.MemberEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-
-import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 

@@ -20,10 +20,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class MemberServiceImpl implements MemberService{
     private final MemberRepository memberRepository;
-    private final UserServiceImpl userServiceImpl;
-    private final CourseServiceImpl courseServiceImpl;
     private final BCryptPasswordEncoder passwordEncoder;
-    private final TaskService taskService;
 
     public void checkManagerMember(UserEntity user, CourseEntity course) {
         memberRepository.findByUserAndCourseAndRoleAndDeletedAtIsNull(user, course, "Manager")

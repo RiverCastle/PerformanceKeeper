@@ -64,11 +64,7 @@ public class MemberServiceImpl implements MemberService{
         memberRepository.save(member); // soft deletion
     }
 
-    public void changeNickname(Long userId, Long courseId, NicknameUpdateDto nicknameUpdateDto) {
-        UserEntity user = userServiceImpl.checkUser(userId);
-        CourseEntity course = courseServiceImpl.checkCourseEntity(courseId);
-        MemberEntity member = memberRepository.findByUserAndCourseAndRoleAndDeletedAtIsNull(user, course, "Student")
-                .orElseThrow(() -> new CustomException(CustomErrorCode.NOT_STUDENT));
+    public void changeNickname(MemberEntity member, NicknameUpdateDto nicknameUpdateDto) {
         member.setNickname(nicknameUpdateDto.getNickname());
         memberRepository.save(member);
     }

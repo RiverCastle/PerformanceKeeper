@@ -184,11 +184,8 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public TaskOverviewDto getTaskDetails(Long userId, Long courseId, Long assignedTaskId) {
-        UserEntity user = userServiceImpl.checkUser(userId);
-        CourseEntity course = courseServiceImpl.checkCourseEntity(courseId);
-        memberServiceImpl.checkMember(user, course);
-        AssignedTaskEntity assignedTask = checkAssignedTask(assignedTaskId);
+    public TaskOverviewDto getTaskDetails(MemberEntity member, AssignedTaskEntity assignedTask) {
+        if (!assignedTask.getMember().equals(member)) throw new CustomException(CustomErrorCode.NO_AUTHORIZATION);
         return TaskOverviewDto.fromEntity(assignedTask.getTask());
     }
 

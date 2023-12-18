@@ -162,8 +162,7 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public TaskOverviewDto getTaskDetails(MemberEntity member, AssignedTaskEntity assignedTask) {
-        if (!assignedTask.getMember().equals(member)) throw new CustomException(CustomErrorCode.NO_AUTHORIZATION);
+    public TaskOverviewDto getTaskDetails(AssignedTaskEntity assignedTask) {
         return TaskOverviewDto.fromEntity(assignedTask.getTask());
     }
 

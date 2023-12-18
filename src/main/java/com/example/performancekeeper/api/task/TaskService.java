@@ -20,7 +20,7 @@ public interface TaskService {
 
     AssignedTaskEntity checkAssignedTask(Long assignedTaskId);
 
-    TaskOverviewDto getTaskDetails(MemberEntity member, AssignedTaskEntity assignedTask);
+    TaskOverviewDto getTaskDetails(AssignedTaskEntity assignedTask);
 
     TaskEntity checkTask(Long taskId);
 }

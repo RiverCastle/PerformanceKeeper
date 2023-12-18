@@ -79,11 +79,8 @@ public class TaskServiceImpl implements TaskService {
 //        return sortByStatus(assignedTaskEntityList);
 //    }
 
-    public List<AssignedTaskOverviewDto>[] searchCompletedTasksAndUncompletedTasksByDate(Long userId, Long courseId, LocalDate date) { // 학생이 날짜별 자신의 진행상황 조회
-        UserEntity user = userServiceImpl.checkUser(userId);
-        CourseEntity course = courseServiceImpl.checkCourseEntity(courseId);
-        MemberEntity member = memberServiceImpl.checkStudentMember(user, course);
-        List<TaskEntity> taskList = taskRepository.findAllByCourseAndStartAtAndDeletedAtIsNull(course, date);
+    public List<AssignedTaskOverviewDto>[] searchCompletedTasksAndUncompletedTasksByDate(MemberEntity member, LocalDate date) { // 학생이 날짜별 자신의 진행상황 조회
+        List<TaskEntity> taskList = taskRepository.findAllByCourseAndStartAtAndDeletedAtIsNull(member.getCourse(), date);
         List<AssignedTaskEntity> assignedTaskEntityList = new ArrayList<>();
         for (TaskEntity task : taskList)
             assignedTaskEntityList.add(assignedTaskRepository.findByMemberAndTaskAndDeletedAtIsNull(member, task));

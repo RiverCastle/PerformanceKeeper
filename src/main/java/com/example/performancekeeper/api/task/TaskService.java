@@ -13,7 +13,7 @@ public interface TaskService {
     void createTask(CourseEntity course, TaskCreateDto taskCreateDto, List<MemberEntity> studentsOfThisCourse);
     int getProgress(MemberEntity member);
     List<AssignedTaskOverviewDto>[] searchCompletedTasksAndUncompletedTasksByDate(MemberEntity member, LocalDate date); // 학생이 날짜별 자신의 진행상황 조회
-    void updateTaskStatus(Long userId, Long courseId, Long taskId, TaskStatusDto taskStatusDto);
+    void updateTaskStatus(AssignedTaskEntity assignedTask, TaskStatusDto taskStatusDto);
     Map<String, Object> getTasksAndProgressesByDate(CourseEntity course, List<MemberEntity> studentsOfThisCourse, LocalDate startAt); // 매니저가 날짜별 과제 진행상황 파악
     void deleteAssignedTasksOfLeavingStudent(MemberEntity member);
     int[] getProgressOfThisTask(Long userId, Long courseId, Long taskId);

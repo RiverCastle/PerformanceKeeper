@@ -92,12 +92,7 @@ public class TaskServiceImpl implements TaskService {
         return result;
     }
 
-    public void updateTaskStatus(Long userId, Long courseId, Long taskId, TaskStatusDto taskStatusDto) {
-        UserEntity user = userServiceImpl.checkUser(userId);
-        CourseEntity course = courseServiceImpl.checkCourseEntity(courseId);
-        MemberEntity member = memberServiceImpl.checkStudentMember(user, course);
-        AssignedTaskEntity assignedTask = assignedTaskRepository.findById(taskId).orElseThrow(() -> new CustomException(CustomErrorCode.NOT_FOUND_TASK));
-        if (!assignedTask.getMember().equals(member)) throw new CustomException(CustomErrorCode.NO_AUTHORIZATION);
+    public void updateTaskStatus(AssignedTaskEntity assignedTask, TaskStatusDto taskStatusDto) {
         assignedTask.setStatus(taskStatusDto.getSelectedStatus());
         assignedTaskRepository.save(assignedTask);
     }

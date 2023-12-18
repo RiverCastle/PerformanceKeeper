@@ -10,4 +10,5 @@ import java.util.Optional;
 @Repository
 public interface CommentRepository extends JpaRepository<CommentEntity, Long> {
     List<CommentEntity> findAllByAssignedTaskEntity(AssignedTaskEntity assignedTask);
+    Optional<CommentEntity> findByIdAndDeletedAtIsNull(Long commentId);
 }

@@ -1,5 +1,6 @@
 package com.example.performancekeeper.api.member;
 
+import com.example.performancekeeper.api.common.PerformanceKeeperFacade;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
@@ -8,13 +9,13 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 @RequestMapping("/api/course/{courseId}/member")
 public class MemberController {
-    private final MemberService memberService;
+    private final PerformanceKeeperFacade performanceKeeperFacade;
     @PostMapping// 강의실 입실
     public void createStudentMember(Authentication authentication,
                                     @PathVariable("courseId") Long courseId,
                                     @RequestBody JoinCourseDto joinCourseDto) {
         Long userId = Long.parseLong(authentication.getName());
-        memberService.createStudentMember(userId, courseId, joinCourseDto);
+        performanceKeeperFacade.createStudentMember(userId, courseId, joinCourseDto);
     }
 
     @DeleteMapping// 강의실 퇴실
@@ -22,7 +23,7 @@ public class MemberController {
                             @PathVariable("courseId") Long courseId,
                             @RequestBody LeaveRequestDto leaveRequestDto) {
         Long userId = Long.parseLong(authentication.getName());
-        memberService.deleteStudentMember(userId, courseId, leaveRequestDto);
+        performanceKeeperFacade.deleteStudentMember(userId, courseId, leaveRequestDto);
     }
 
     @PutMapping
@@ -30,13 +31,13 @@ public class MemberController {
                                @PathVariable("courseId") Long courseId,
                                @RequestBody NicknameUpdateDto nicknameUpdateDto) {
         Long userId = Long.parseLong(authentication.getName());
-        memberService.changeNickname(userId, courseId, nicknameUpdateDto);
+        performanceKeeperFacade.changeNickname(userId, courseId, nicknameUpdateDto);
     }
 
     @GetMapping
     public MemberOverviewDto getMemberInfo(Authentication authentication,
                                            @PathVariable("courseId") Long courseId) {
         Long userId = Long.parseLong(authentication.getName());
-        return memberService.getMemberInfo(userId, courseId);
+        return performanceKeeperFacade.getMemberInfo(userId, courseId);
     }
 }

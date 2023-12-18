@@ -26,29 +26,24 @@ public class TaskServiceImpl implements TaskService {
     private final CourseServiceImpl courseServiceImpl;
     private final MemberServiceImpl memberServiceImpl;
 
-    public void assignTasksToNewStudent(CourseEntity course, MemberEntity memberEntity) { // 새 학생에게 기존의 과제들을 부여하기
+    public void assignTasksToNewStudent(CourseEntity course, MemberEntity member) { // 새 학생에게 기존의 과제들을 부여하기
         List<TaskEntity> existingTasks = taskRepository.findAllByCourseAndDeletedAtIsNull(course);
         List<AssignedTaskEntity> assignedTaskEntitiesToNewStudent = new ArrayList<>();
+
         for (TaskEntity existingTask : existingTasks) {
-            AssignedTaskEntity newTaskEntity = AssignedTaskEntity.fromTaskEntity(existingTask);
-            newTaskEntity.setMember(memberEntity);
+            AssignedTaskEntity newTaskEntity = AssignedTaskEntity.fromTaskEntity(existingTask, member);
             assignedTaskEntitiesToNewStudent.add(newTaskEntity);
         }
         assignedTaskRepository.saveAll(assignedTaskEntitiesToNewStudent);
     }
+
     @Transactional
-    public void createTask(Long userId, Long courseId, TaskCreateDto taskCreateDto) {
-        UserEntity user = userServiceImpl.checkUser(userId);
-        CourseEntity course = courseServiceImpl.checkCourseEntity(courseId);
-        memberServiceImpl.checkManagerMember(user, course);
-        TaskEntity taskEntity = TaskCreateDto.toEntity(taskCreateDto);
-        taskEntity.setCourse(course);
+    public void createTask(CourseEntity course, TaskCreateDto taskCreateDto, List<MemberEntity> studentsOfThisCourse) {
+        TaskEntity taskEntity = TaskCreateDto.toEntity(taskCreateDto, course);
         taskEntity = taskRepository.save(taskEntity);
 
-        List<MemberEntity> studentsOfThisCourse = memberServiceImpl.getAllStudentsOfThisCourse(course); // 기존 학생들에게 부여
-        for (MemberEntity studentMemberEntity : studentsOfThisCourse) {
-            AssignedTaskEntity assignedTaskEntity = AssignedTaskEntity.fromTaskEntity(taskEntity);
-            assignedTaskEntity.setMember(studentMemberEntity);
+        for (MemberEntity studentMemberEntity : studentsOfThisCourse) { // 기존 학생들에게 부여
+            AssignedTaskEntity assignedTaskEntity = AssignedTaskEntity.fromTaskEntity(taskEntity, studentMemberEntity);
             assignedTaskRepository.save(assignedTaskEntity);
         }
     }

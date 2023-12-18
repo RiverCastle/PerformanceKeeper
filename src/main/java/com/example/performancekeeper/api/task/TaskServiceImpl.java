@@ -3,11 +3,8 @@ package com.example.performancekeeper.api.task;
 import com.example.performancekeeper.api.common.exception.CustomErrorCode;
 import com.example.performancekeeper.api.common.exception.CustomException;
 import com.example.performancekeeper.api.course.CourseEntity;
-import com.example.performancekeeper.api.course.CourseServiceImpl;
 import com.example.performancekeeper.api.member.MemberEntity;
 import com.example.performancekeeper.api.member.MemberOverviewDto;
-import com.example.performancekeeper.api.member.MemberServiceImpl;
-import com.example.performancekeeper.api.users.UserServiceImpl;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -21,9 +18,6 @@ import java.util.*;
 public class TaskServiceImpl implements TaskService {
     private final TaskRepository taskRepository;
     private final AssignedTaskRepository assignedTaskRepository;
-    private final UserServiceImpl userServiceImpl;
-    private final CourseServiceImpl courseServiceImpl;
-    private final MemberServiceImpl memberServiceImpl;
 
     public void assignTasksToNewStudent(CourseEntity course, MemberEntity member) { // 새 학생에게 기존의 과제들을 부여하기
         List<TaskEntity> existingTasks = taskRepository.findAllByCourseAndDeletedAtIsNull(course);

@@ -55,7 +55,7 @@ public class TaskServiceImpl implements TaskService {
             List<TaskEntity> taskEntityList = taskRepository.findAllByCourseAndDeletedAtIsNull(course);
             int all = 0;
             for (TaskEntity task : taskEntityList) {
-                List<AssignedTaskEntity> assignedTaskEntityList = assignedTaskRepository.countAssignedTaskEntitiesByTaskAndDeletedAtIsNull(task);
+                List<AssignedTaskEntity> assignedTaskEntityList = assignedTaskRepository.findAllAssignedTaskEntitiesByTaskAndDeletedAtIsNull(task);
                 all += assignedTaskEntityList.size();
                 completed += countCompletedAssignedTask(assignedTaskEntityList);
             }

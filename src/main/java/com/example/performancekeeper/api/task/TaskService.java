@@ -3,7 +3,6 @@ package com.example.performancekeeper.api.task;
 
 import com.example.performancekeeper.api.course.CourseEntity;
 import com.example.performancekeeper.api.member.MemberEntity;
-import com.example.performancekeeper.api.member.MemberOverviewDto;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -15,9 +14,7 @@ public interface TaskService {
     int getProgress(MemberEntity member);
     List<AssignedTaskOverviewDto>[] searchCompletedTasksAndUncompletedTasksByDate(MemberEntity member, LocalDate date); // 학생이 날짜별 자신의 진행상황 조회
     void updateTaskStatus(Long userId, Long courseId, Long taskId, TaskStatusDto taskStatusDto);
-    List<Object> getTasksByDate(Long userId, Long courseId, LocalDate startAt);
-    Map<MemberOverviewDto, List<AssignedTaskStatusDto>> getProgressesByDate(Long userId, Long courseId, LocalDate startAt);
-    Map<String, Object> getTasksAndProgressesByDate(Long userId, Long courseId, LocalDate startAt); // 매니저가 날짜별 과제 진행상황 파악
+    Map<String, Object> getTasksAndProgressesByDate(CourseEntity course, List<MemberEntity> studentsOfThisCourse, LocalDate startAt); // 매니저가 날짜별 과제 진행상황 파악
     void deleteAssignedTasksOfLeavingStudent(MemberEntity member);
     int[] getProgressOfThisTask(Long userId, Long courseId, Long taskId);
 

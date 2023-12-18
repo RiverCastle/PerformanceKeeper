@@ -107,10 +107,7 @@ public class TaskServiceImpl implements TaskService {
         assignedTaskRepository.save(assignedTask);
     }
 
-    public List<Object> getTasksByDate(Long userId, Long courseId, LocalDate startAt) {
-        UserEntity user = userServiceImpl.checkUser(userId);
-        CourseEntity course = courseServiceImpl.checkCourseEntity(courseId);
-        memberServiceImpl.checkManagerMember(user, course);
+    public List<Object> getTasksByDate(CourseEntity course, LocalDate startAt) {
 
         List<Object> result = new ArrayList<>();
         List<TaskEntity> taskEntityList =
@@ -120,17 +117,11 @@ public class TaskServiceImpl implements TaskService {
         return result;
     }
 
-    public Map<MemberOverviewDto, List<AssignedTaskStatusDto>> getProgressesByDate(Long userId, Long courseId, LocalDate startAt) {
-        UserEntity user = userServiceImpl.checkUser(userId);
-        CourseEntity course = courseServiceImpl.checkCourseEntity(courseId);
-        memberServiceImpl.checkManagerMember(user, course);
-        // ↑ 3줄 필요X
-
+    public Map<MemberOverviewDto, List<AssignedTaskStatusDto>> getProgressesByDate(List<MemberEntity> studentsOfThisCourse, LocalDate startAt) {
         Map<MemberOverviewDto, List<AssignedTaskStatusDto>> result = new HashMap<>();
-        List<MemberEntity> studentsOfThisCourse = memberServiceImpl.getAllStudentsOfThisCourse(course);
         for (MemberEntity student : studentsOfThisCourse) {
             MemberOverviewDto key = MemberOverviewDto.fromEntity(student);
-            List<AssignedTaskEntity> assignedTaskEntityList = assignedTaskRepository.findAllByMemberAndDeletedAtIsNull(student);
+            List<AssignedTaskEntity> assignedTaskEntityList = assignedTaskRepository.findAllByMemberAndDeletedAtIsNull(student); // startAt도 넣어서 찾으면 좋은지 확인하기
             List<AssignedTaskStatusDto> value = new ArrayList<>();
             for (AssignedTaskEntity assignedTaskEntity : assignedTaskEntityList)
                 if (assignedTaskEntity.getTask().getStartAt().equals(startAt)) value.add(AssignedTaskStatusDto.fromEntity(assignedTaskEntity));
@@ -139,10 +130,10 @@ public class TaskServiceImpl implements TaskService {
         return result;
     }
 
-    public Map<String, Object> getTasksAndProgressesByDate(Long userId, Long courseId, LocalDate startAt) {
+    public Map<String, Object> getTasksAndProgressesByDate(CourseEntity course, List<MemberEntity> studentsOfThisCourse, LocalDate startAt) {
         Map<String, Object> result = new HashMap<>();
-        result.put("taskList", getTasksByDate(userId, courseId, startAt));
-        result.put("progresses", getProgressesByDate(userId, courseId, startAt));
+        result.put("taskList", getTasksByDate(course, startAt));
+        result.put("progresses", getProgressesByDate(studentsOfThisCourse, startAt));
         return result;
     }
 

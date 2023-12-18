@@ -13,7 +13,9 @@ public interface MemberService {
     void createManagerMember(UserEntity user, CourseEntity course);
     MemberEntity createStudentMember(UserEntity user, CourseEntity course, JoinCourseDto joinCourseDto);
     List<MemberEntity> getMyMember(UserEntity user);
-    void deleteStudentMember(Long userId, Long courseId, LeaveRequestDto leaveRequestDto);
+    void deleteStudentMember(MemberEntity member);
     void changeNickname(Long userId, Long courseId, NicknameUpdateDto nicknameUpdateDto);
     MemberOverviewDto getMemberInfo(Long userId, Long courseId);
+
+    MemberEntity checkStudentMemberBeforeDelete(UserEntity user, CourseEntity course, LeaveRequestDto leaveRequestDto);
 }

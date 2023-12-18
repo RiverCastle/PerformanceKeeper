@@ -58,18 +58,10 @@ public class MemberServiceImpl implements MemberService{
     public List<MemberEntity> getMyMember(UserEntity user) {
         return memberRepository.findAllByUserAndDeletedAtIsNull(user);
     }
-    @Transactional
-    public void deleteStudentMember(Long userId, Long courseId, LeaveRequestDto leaveRequestDto) {
-        UserEntity user = userServiceImpl.checkUser(userId);
-        CourseEntity course = courseServiceImpl.checkCourseEntity(courseId);
-        MemberEntity member = memberRepository.findByUserAndCourseAndRoleAndDeletedAtIsNull(user, course, "Student")
-                .orElseThrow(() -> new CustomException(CustomErrorCode.NOT_STUDENT));
-        if (!course.getName().equals(leaveRequestDto.getCourseNameCheck())) throw new CustomException(CustomErrorCode.WRONG_COURSE_NAME);
 
-        taskService.deleteAssignedTasksOfLeavingStudent(member); // 나가려는 유저에게 부여된 과제들 삭제처리
+    public void deleteStudentMember(MemberEntity member) {
         member.setDeletedAt(LocalDateTime.now());
         memberRepository.save(member); // soft deletion
-
     }
 
     public void changeNickname(Long userId, Long courseId, NicknameUpdateDto nicknameUpdateDto) {
@@ -87,5 +79,11 @@ public class MemberServiceImpl implements MemberService{
         MemberEntity member = memberRepository.findByUserAndCourseAndDeletedAtIsNull(user, course)
                 .orElseThrow(() -> new CustomException(CustomErrorCode.NOT_MEMBER));
         return MemberOverviewDto.fromEntity(member);
+    }
+
+    @Override
+    public MemberEntity checkStudentMemberBeforeDelete(UserEntity user, CourseEntity course, LeaveRequestDto leaveRequestDto) {
+        return memberRepository.findByUserAndCourseAndRoleAndDeletedAtIsNull(user, course, "Student")
+                .orElseThrow(() -> new CustomException(CustomErrorCode.NOT_STUDENT));
     }
 }

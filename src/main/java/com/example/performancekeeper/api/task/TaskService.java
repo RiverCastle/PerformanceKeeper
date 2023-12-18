@@ -16,7 +16,7 @@ public interface TaskService {
     void updateTaskStatus(AssignedTaskEntity assignedTask, TaskStatusDto taskStatusDto);
     Map<String, Object> getTasksAndProgressesByDate(CourseEntity course, List<MemberEntity> studentsOfThisCourse, LocalDate startAt); // 매니저가 날짜별 과제 진행상황 파악
     void deleteAssignedTasksOfLeavingStudent(MemberEntity member);
-    int[] getProgressOfThisTask(Long userId, Long courseId, Long taskId);
+    int[] getProgressOfThisTask(TaskEntity task);
 
     AssignedTaskEntity checkAssignedTask(Long assignedTaskId);
 

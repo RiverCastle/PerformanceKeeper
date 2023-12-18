@@ -7,7 +7,6 @@ import com.example.performancekeeper.api.course.CourseServiceImpl;
 import com.example.performancekeeper.api.member.MemberEntity;
 import com.example.performancekeeper.api.member.MemberOverviewDto;
 import com.example.performancekeeper.api.member.MemberServiceImpl;
-import com.example.performancekeeper.api.users.UserEntity;
 import com.example.performancekeeper.api.users.UserServiceImpl;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -136,13 +135,9 @@ public class TaskServiceImpl implements TaskService {
         }
     }
 
-    public int[] getProgressOfThisTask(Long userId, Long courseId, Long taskId) {
-        UserEntity user = userServiceImpl.checkUser(userId);
-        CourseEntity course = courseServiceImpl.checkCourseEntity(courseId);
-        memberServiceImpl.checkManagerMember(user, course);
-        TaskEntity task = taskRepository.findById(taskId).orElseThrow(() -> new CustomException(CustomErrorCode.NOT_FOUND_TASK));
+    public int[] getProgressOfThisTask(TaskEntity task) {
         List<AssignedTaskEntity> assignedTaskEntityList = assignedTaskRepository.findAllByTaskAndDeletedAtIsNull(task);
-        int[] result = new int[4]; // index 0: 완료 1: 진행중 2: 에러 3: 등록
+        int[] result = new int[4]; //   index 0: 완료   1: 진행중   2: 에러   3: 등록
         for (AssignedTaskEntity assignedTaskEntity : assignedTaskEntityList) {
             String status = assignedTaskEntity.getStatus();
             switch (status) {

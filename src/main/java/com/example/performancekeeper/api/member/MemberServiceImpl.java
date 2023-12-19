@@ -62,8 +62,15 @@ public class MemberServiceImpl implements MemberService{
     }
 
     public void changeNickname(MemberEntity member, NicknameUpdateDto nicknameUpdateDto) {
+        checkNicknameAvailability(member, nicknameUpdateDto);
         member.setNickname(nicknameUpdateDto.getNickname());
         memberRepository.save(member);
+    }
+
+    private void checkNicknameAvailability(MemberEntity member, NicknameUpdateDto nicknameUpdateDto) {
+        List<MemberEntity> memberEntityList = memberRepository.findAllByCourseAndRoleAndDeletedAtIsNull(member.getCourse(), "Student");
+        for (MemberEntity memberEntity : memberEntityList)
+            if (memberEntity.getNickname().equals(nicknameUpdateDto.getNickname())) throw new CustomException(CustomErrorCode.NICKNAME_DUPLICATED);
     }
 
     public MemberOverviewDto getMemberInfo(MemberEntity member) {

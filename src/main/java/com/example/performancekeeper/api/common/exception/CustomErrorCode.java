@@ -30,7 +30,8 @@ public enum CustomErrorCode {
     ALREADY_DELETED(ALREADY_REPORTED, "이미 삭제되었습니다."),
     NOT_FOUND_REPLY(NOT_FOUND, "해당 답글이 존재하지 않습니다."),
     COMMENT_REPLY_MISMATCH(BAD_REQUEST, "해당 댓글에 존재하지 않는 답글입니다."),
-    ASSIGNEDTASK_COMMENT_MISMATCH(BAD_REQUEST, "해당 과제에 존재하지 않는 댓글입니다.");
+    ASSIGNEDTASK_COMMENT_MISMATCH(BAD_REQUEST, "해당 과제에 존재하지 않는 댓글입니다."),
+    NICKNAME_DUPLICATED(BAD_REQUEST, "이미 존재하는 닉네임입니다.");
     private final HttpStatus httpStatus;
     private final String message;
 }

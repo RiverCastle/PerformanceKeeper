@@ -60,9 +60,10 @@ Performance Keeper는 실시간 온라인 교육 현장에서 학생, 강사, �
 
 ## 프로젝트 소개자료 ppt
 더 자세한 내용이 궁금하시다면, 프로젝트 소개자료를 참고해주세요. 
-[최강성_Performance_Keeper_소개자료.pdf](https://github.com/RiverCastle/PerformanceKeeper/files/13735913/_Performance_Keeper_.pdf)
+[Performance_Keeper_소개자료.pdf](https://github.com/RiverCastle/PerformanceKeeper/files/13735913/_Performance_Keeper_.pdf)
 
 ## 연락처
 e-mail: fayal3@naver.com
+
 blog: https://programming-with-j.tistory.com/
 

@@ -39,6 +39,14 @@ public class TaskController {
         Long userId = Long.parseLong(authentication.getName());
         return performanceKeeperFacade.getTasksAndProgressesByDate(userId, courseId, startAt);
     }
+
+    @GetMapping("/uncompleted-assigned-tasks")
+    public List<AssignedTaskOverviewDto> getUncompletedAssignedTasksOfThisCourse(Authentication authentication,
+                                                                                 @PathVariable("courseId") Long courseId) {
+        Long userId = Long.parseLong(authentication.getName());
+        return performanceKeeperFacade.getUncompletedAssignedTasksOfThisCourse(userId, courseId);
+    }
+
     @PostMapping
     public void createTask(Authentication authentication,
                            @PathVariable("courseId") Long courseId,

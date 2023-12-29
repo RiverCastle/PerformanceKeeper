@@ -171,4 +171,12 @@ public class TaskServiceImpl implements TaskService {
         return taskRepository.findByIdAndDeletedAtIsNull(taskId)
                 .orElseThrow(() -> new CustomException(CustomErrorCode.NOT_FOUND_TASK));
     }
+
+    @Override
+    public List<AssignedTaskOverviewDto> getUncompletedAssignedTasksListOfThisCourse(MemberEntity member) {
+        List<AssignedTaskOverviewDto> result = new ArrayList<>();
+        List<AssignedTaskEntity> theUncompleted = assignedTaskRepository.findAllByMemberAndStatusIsNotAndDeletedAtIsNull(member, "완료");
+        for (AssignedTaskEntity uncompleted : theUncompleted) result.add(AssignedTaskOverviewDto.fromEntity(uncompleted));
+        return result;
+    }
 }

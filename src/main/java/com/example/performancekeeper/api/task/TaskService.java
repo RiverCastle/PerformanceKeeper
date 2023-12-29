@@ -23,4 +23,6 @@ public interface TaskService {
     TaskOverviewDto getTaskDetails(AssignedTaskEntity assignedTask);
 
     TaskEntity checkTask(Long taskId);
+
+    List<AssignedTaskOverviewDto> getUncompletedAssignedTasksListOfThisCourse(MemberEntity member);
 }

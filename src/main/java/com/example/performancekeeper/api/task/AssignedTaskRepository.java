@@ -13,4 +13,5 @@ public interface AssignedTaskRepository extends JpaRepository<AssignedTaskEntity
     AssignedTaskEntity findByMemberAndTaskAndDeletedAtIsNull(MemberEntity member, TaskEntity task);
     List<AssignedTaskEntity> findAllAssignedTaskEntitiesByTaskAndDeletedAtIsNull(TaskEntity task);
     Optional<AssignedTaskEntity> findByIdAndDeletedAtIsNull(Long id);
+    List<AssignedTaskEntity> findAllByMemberAndStatusIsNotAndDeletedAtIsNull(MemberEntity member, String status);
 }

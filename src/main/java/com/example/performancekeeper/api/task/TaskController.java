@@ -25,12 +25,20 @@ public class TaskController {
         return performanceKeeperFacade.getTaskDetails(userId, courseId, assignedTaskId);
     }
 
-    @GetMapping("/my-progress")// 학생이 자신의 진행상황을 요청
+    @GetMapping(value = "/my-progress", params = "date")// 학생이 자신의 진행상황을 요청
     public List<AssignedTaskOverviewDto>[] getCompletedTasksAndUncompletedTasksByDate(Authentication authentication,
                                                                                       @PathVariable("courseId") Long courseId,
                                                                                       @RequestParam("date") LocalDate date) {
         Long userId = Long.parseLong(authentication.getName());
         return performanceKeeperFacade.searchCompletedTasksAndUncompletedTasksByDate(userId, courseId, date);
+    }
+
+    @GetMapping(value = "/my-progress", params = "keyword")
+    public List<AssignedTaskOverviewDto>[] getCompletedTasksAndUncompletedTasksByKeyword(Authentication authentication,
+                                                                                         @PathVariable("courseId") Long courseId,
+                                                                                         @RequestParam("keyword") String keyword) {
+        Long userId = Long.parseLong(authentication.getName());
+        return performanceKeeperFacade.searchCompletedTasksAndUncompletedTasksByKeyword(userId, courseId, keyword);
     }
     @GetMapping("/course-progress")// 매니저가 과제명과 각 학생의 진행상황을 요청
     public Map<String, Object> getTasksProgressesByDate(Authentication authentication,

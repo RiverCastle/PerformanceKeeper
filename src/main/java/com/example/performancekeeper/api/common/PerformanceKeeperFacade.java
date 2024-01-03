@@ -167,6 +167,13 @@ public class PerformanceKeeperFacade {
         return taskService.searchCompletedTasksAndUncompletedTasksByDate(member, date);
     }
 
+    public List<AssignedTaskOverviewDto>[] searchCompletedTasksAndUncompletedTasksByKeyword(Long userId, Long courseId, String keyword) {
+        UserEntity user = userService.checkUser(userId);
+        CourseEntity course = courseService.checkCourse(courseId);
+        MemberEntity member = memberService.checkMember(user, course);
+        return taskService.searchCompletedTasksAndUncompletedTasksByKeyword(member, keyword);
+    }
+
     public Map<String, Object> getTasksAndProgressesByDate(Long userId, Long courseId, LocalDate startAt) {
         UserEntity user = userService.checkUser(userId);
         CourseEntity course = courseService.checkCourse(courseId);

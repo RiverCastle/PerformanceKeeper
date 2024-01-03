@@ -12,6 +12,6 @@ import java.util.Optional;
 public interface TaskRepository extends JpaRepository<TaskEntity, Long> {
     List<TaskEntity> findAllByCourseAndDeletedAtIsNull(CourseEntity course);
     List<TaskEntity> findAllByCourseAndStartAtAndDeletedAtIsNull(CourseEntity course, LocalDate startAt);
-
+    List<TaskEntity> findAllByCourseAndNameContainingAndDeletedAtIsNull(CourseEntity course, String keyword);
     Optional<TaskEntity> findByIdAndDeletedAtIsNull(Long taskId);
 }

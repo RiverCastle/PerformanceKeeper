@@ -25,4 +25,6 @@ public interface TaskService {
     TaskEntity checkTask(Long taskId);
 
     List<AssignedTaskOverviewDto> getUncompletedAssignedTasksListOfThisCourse(MemberEntity member);
+
+    List<AssignedTaskOverviewDto>[] searchCompletedTasksAndUncompletedTasksByKeyword(MemberEntity member, String keyword);
 }

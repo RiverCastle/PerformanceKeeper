@@ -70,13 +70,17 @@ public class TaskServiceImpl implements TaskService {
         return result;
     }
 
-//    public List<AssignedTaskOverviewDto>[] searchTasksByKeyword(Long userId, Long courseId, String keyword) {
-//        UserEntity user = userServiceImpl.checkUserEntity(userId);
-//        CourseEntity course = courseServiceImpl.checkCourseEntity(courseId);
-//        MemberEntity member = memberServiceImpl.checkStudentMember(user, course);
-//        List<AssignedTaskEntity> assignedTaskEntityList = assignedTaskRepository.findAllByMemberAndNameContainingAndDeletedAtIsNull(member, keyword);
-//        return sortByStatus(assignedTaskEntityList);
-//    }
+    @Override
+    public List<AssignedTaskOverviewDto>[] searchCompletedTasksAndUncompletedTasksByKeyword(MemberEntity member, String keyword) {
+        List<TaskEntity> taskEntityList = taskRepository.findAllByCourseAndNameContainingAndDeletedAtIsNull(member.getCourse(), keyword);
+        List<AssignedTaskOverviewDto>[] result = new ArrayList[] {new ArrayList(), new ArrayList()};
+        for (TaskEntity task : taskEntityList) {
+            AssignedTaskEntity assignedTask = assignedTaskRepository.findByMemberAndTaskAndDeletedAtIsNull(member, task);
+            if (assignedTask.getStatus().equals("완료")) result[0].add(AssignedTaskOverviewDto.fromEntity(assignedTask));
+            else result[1].add(AssignedTaskOverviewDto.fromEntity(assignedTask));
+        }
+        return result;
+    }
 
     public List<AssignedTaskOverviewDto>[] searchCompletedTasksAndUncompletedTasksByDate(MemberEntity member, LocalDate date) { // 학생이 날짜별 자신의 진행상황 조회
         List<TaskEntity> taskList = taskRepository.findAllByCourseAndStartAtAndDeletedAtIsNull(member.getCourse(), date);

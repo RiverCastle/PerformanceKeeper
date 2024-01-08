@@ -14,9 +14,9 @@ public class ReplyEntity extends BaseTimeEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String content;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private CommentEntity comment;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private MemberEntity writer;
 
     public ReplyEntity(String content, CommentEntity comment, MemberEntity writer) {

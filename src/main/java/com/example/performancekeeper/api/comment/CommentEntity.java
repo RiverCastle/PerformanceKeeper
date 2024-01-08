@@ -16,9 +16,9 @@ public class CommentEntity extends BaseTimeEntity {
     private Long id;
     private String content;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private AssignedTaskEntity assignedTaskEntity;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private MemberEntity writer;
 
     public CommentEntity(String content, AssignedTaskEntity assignedTaskEntity, MemberEntity writer) {

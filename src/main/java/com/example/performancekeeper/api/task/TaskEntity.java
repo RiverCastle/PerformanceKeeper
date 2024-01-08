@@ -19,6 +19,6 @@ public class TaskEntity extends BaseTimeEntity {
     private String name;
     private String description;
     private LocalDate startAt;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private CourseEntity course;
 }

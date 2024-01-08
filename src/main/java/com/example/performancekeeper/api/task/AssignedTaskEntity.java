@@ -15,9 +15,9 @@ public class AssignedTaskEntity extends BaseTimeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private TaskEntity task;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private MemberEntity member;
     private String status;
 

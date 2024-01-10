@@ -1,4 +1,4 @@
-package com.example.performancekeeper.repository;
+package com.example.performancekeeper.api.course;
 
 import com.example.performancekeeper.api.course.CourseEntity;
 import com.example.performancekeeper.api.course.CourseRepository;

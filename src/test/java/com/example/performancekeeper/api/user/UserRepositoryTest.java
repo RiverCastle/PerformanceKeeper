@@ -1,4 +1,4 @@
-package com.example.performancekeeper.repository;
+package com.example.performancekeeper.api.user;
 
 import com.example.performancekeeper.api.users.UserEntity;
 import com.example.performancekeeper.api.users.UserRepository;

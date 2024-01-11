@@ -1,12 +1,14 @@
 package com.example.performancekeeper.api.task;
 
 import com.example.performancekeeper.api.course.CourseEntity;
-import com.example.performancekeeper.api.repository.CourseRepository;
+import com.example.performancekeeper.api.course.CourseRepository;
 import com.example.performancekeeper.api.member.MemberEntity;
-import com.example.performancekeeper.api.repository.MemberRepository;
-import com.example.performancekeeper.api.repository.TaskRepository;
+
+
+import com.example.performancekeeper.api.member.MemberRepository;
 import com.example.performancekeeper.api.users.UserEntity;
-import com.example.performancekeeper.api.repository.UserRepository;
+
+import com.example.performancekeeper.api.users.UserRepository;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;

@@ -20,32 +20,29 @@ import java.util.Optional;
 @DataJpaTest
 @AutoConfigureTestDatabase(connection = EmbeddedDatabaseConnection.H2)
 class MemberRepositoryTest {
-    @Autowired
-    MemberRepository memberRepository;
-    @Autowired
-    CourseRepository courseRepository;
-    @Autowired
-    UserRepository userRepository;
+    private final MemberRepository memberRepository;
+    private final CourseRepository courseRepository;
+    private final UserRepository userRepository;
     private UserEntity testUser;
     private UserEntity testUser2;
     private CourseEntity testCourse;
     private CourseEntity testCourse2;
     private CourseEntity testCourse3;
+    @Autowired
+    public MemberRepositoryTest(MemberRepository memberRepository, CourseRepository courseRepository, UserRepository userRepository) {
+        this.memberRepository = memberRepository;
+        this.courseRepository = courseRepository;
+        this.userRepository = userRepository;
+    }
 
     @BeforeEach
     public void createTestUserAndTestCourse() {
         System.out.println("Test Users | Test Courses 생성");
 
-        this.testUser = new UserEntity();
-        this.testUser.setUsername("test user 1");
-        this.testUser.setRole("User");
-        this.testUser.setEncodedPW("1234");
+        this.testUser = new UserEntity("test user 1", "1234", "User");
         userRepository.save(testUser);
 
-        this.testUser2 = new UserEntity();
-        this.testUser2.setUsername("test user 2");
-        this.testUser2.setRole("User");
-        this.testUser2.setEncodedPW("1234");
+        this.testUser2 = new UserEntity("test user 2", "1234", "User");
         userRepository.save(testUser2);
 
         this.testCourse = new CourseEntity();
@@ -125,12 +122,6 @@ class MemberRepositoryTest {
         Assertions.assertThat(studentsOfTestCourse3).contains(member3);
         Assertions.assertThat(studentsOfTestCourse3.size()).isEqualTo(1);
         Assertions.assertThat(studentsOfTestCourse).doesNotContain(member4);
-
-
-
-        // then
-
-
     }
 
     @Test

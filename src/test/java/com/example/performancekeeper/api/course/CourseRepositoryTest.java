@@ -1,7 +1,5 @@
 package com.example.performancekeeper.api.course;
 
-import com.example.performancekeeper.api.course.CourseEntity;
-import com.example.performancekeeper.api.course.CourseRepository;
 import com.example.performancekeeper.api.users.UserEntity;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.AfterEach;
@@ -14,6 +12,7 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
+import java.util.Random;
 
 @DataJpaTest
 @AutoConfigureTestDatabase(connection = EmbeddedDatabaseConnection.H2)
@@ -37,16 +36,20 @@ public class CourseRepositoryTest {
     @Test
     public void save() {
         // given
-        CourseEntity course = new CourseEntity();
-        course.setName("test course name 1");
-        course.setDescription("test course desc 1");
-        course.setJoinCode("test course join code 1");
+        int previous = courseRepository.findAll().size();
+        System.out.println("현재 repository에는 " + previous + "개의 데이터가 있습니다. 임의의 수의 데이터를 저장하겠습니다.");
+        int randomInt = new Random().nextInt(1, 10);
 
         // when
-        courseRepository.save(course);
+        for (int i = 0; i < randomInt; i++) {
+            CourseEntity testCourse = new CourseEntity();
+            testCourse.setName("test course " + i);
+            testCourse.setJoinCode("test course pw " + i);
+            courseRepository.save(testCourse);
+        }
 
         // then
-        Assertions.assertThat(courseRepository.findByIdAndDeletedAtIsNull(course.getId()).get()).isEqualTo(course);
+        Assertions.assertThat(courseRepository.findAll().size()).isEqualTo(previous + randomInt);
     }
 
     @Test

@@ -32,7 +32,7 @@ class TokenServiceTest {
             tokenService.issueAccessToken(loginRequestDto);
         } catch (CustomException e) {
             Long end = System.currentTimeMillis();
-            System.out.println(end - now);
+            System.out.println("로그인 실패 에러 처리 신버전 시간 결과: " + (end - now));
         }
     }
 
@@ -45,7 +45,7 @@ class TokenServiceTest {
             tokenService.issueAccessTokenOldVersion(loginRequestDto);
         } catch (CustomException e) {
             Long end = System.currentTimeMillis();
-            System.out.println(end - now);
+            System.out.println("로그인 실패 에러 처리 구버전 시간 결과: " + (end - now));
         }
     }
 }

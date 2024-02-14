@@ -2,10 +2,16 @@
 Performance Keeper는 실시간 온라인 교육 현장에서 학생, 강사, 그리고 매니저들을 위해 실습과제를 용이하게 관리할 수 있도록 돕는 서비스입니다.
 프로젝트 소개자료 pdf 다운로드 [최강성_Performance_Keeper_소개자료.pdf](https://github.com/RiverCastle/PerformanceKeeper/files/13768537/_Performance_Keeper_.pdf)
 
+## 🚀Enhancements (발전내용)
+### 1. JPA N + 1 문제 해결📈 [관련 블로그 포스팅](https://programming-with-j.tistory.com/36)
+DB로 데이터를 요청하기 위해 1개의 쿼리를 보냈는데, 다른 부수적인 쿼리들이 추가로 보내지는 상황을 포착하였습니다. 원인은 크게 2가지로, 지연 로딩을 처리하지 않은 경우와 연관관계에 있는 엔티티들을 보낸 쿼리로 조회할 수 없었기 때문이었습니다. 첫 번째 문제는 Fetch 전략을 Lazy로 설정하여 불필요한 쿼리 N 개가 발생하지 않도록 막았고, 두 번째 문제는 연관관계에 있는 필요한 엔티티에 대해 Fetch join을 사용해서 불필요한 쿼리 N 개가 발생하지 않도록 조치하여 문제를 해결하였습니다.
 
-## 설치 방법 또는 사용법
+### 2. 로그인(JWT 발급) 성능 개선📈 [관련 블로그 포스팅](https://programming-with-j.tistory.com/42)
+클라이언트로부터 ID와 PW를 입력받은 후, 입력받은 데이터를 바로 DB에 데이터를 조회하여 비교하는 로직을 사용하고 있었습니다. 로그인에 성공하는 경우에 대해서는 정당한 쿼리라고 생각하였지만, 로그인에 실패하는 경우에 대해서는 굳이 DB에 쿼리를 보낼 필요가 없을 것이라고 생각하였습니다. 그래서 상용 서비스의 아이디와 비밀번호 생성 조건(길이)에 대해서 떠올렸고, 생성 조건에 위배되는 요청에 대해서는 DB에 쿼리를 보내기 전에 에러 메시지를 발생시켜 불필요한 쿼리를 방지하였으며, 평균 20ms에서 3ms 이내로 로그인 실패 응답을 보낼 수 있는 이점을 챙길 수 있었습니다. 
 
-서비스를 사용하려면 다음 URL에 접속하세요: [Performance Keeper](http://ec2-3-38-174-31.ap-northeast-2.compute.amazonaws.com:8080/views/home)
+### 3. 순환참조 문제 해결을 위한 Facade Pattern 적용🛠️ [관련 블로그 포스팅](https://programming-with-j.tistory.com/35)
+(매니저)사용자가 강의실을 생성하는 요청에 대하여 Course와 Member 도메인에 대하여 각각 Entity를 생성하는 처리를 하다보니 CourseService에서 새 강의실을 생성하는 로직을 수행한 뒤에 MemberService의 관리자 멤버를 생성하는 메서드를 호출하도록 코드를 작성하였습니다. 추후에 Member 도메인에 대한 요청을 처리하면서 Course 유효성 검증을 위해 CourseService를 MemberService에 호출하게 되면서 순환참조 문제를 겪었습니다. 이를 계기로 여러 도메인에 걸친 요청을 처리하면서 각 도메인에 대해서 분리할 수 있는 방법을 찾은 결과 Facade Pattern을 이용해 문제를 해결할 수 있었습니다. 
+
 
 ## 주요 기능 및 목적 소개
 

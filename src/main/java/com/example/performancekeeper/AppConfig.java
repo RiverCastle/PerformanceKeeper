@@ -1,12 +1,12 @@
 package com.example.performancekeeper;
 
 import com.example.performancekeeper.aop.TimeTracer;
-import com.example.performancekeeper.api.comment.CommentService;
+import com.example.performancekeeper.api.service.CommentService;
 import com.example.performancekeeper.api.common.PerformanceKeeperFacade;
-import com.example.performancekeeper.api.course.CourseService;
-import com.example.performancekeeper.api.member.MemberService;
-import com.example.performancekeeper.api.task.TaskService;
-import com.example.performancekeeper.api.users.UserService;
+import com.example.performancekeeper.api.service.CourseService;
+import com.example.performancekeeper.api.service.MemberService;
+import com.example.performancekeeper.api.service.TaskService;
+import com.example.performancekeeper.api.service.UserService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;

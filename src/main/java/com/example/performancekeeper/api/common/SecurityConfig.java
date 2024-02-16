@@ -1,6 +1,5 @@
 package com.example.performancekeeper.api.common;
 
-import com.example.performancekeeper.api.token.JwtFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

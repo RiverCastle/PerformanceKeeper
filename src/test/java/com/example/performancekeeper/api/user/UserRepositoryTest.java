@@ -1,7 +1,7 @@
 package com.example.performancekeeper.api.user;
 
-import com.example.performancekeeper.api.users.UserEntity;
-import com.example.performancekeeper.api.users.UserRepository;
+import com.example.performancekeeper.api.entity.UserEntity;
+import com.example.performancekeeper.api.repository.UserRepository;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.DisplayName;

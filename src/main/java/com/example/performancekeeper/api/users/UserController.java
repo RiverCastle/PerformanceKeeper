@@ -1,6 +1,6 @@
 package com.example.performancekeeper.api.users;
 
-import com.example.performancekeeper.api.common.ResponseDto;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -15,7 +15,7 @@ public class UserController {
     private final UserService userService;
     private final PasswordEncoder passwordEncoder;
     @PostMapping
-    public void signUp(@RequestBody UserCreateDto userCreateDto) {
+    public void signUp(@RequestBody @Valid UserCreateDto userCreateDto) {
         userService.createUser(userCreateDto);
     }
 }

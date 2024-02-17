@@ -1,11 +1,11 @@
 package com.example.performancekeeper.api.controller;
 
 
-import com.example.performancekeeper.api.common.PerformanceKeeperFacade;
 import com.example.performancekeeper.api.dto.task.AssignedTaskOverviewDto;
 import com.example.performancekeeper.api.dto.task.TaskCreateDto;
 import com.example.performancekeeper.api.dto.task.TaskOverviewDto;
 import com.example.performancekeeper.api.dto.task.TaskStatusDto;
+import com.example.performancekeeper.api.facade.TaskControllerFacade;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
@@ -19,7 +19,7 @@ import java.util.Map;
 @RequiredArgsConstructor
 @RequestMapping("/api/course/{courseId}/task")
 public class TaskController {
-    private final PerformanceKeeperFacade performanceKeeperFacade;
+    private final TaskControllerFacade performanceKeeperFacade;
 
     @GetMapping("/{taskId}")
     public TaskOverviewDto getTaskDetails(Authentication authentication,

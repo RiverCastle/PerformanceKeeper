@@ -7,7 +7,7 @@ import org.aspectj.lang.annotation.Aspect;
 @Aspect
 public class TimeTracer {
 
-    @Around("target(com.example.performancekeeper.api.common.PerformanceKeeperFacade)")
+    @Around("within(com.example.performancekeeper.api.controller.*)")
     public Object execute(ProceedingJoinPoint joinPoint) throws Throwable {
         long start = System.currentTimeMillis();
         System.out.println("START At : " + joinPoint.toString());

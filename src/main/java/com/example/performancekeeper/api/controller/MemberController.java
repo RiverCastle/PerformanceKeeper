@@ -1,6 +1,6 @@
 package com.example.performancekeeper.api.controller;
 
-import com.example.performancekeeper.api.common.PerformanceKeeperFacade;
+import com.example.performancekeeper.api.facade.MemberControllerFacade;
 import com.example.performancekeeper.api.dto.member.JoinCourseDto;
 import com.example.performancekeeper.api.dto.member.LeaveRequestDto;
 import com.example.performancekeeper.api.dto.member.MemberOverviewDto;
@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 @RequestMapping("/api/course/{courseId}/member")
 public class MemberController {
-    private final PerformanceKeeperFacade performanceKeeperFacade;
+    private final MemberControllerFacade performanceKeeperFacade;
     @PostMapping// 강의실 입실
     public void createStudentMember(Authentication authentication,
                                     @PathVariable("courseId") Long courseId,

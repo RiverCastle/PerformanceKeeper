@@ -22,7 +22,7 @@ public class AppConfig {
     }
 
     @Bean
-    public CommentControllerFacade performanceKeeperFacade(
+    public CommentControllerFacade commentControllerFacade(
             UserService userService,
             CourseService courseService,
             MemberService memberService,

@@ -26,6 +26,9 @@ jobs:
           echo "${{ secrets.APPLICATION_YML }}" | base64 --decode > src/main/resources/application.yml  # 암호화된 yml 내용을 복호화하여 생성
           find src
 
+      - name: Run chmod to make gradlew executable
+        run: chmod +x ./gradlew
+
       - name: Build with Gradle (Test 제외)
         uses: gradle/gradle-build-action@v2
         with: 

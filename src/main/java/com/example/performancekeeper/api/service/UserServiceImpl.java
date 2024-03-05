@@ -33,7 +33,7 @@ public class UserServiceImpl implements UserService{
      * 회원 정보를 등록하는 메서드입니다.
      * 파라미터인 UserCreateDto에 담긴 아이디를 가지고 중복 여부를 파악합니다.
      * 파라미터인 UserCreateDto에 담긴 비밀번호, 비밀번호 일치 여부를 확인합니다.
-     * 검증이 완료된 아이디와 비밀번호를 바탕으로 새 UserEntity를 생성하여 회원 테이블에 등록합니다.
+     * 검증이 완료된 아이디와 암호화된 비밀번호를 바탕으로 새 UserEntity를 생성하여 회원 테이블에 등록합니다.
      *
      * @param userCreateDto
      */

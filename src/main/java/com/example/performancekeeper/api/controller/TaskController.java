@@ -15,7 +15,8 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * 과제 생성, 조회, 수정 요청을 처리하는 Controller
+ * 강의실에 생성된 과제와 관련된 요청을 처리하는 Controller입니다.
+ * 과제 생성, 조회, 수정 요청을 처리합니다.
  */
 @RestController
 @RequiredArgsConstructor

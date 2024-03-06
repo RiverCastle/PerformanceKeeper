@@ -10,6 +10,10 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+/**
+ * 댓글/답글 관련 요청을 처리하는 Controller입니다.
+ * 댓글/답글 등록, 조회, 삭제 요청을 처리합니다.
+ */
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/course/{courseId}/assignedTask/{assignedTaskId}/comment")

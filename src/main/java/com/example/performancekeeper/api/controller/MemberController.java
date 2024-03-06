@@ -10,7 +10,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 /**
- * 강의실에 입실한 멤버 관련 Controller
+ * 강의실 멤버와 관련된 요청을 처리하는 Controller입니다.
+ * 멤버 등록, 조회, 수정, 삭제 요청을 처리합니다.
  */
 @RestController
 @RequiredArgsConstructor

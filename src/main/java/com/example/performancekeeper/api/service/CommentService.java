@@ -10,6 +10,9 @@ import com.example.performancekeeper.api.entity.task.AssignedTaskEntity;
 
 import java.util.List;
 
+/**
+ * 댓글 관련 비즈니스 로직을 처리하는 서비스 인터페이스입니다.
+ */
 public interface CommentService {
     void createComment(MemberEntity member, AssignedTaskEntity assignedTask, CommentCreateDto commentCreateDto);
 

@@ -10,6 +10,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+/**
+ * JWT 관련 비즈니스 로직을 처리하는 Service 클래스입니다.
+ */
 @Service
 @RequiredArgsConstructor
 public class TokenService {

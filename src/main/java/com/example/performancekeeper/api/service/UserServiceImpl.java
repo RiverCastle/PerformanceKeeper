@@ -10,7 +10,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 /**
- * 인터페이스 UserService의 구현체입니다.
+ * 유저 관련 비즈니스 로직을 처리하는 인터페이스 UserService의 구현체 클래스입니다.
  */
 @Service
 @RequiredArgsConstructor

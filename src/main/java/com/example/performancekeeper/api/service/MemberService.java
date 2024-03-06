@@ -10,7 +10,7 @@ import com.example.performancekeeper.api.entity.UserEntity;
 
 import java.util.List;
 /**
- * 인터페이스 MemberService
+ * 강의실 멤버 관련 비즈니스 로직을 처리하는 서비스 인터페이스입니다.
  */
 public interface MemberService {
     /**

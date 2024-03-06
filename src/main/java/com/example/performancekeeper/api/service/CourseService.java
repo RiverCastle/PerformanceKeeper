@@ -5,6 +5,9 @@ import com.example.performancekeeper.api.entity.CourseEntity;
 
 import java.util.List;
 
+/**
+ * 강의실 관련 비즈니스 로직을 처리하는 서비스 인터페이스입니다.
+ */
 public interface CourseService {
     /**
      * 새로운 강의실을 생성하는 메서드입니다.

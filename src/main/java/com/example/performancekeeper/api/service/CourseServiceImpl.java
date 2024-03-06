@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * 인터페이스 CourseService의 구현체 클래스입니다.
+ * 강의실 관련 비즈니스 로직을 처리하는 서비스 인터페이스 CourseService의 구현체 클래스입니다.
  */
 @Service
 @RequiredArgsConstructor

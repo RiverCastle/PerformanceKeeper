@@ -19,7 +19,7 @@ import java.util.List;
 import java.util.Optional;
 
 /**
- * 인터페이스 MemberService 구현체
+ * 강의실 멤버 관련 비즈니스 로직을 처리하는 서비스 인터페이스 MemberService의 구현체 클래스입니다.
  */
 @Service
 @RequiredArgsConstructor

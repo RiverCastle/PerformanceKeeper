@@ -7,6 +7,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
+/**
+ * JWT와 관련된 요청을 처리하는 Controller입니다.
+ * 토큰 생성 및 삭제 요청을 처리합니다.
+ */
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/token")

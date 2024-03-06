@@ -19,6 +19,9 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * 댓글 관련 비즈니스 로직을 처리하는 인터페이스 CommentService의 구현체 클래스입니다.
+ */
 @Service
 @RequiredArgsConstructor
 public class CommentServiceImpl implements CommentService {

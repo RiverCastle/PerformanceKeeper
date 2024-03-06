@@ -7,6 +7,9 @@ import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
+/**
+ * RefreshToken 관련 비즈니스 로직을 처리하는 Service 클래스입니다.
+ */
 @Service
 @RequiredArgsConstructor
 public class RefreshTokenService {

@@ -1,7 +1,6 @@
 # Performance Keeper 
 Performance Keeper는 실시간 온라인 교육 현장에서 학생, 강사, 그리고 매니저들을 위해 실습과제를 용이하게 관리할 수 있도록 돕는 서비스입니다.
 
-[Performance Keeper 방문하기](http://ec2-13-125-238-93.ap-northeast-2.compute.amazonaws.com/views/login)
 
 프로젝트 소개자료 pdf 다운로드 [최강성_Performance_Keeper_소개자료.pdf](https://github.com/RiverCastle/PerformanceKeeper/files/13768537/_Performance_Keeper_.pdf)
 

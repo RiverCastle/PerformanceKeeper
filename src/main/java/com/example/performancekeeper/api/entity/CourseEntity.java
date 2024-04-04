@@ -5,6 +5,8 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
 import lombok.Setter;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -18,4 +20,11 @@ public class CourseEntity extends BaseTimeEntity {
     @NotBlank
     private String joinCode;
     private String description;
+    @OneToMany(mappedBy = "course", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
+    private List<MemberEntity> members = new ArrayList<>();
+
+    public void add(MemberEntity member) {
+        member.setCourse(this);
+        this.members.add(member);
+    }
 }

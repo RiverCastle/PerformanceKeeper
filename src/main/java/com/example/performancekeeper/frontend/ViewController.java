@@ -14,40 +14,40 @@ public class ViewController {
 
     @GetMapping("/home")
     public String homepage() {
-        return "home";
+        return "common/home";
     }
     @GetMapping("/sign-up")
     public String signUpPage() {
         log.info("to sign up page");
-        return "sign-up-page";
+        return "common/sign-up-page";
     }
 
     @GetMapping("/login")
     public String logInPage() {
         log.info("to login page");
-        return "login-page";
+        return "common/login-page";
     }
 
     @GetMapping("/main")
     public String mainPage() {
         log.info("to main page");
-        return "index";
+        return "common/index";
     }
 
     @GetMapping("/course-list-page")
     public String courseListPage() {
         log.info("to course-list-page");
-        return "course-list-page";
+        return "common/course-list-page";
     }
 
     @GetMapping("/course/{courseId}")
     public String coursePage() {
         log.info("to course page");
-        return "course-page";
+        return "student/course-page";
     }
 
     @GetMapping("/course/{courseId}/assignedTask/{assignedTaskId}")
     public String assignedTaskPage() {
-        return "task-page";
+        return "student/task-page";
     }
 }

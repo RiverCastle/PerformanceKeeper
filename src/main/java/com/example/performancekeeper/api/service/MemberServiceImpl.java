@@ -177,6 +177,7 @@ public class MemberServiceImpl implements MemberService{
      */
     @Override
     public MemberEntity checkStudentMemberBeforeDelete(UserEntity user, CourseEntity course, LeaveRequestDto leaveRequestDto) {
+        if (!course.getName().equals(leaveRequestDto.getCourseNameCheck())) throw new CustomException(CustomErrorCode.WRONG_COURSE_NAME);
         return memberRepository.findByUserAndCourseAndRoleAndDeletedAtIsNull(user, course, "Student")
                 .orElseThrow(() -> new CustomException(CustomErrorCode.NOT_STUDENT));
     }

@@ -34,10 +34,14 @@ public class MemberEntity extends BaseTimeEntity {
         this.user = user;
         this.course = course;
         this.role = role;
-        this.nickname = getUser().getUsername();
+        this.nickname = this.user.getUsername();
     }
     public void addTask(AssignedTaskEntity task) {
         task.setMember(this);
         this.tasks.add(task);
+    }
+
+    public void setCourse(CourseEntity course) {
+        this.course = course;
     }
 }

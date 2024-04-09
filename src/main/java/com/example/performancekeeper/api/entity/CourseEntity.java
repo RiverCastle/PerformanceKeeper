@@ -27,4 +27,8 @@ public class CourseEntity extends BaseTimeEntity {
         member.setCourse(this);
         this.members.add(member);
     }
+
+    public String getName() {
+        return name;
+    }
 }

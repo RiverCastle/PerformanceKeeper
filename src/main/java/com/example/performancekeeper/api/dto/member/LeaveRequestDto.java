@@ -10,4 +10,8 @@ import lombok.Data;
 @Data
 public class LeaveRequestDto {
     private String courseNameCheck;
+
+    public String getCourseNameCheck() {
+        return courseNameCheck;
+    }
 }

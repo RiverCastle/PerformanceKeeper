@@ -31,4 +31,8 @@ public class AssignedTaskEntity extends BaseTimeEntity {
     public static AssignedTaskEntity fromTaskEntity(TaskEntity entity, MemberEntity member) {
         return new AssignedTaskEntity(entity, member, "등록");
     }
+
+    public void setTask(TaskEntity task) {
+        this.task = task;
+    }
 }

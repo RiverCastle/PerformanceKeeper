@@ -5,12 +5,16 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.SQLDelete;
+
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 @Getter
 @Setter
+@SQLDelete(sql = "UPDATE course_entity SET deleted_at = NOW() WHERE id = ?")
+
 public class CourseEntity extends BaseTimeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

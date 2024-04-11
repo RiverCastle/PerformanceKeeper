@@ -27,7 +27,7 @@ public class MemberEntity extends BaseTimeEntity {
     private CourseEntity course;
 
     @OneToMany(mappedBy = "member", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
-    private List<AssignedTaskEntity> tasks = new ArrayList<>();
+    public List<AssignedTaskEntity> tasks = new ArrayList<>();
     private String role;
     @Setter
     @NotBlank

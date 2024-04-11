@@ -126,8 +126,7 @@ public class MemberServiceImpl implements MemberService{
      * @param member
      */
     public void deleteStudentMember(MemberEntity member) {
-        member.setDeletedAt(LocalDateTime.now());
-        memberRepository.save(member); // soft deletion
+        memberRepository.delete(member); // soft deletion
     }
 
     /**

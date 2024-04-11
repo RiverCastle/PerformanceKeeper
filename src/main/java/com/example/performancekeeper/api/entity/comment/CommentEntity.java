@@ -6,9 +6,11 @@ import com.example.performancekeeper.api.entity.task.AssignedTaskEntity;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.SQLDelete;
 
 @Entity
 @Getter
+@SQLDelete(sql = "UPDATE comment_entity SET deleted_at = NOW() WHERE id = ?")
 @NoArgsConstructor
 public class CommentEntity extends BaseTimeEntity {
     @Id

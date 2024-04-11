@@ -15,7 +15,6 @@ import com.example.performancekeeper.api.entity.task.AssignedTaskEntity;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -64,12 +63,14 @@ public class CommentServiceImpl implements CommentService {
     public void deleteComment(MemberEntity member, AssignedTaskEntity assignedTask, CommentEntity comment) {
         if (!assignedTask.getMember().equals(member) && !member.getRole().equals("Manager"))
             throw new CustomException(CustomErrorCode.NO_AUTHORIZATION);
-        if (!comment.getAssignedTaskEntity().equals(assignedTask)) throw new CustomException(CustomErrorCode.ASSIGNEDTASK_COMMENT_MISMATCH);
-        if (!comment.getWriter().equals(member)) throw new CustomException(CustomErrorCode.NO_AUTHORIZATION);
-        if (comment.getDeletedAt() != null) throw new CustomException(CustomErrorCode.ALREADY_DELETED);
+        if (!comment.getAssignedTaskEntity().equals(assignedTask))
+            throw new CustomException(CustomErrorCode.ASSIGNEDTASK_COMMENT_MISMATCH);
+        if (!comment.getWriter().equals(member))
+            throw new CustomException(CustomErrorCode.NO_AUTHORIZATION);
+        if (comment.getDeletedAt() != null)
+            throw new CustomException(CustomErrorCode.ALREADY_DELETED);
 
-        comment.setDeletedAt(LocalDateTime.now());
-        commentRepository.save(comment);
+        commentRepository.delete(comment);
 
     }
 
@@ -77,11 +78,12 @@ public class CommentServiceImpl implements CommentService {
     public void deleteReply(MemberEntity member, AssignedTaskEntity assignedTask, CommentEntity comment, ReplyEntity reply) {
         if (!assignedTask.getMember().equals(member) && !member.getRole().equals("Manager"))
             throw new CustomException(CustomErrorCode.NO_AUTHORIZATION);
-        if (!reply.getComment().equals(comment)) throw new CustomException(CustomErrorCode.COMMENT_REPLY_MISMATCH);
-        if (reply.getDeletedAt() != null) throw new CustomException(CustomErrorCode.ALREADY_DELETED);
+        if (!reply.getComment().equals(comment))
+            throw new CustomException(CustomErrorCode.COMMENT_REPLY_MISMATCH);
+        if (reply.getDeletedAt() != null)
+            throw new CustomException(CustomErrorCode.ALREADY_DELETED);
 
-        reply.setDeletedAt(LocalDateTime.now());
-        replyRepository.save(reply);
+        replyRepository.delete(reply);
     }
 
     @Override

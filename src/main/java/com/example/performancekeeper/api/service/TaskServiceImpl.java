@@ -215,22 +215,6 @@ public class TaskServiceImpl implements TaskService {
     }
 
     /**
-     * 학생이 강의실을 탈퇴할 때, 해당 학생에게 부여된 모든 과제들을 삭제하는 메서드입니다.
-     * 탈퇴 시점을 과제의 DeletedAt 필드에 할당하여 저장합니다.
-     * Soft deletion
-     *
-     * @param member 탈퇴하는 학생 엔티티
-     */
-    public void deleteAssignedTasksOfLeavingStudent(MemberEntity member) {
-        LocalDateTime now = LocalDateTime.now();
-        List<AssignedTaskEntity> assignedTaskEntityListToBeDeleted = assignedTaskRepository.findAllByMemberAndDeletedAtIsNull(member);
-        for (AssignedTaskEntity assignedTaskEntity : assignedTaskEntityListToBeDeleted) {
-            assignedTaskEntity.setDeletedAt(now);
-            assignedTaskRepository.save(assignedTaskEntity);
-        }
-    }
-
-    /**
      * 특정 과제의 진행상황을 세부적으로 조회하는 메서드입니다.
      * [완료 학생 수, 진행중인 학생 수, 문제가 발생한 학생 수, 시작전의 학생 수]
      * 특정 과제에 대한 학생들의 진행상황을 조회하여 위의 배열을 생성합니다.
@@ -303,5 +287,21 @@ public class TaskServiceImpl implements TaskService {
         List<AssignedTaskEntity> theUncompleted = assignedTaskRepository.findAllByMemberAndStatusIsNotAndDeletedAtIsNull(member, "완료");
         for (AssignedTaskEntity uncompleted : theUncompleted) result.add(AssignedTaskOverviewDto.fromEntity(uncompleted));
         return result;
+    }
+
+    /**
+     * 학생이 강의실을 탈퇴할 때, 해당 학생에게 부여된 모든 과제들을 삭제하는 메서드입니다.
+     * 탈퇴 시점을 과제의 DeletedAt 필드에 할당하여 저장합니다.
+     * Soft deletion
+     * @deprecated @SQLDelete으로 대체하여 사용X
+     * @param member 탈퇴하는 학생 엔티티
+     */
+    public void deleteAssignedTasksOfLeavingStudent(MemberEntity member) {
+        LocalDateTime now = LocalDateTime.now();
+        List<AssignedTaskEntity> assignedTaskEntityListToBeDeleted = assignedTaskRepository.findAllByMemberAndDeletedAtIsNull(member);
+        for (AssignedTaskEntity assignedTaskEntity : assignedTaskEntityListToBeDeleted) {
+            assignedTaskEntity.setDeletedAt(now);
+            assignedTaskRepository.save(assignedTaskEntity);
+        }
     }
 }

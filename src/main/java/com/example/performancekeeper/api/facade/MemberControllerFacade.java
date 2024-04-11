@@ -31,7 +31,6 @@ public class MemberControllerFacade {
         UserEntity user = userService.checkUser(userId);
         CourseEntity course = courseService.checkCourse(courseId);
         MemberEntity member = memberService.checkStudentMemberBeforeDelete(user, course, leaveRequestDto);
-        taskService.deleteAssignedTasksOfLeavingStudent(member);
         memberService.deleteStudentMember(member);
     }
 

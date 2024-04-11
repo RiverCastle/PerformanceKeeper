@@ -70,13 +70,6 @@ public interface TaskService {
     Map<String, Object> getTasksAndProgressesByDate(CourseEntity course, List<MemberEntity> studentsOfThisCourse, LocalDate startAt);
 
     /**
-     * 학생이 탈퇴할 경우 해당 학생의 부여된 과제를 삭제하는 메서드입니다.
-     *
-     * @param member 탈퇴하는 학생 엔티티
-     */
-    void deleteAssignedTasksOfLeavingStudent(MemberEntity member);
-
-    /**
      * 특정 과제의 진행 상황을 조회하는 메서드입니다.
      *
      * @param task 과제 엔티티
@@ -124,5 +117,12 @@ public interface TaskService {
      * @return 완료 및 미완료된 과제 리스트 배열
      */
     List<AssignedTaskOverviewDto>[] searchCompletedTasksAndUncompletedTasksByKeyword(MemberEntity member, String keyword);
+
+    /**
+     * 학생이 탈퇴할 경우 해당 학생의 부여된 과제를 삭제하는 메서드입니다.
+     * @deprecated @SQLDelete으로 대체하여 사용X
+     * @param member 탈퇴하는 학생 엔티티
+     */
+    void deleteAssignedTasksOfLeavingStudent(MemberEntity member);
 }
 

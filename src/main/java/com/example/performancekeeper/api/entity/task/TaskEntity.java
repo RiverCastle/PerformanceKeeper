@@ -6,12 +6,15 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.SQLDelete;
 
 import java.time.LocalDate;
 @Entity
 @Getter
 @Setter
 @NoArgsConstructor
+@SQLDelete(sql = "UPDATE task_entity SET deleted_at = NOW() WHERE id = ?")
+
 public class TaskEntity extends BaseTimeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

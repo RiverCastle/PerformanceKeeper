@@ -6,10 +6,12 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.SQLDelete;
 
 @Entity
 @Getter
 @Setter
+@SQLDelete(sql = "UPDATE assigned_task_entity SET deleted_at = NOW() WHERE id = ?")
 @NoArgsConstructor
 public class AssignedTaskEntity extends BaseTimeEntity {
     @Id

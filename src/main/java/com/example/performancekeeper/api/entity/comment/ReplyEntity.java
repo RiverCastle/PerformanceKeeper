@@ -24,7 +24,8 @@ public class ReplyEntity extends BaseTimeEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     private MemberEntity writer;
 
-    public ReplyEntity(String content, CommentEntity comment, MemberEntity writer) {
+    public ReplyEntity(String content, AssignedTaskEntity assignedTaskEntity, CommentEntity comment, MemberEntity writer) {
+        this.assignedTaskEntity = assignedTaskEntity;
         this.content = content;
         this.comment = comment;
         this.writer = writer;

@@ -1,7 +1,8 @@
-package com.example.performancekeeper.api.common.queryCounter;
+package com.example.performancekeeper.api.common.config;
 
 
 
+import com.example.performancekeeper.api.common.queryCounter.ApiQueryInspector;
 import org.hibernate.cfg.AvailableSettings;
 import org.springframework.boot.autoconfigure.orm.jpa.HibernatePropertiesCustomizer;
 import org.springframework.context.annotation.Bean;

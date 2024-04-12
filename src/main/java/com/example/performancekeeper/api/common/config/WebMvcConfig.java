@@ -1,4 +1,4 @@
-package com.example.performancekeeper.api.common;
+package com.example.performancekeeper.api.common.config;
 
 import com.example.performancekeeper.api.common.queryCounter.ApiQueryCounter;
 import com.example.performancekeeper.api.common.queryCounter.LoggingInterceptor;

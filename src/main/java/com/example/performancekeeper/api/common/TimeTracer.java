@@ -1,4 +1,4 @@
-package com.example.performancekeeper.aop;
+package com.example.performancekeeper.api.common;
 
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;

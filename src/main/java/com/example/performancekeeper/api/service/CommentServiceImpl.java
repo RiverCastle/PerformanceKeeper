@@ -34,8 +34,8 @@ public class CommentServiceImpl implements CommentService {
         commentRepository.save(new CommentEntity(commentCreateDto.getContent(), assignedTask, member));
     }
 
-    @Override
-    public List<CommentReadDto> getComments(MemberEntity member, AssignedTaskEntity assignedTask) {
+    @Deprecated
+    public List<CommentReadDto> getCommentsDeprecated(MemberEntity member, AssignedTaskEntity assignedTask) {
         if (!assignedTask.getMember().equals(member) && !member.getRole().equals("Manager"))
             throw new CustomException(CustomErrorCode.NO_AUTHORIZATION); // 작성자 본인 또는 강사만 작성 가능
 
@@ -53,10 +53,23 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
+    public List<CommentReadDto> getComments(MemberEntity member, AssignedTaskEntity assignedTask) {
+        if (!assignedTask.getMember().equals(member) && !member.getRole().equals("Manager"))
+            throw new CustomException(CustomErrorCode.NO_AUTHORIZATION); // 작성자 본인 또는 강사만 작성 가능
+
+        List<CommentReadDto> result = new ArrayList<>();
+        List<CommentEntity> comments = commentRepository.findAllByAssignedTaskEntityWithReplies(assignedTask);
+        for (CommentEntity comment : comments) {
+            result.add(CommentReadDto.fromEntity(comment));
+        }
+        return result;
+    }
+
+    @Override
     public void createReply(MemberEntity member, AssignedTaskEntity assignedTask, CommentEntity comment, ReplyCreateDto replyCreateDto) {
         if (!assignedTask.getMember().equals(member) && !member.getRole().equals("Manager"))
             throw new CustomException(CustomErrorCode.NO_AUTHORIZATION);
-        replyRepository.save(new ReplyEntity(replyCreateDto.getContent(), comment, member));
+        replyRepository.save(new ReplyEntity(replyCreateDto.getContent(), assignedTask, comment, member));
     }
 
     @Override

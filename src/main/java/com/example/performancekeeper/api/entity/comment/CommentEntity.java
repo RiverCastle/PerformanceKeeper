@@ -8,6 +8,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.SQLDelete;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Getter
 @SQLDelete(sql = "UPDATE comment_entity SET deleted_at = NOW() WHERE id = ?")
@@ -22,6 +25,8 @@ public class CommentEntity extends BaseTimeEntity {
     private AssignedTaskEntity assignedTaskEntity;
     @ManyToOne(fetch = FetchType.LAZY)
     private MemberEntity writer;
+    @OneToMany(mappedBy = "comment", fetch = FetchType.LAZY)
+    private final List<ReplyEntity> replies = new ArrayList<>();
 
     public CommentEntity(String content, AssignedTaskEntity assignedTaskEntity, MemberEntity writer) {
         this.content = content;

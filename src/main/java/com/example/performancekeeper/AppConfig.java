@@ -1,6 +1,6 @@
 package com.example.performancekeeper;
 
-import com.example.performancekeeper.aop.TimeTracer;
+import com.example.performancekeeper.api.common.TimeTracer;
 import com.example.performancekeeper.api.facade.CourseControllerFacade;
 import com.example.performancekeeper.api.facade.MemberControllerFacade;
 import com.example.performancekeeper.api.facade.TaskControllerFacade;

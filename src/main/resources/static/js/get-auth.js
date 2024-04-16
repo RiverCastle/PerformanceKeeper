@@ -1,1 +1,0 @@
-let auth = "Bearer " + sessionStorage.getItem("JWT");

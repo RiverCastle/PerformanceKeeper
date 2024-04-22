@@ -23,15 +23,13 @@ public class ServerCheckController {
     private String env;
     @Value("${server.port}")
     private String port;
-    @Value("${server.serverAddress}")
-    private String serverAddress;
 
     @GetMapping
     public ResponseEntity<?> serverCheck() {
         Map<String, String> responseData = new TreeMap<>();
         responseData.put("env", env);
         responseData.put("portNumber", port);
-        responseData.put("serverAddress", serverAddress);
+
         return ResponseEntity.ok(responseData);
     }
 

@@ -33,6 +33,10 @@ public class ServerCheckController {
         return ResponseEntity.ok(responseData);
     }
 
+    /**
+     * blue/green 중 사용중인 서버명을 반환합니다.
+     * @return "blue" or "green"
+     */
     @GetMapping("/env")
     public ResponseEntity<?> getEnv() {
         return ResponseEntity.ok(env);

@@ -55,17 +55,27 @@ DB로 데이터를 요청하기 위해 1개의 쿼리를 보냈는데, 다른 �
 
 ![Student Course Leave](https://github.com/RiverCastle/PerformanceKeeper/assets/131141755/5e0d02e4-2e78-4067-aedc-515b97cf5f85)
 
+
+
 ---
 ![Student Course Page](https://github.com/RiverCastle/PerformanceKeeper/assets/131141755/ed7b8fe5-dae0-4e15-9543-2600c882b37b)
+
+
 
 ---
 ![Student Course Search](https://github.com/RiverCastle/PerformanceKeeper/assets/131141755/de3de5cb-923b-40be-8ae5-8600e8478d16)
 
+
+
 ---
 ![Student Main](https://github.com/RiverCastle/PerformanceKeeper/assets/131141755/25799768-2c36-4c13-912b-8aeed2d1aa43)
 
+
+
 ---
 ![Student Task Status](https://github.com/RiverCastle/PerformanceKeeper/assets/131141755/5576afa3-4836-4f33-8470-d88a7854c4ed)
+
+
 
 ---
 
@@ -73,23 +83,37 @@ DB로 데이터를 요청하기 위해 1개의 쿼리를 보냈는데, 다른 �
 
 ![Manager Main](https://github.com/RiverCastle/PerformanceKeeper/assets/131141755/355f9fa9-a875-46f8-9650-67f9d5fe14cd)
 
+
+
 ---
 ![Manager Course Create](https://github.com/RiverCastle/PerformanceKeeper/assets/131141755/17fd5d37-135b-47cc-ac76-3fe88ba7ae79)
+
+
 
 ---
 ![Manager Course Page](https://github.com/RiverCastle/PerformanceKeeper/assets/131141755/871cda62-e310-435a-919b-7afeb8707794)
 
+
+
 ---
 ![Manager Course Page](https://github.com/RiverCastle/PerformanceKeeper/assets/131141755/2a3cb157-2db1-4593-9d3d-376441a720a6)
+
+
 
 ---
 ![Manager Course Page](https://github.com/RiverCastle/PerformanceKeeper/assets/131141755/7d36d08b-2759-4a86-99ff-e1aa4c45bee2)
 
+
+
 ---
 ![Manager Task Create](https://github.com/RiverCastle/PerformanceKeeper/assets/131141755/2cabfcc5-48a7-4bd7-a5bf-2fad9ec69e62)
 
+
+
 ---
 ![Manager Task Comment Reply](https://github.com/RiverCastle/PerformanceKeeper/assets/131141755/69ed01c5-a2bb-4045-9a9d-8d7e95cfa06f)
+
+
 
 ---
 
